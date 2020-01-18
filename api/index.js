@@ -12,11 +12,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/api/applicants', applicantRoutes);
 
 // when a random route is inputed
+/*
 app.get('*', (req, res) =>
   res.status(200).send({
     message: 'Welcome to this API.'
   })
 );
+*/
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === 'production') {
