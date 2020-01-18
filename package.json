@@ -9,7 +9,7 @@
     "client": "npm start --prefix client",
     "client-install": "npm install --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "server-test": "SET NODE_ENV=test &&  sequelize db:migrate:undo:all  && sequelize db:migrate  && nyc --require @babel/register  mocha ./api/test/*.js --timeout 20000 --exit",
+    "server-test": "export NODE_ENV=test &&  sequelize db:migrate:undo:all  && sequelize db:migrate  && nyc --require @babel/register  mocha ./api/test/*.js --timeout 20000 --exit",
     "client-test": "npm test --prefix client",
     "test": "npm run server-test && npm run client-test",
     "build": "rm -rf ./build && babel -d ./build ./api -s --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files && npm install --prefix client && npm run build --prefix client",
