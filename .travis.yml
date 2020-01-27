@@ -6,7 +6,7 @@
       services:
        - postgresql
       before_install:
-        - chmod og+rX backend
+       - chmod og+rX backend
        - cd backend/
        - chmod +x mvnw
        - psql -c 'create database recruitment;' -U postgres
