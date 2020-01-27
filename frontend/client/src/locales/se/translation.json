@@ -1,0 +1,11 @@
+{
+  "home": "Hem",
+  "register": "Registrera",
+  "login": "Logga in",
+  "brand": "Rekryterings Applikation",
+  "email": "Epost",
+  "password": "Lösenord",
+  "missing_account?": "Har du inget konto?",
+  "admin": "Admin",
+  "apply": "Ansök"
+}

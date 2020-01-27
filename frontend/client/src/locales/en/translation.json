@@ -1,0 +1,11 @@
+{
+  "home": "Home",
+  "register": "Register",
+  "login": "Login",
+  "brand": "Recruitment Application",
+  "email": "Email",
+  "password": "Password",
+  "missing_account?": "Don't you have an account?",
+  "admin": "Admin",
+  "apply": "Apply"
+}

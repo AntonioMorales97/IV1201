@@ -1,0 +1,26 @@
+{
+  "name": "iv1201-frontend",
+  "version": "1.0.0",
+  "description": "recruitment application frontend",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm test --prefix client",
+    "postinstall": "npm run build",
+    "start": "node server.js",
+    "client": "npm start --prefix client",
+    "server": "nodemon server.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "build": "npm install --prefix client && npm run build --prefix client"
+  },
+  "author": "IV1201 Group 4",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "concurrently": "^5.1.0",
+    "nodemon": "^2.0.2"
+  }
+}
