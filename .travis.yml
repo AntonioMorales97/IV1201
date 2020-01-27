@@ -1,5 +1,6 @@
  matrix:
    include:
+      sudo: required
     - language: java
       jdk: oraclejdk11
       services:
@@ -10,6 +11,7 @@
        - psql -c 'create database recruitment;' -U postgres
        - sudo -u postgres psql -c "CREATE USER recruitment_acc WITH ENCRYPTED PASSWORD '123123';"
        - sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE recruitment TO recruitment_acc;"
+
     - language: node_js
       node_js:
        - 'stable'
