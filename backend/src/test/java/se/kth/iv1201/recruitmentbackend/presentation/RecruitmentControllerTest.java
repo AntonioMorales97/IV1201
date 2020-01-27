@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -17,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
@@ -27,7 +29,7 @@ public class RecruitmentControllerTest {
 
 	@Autowired
 	private MockMvc mvc;
-
+	
 	@BeforeAll
 	private void setup() throws Exception {
 		String body = setupBody("testyy","testaryy","testay@gmail.com","9443528491","heja","då");
