@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> 0bd19a271a3afc51621be1571142acfb7ec5870c
  matrix:
    include:
       sudo: required
