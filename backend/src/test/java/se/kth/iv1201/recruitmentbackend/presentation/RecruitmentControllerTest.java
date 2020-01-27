@@ -28,7 +28,12 @@ public class RecruitmentControllerTest {
 	@Autowired
 	private MockMvc mvc;
 
-	
+	@BeforeAll
+	private void setup() throws Exception {
+		String body = setupBody("testyy","testaryy","testay@gmail.com","9443528491","heja","då");
+		this.mvc.perform(post("/register").contentType(MediaType.APPLICATION_JSON)
+                .content(body));
+	}
 
 	@Test
 	public void registerTestBadRequest()throws Exception{
