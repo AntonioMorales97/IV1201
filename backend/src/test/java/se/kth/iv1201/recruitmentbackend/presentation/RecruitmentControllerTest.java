@@ -10,14 +10,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
 import org.springframework.transaction.annotation.Transactional;
+
+
 
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -30,12 +32,7 @@ public class RecruitmentControllerTest {
 	@Autowired
 	private MockMvc mvc;
 	
-	@BeforeAll
-	private void setup() throws Exception {
-		String body = setupBody("testyy","testaryy","testay@gmail.com","9443528491","heja","då");
-		this.mvc.perform(post("/register").contentType(MediaType.APPLICATION_JSON)
-                .content(body));
-	}
+	
 
 	@Test
 	public void registerTestBadRequest()throws Exception{
@@ -57,12 +54,13 @@ public class RecruitmentControllerTest {
 	}
 	@Test 
 	public void registerAlredyUsedEmail() throws Exception{
-		
+		testSetup();
 		String body = setupBody("testar","testars","testay@gmail.com","9563258789","hejaaa","då");
 		 registerRequest("A person with the given email already exists!", body);
 	}
 	@Test 
 	public void registerAlredyUsedSsn() throws Exception{
+		testSetup();
 		String body = setupBody("testa","test","finnsej@gmail.com","9443528491","hejaaar","då");
 		 registerRequest("A person with the given ssn already exists!", body);
 		
@@ -70,6 +68,7 @@ public class RecruitmentControllerTest {
 	
 	
 	private void registerRequest(String msg, String body) throws Exception{
+		testSetup();
 		this.mvc.perform(post("/register").contentType(MediaType.APPLICATION_JSON)
                 .content(body.toString())).andDo(print())
                 .andExpect(status().isMethodNotAllowed())
@@ -84,5 +83,11 @@ public class RecruitmentControllerTest {
 			body.put("username", username);
 			body.put("password", password);
 			return body.toString();
+	}
+	private void testSetup() throws Exception{
+		
+		String body = setupBody("testyy","testaryy","testay@gmail.com","9443528491","heja","då");
+		this.mvc.perform(post("/register")
+				.contentType(MediaType.APPLICATION_JSON).content(body.toString()));
 	}
 }
