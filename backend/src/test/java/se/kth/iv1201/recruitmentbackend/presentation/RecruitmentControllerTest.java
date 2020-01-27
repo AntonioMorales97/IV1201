@@ -46,18 +46,18 @@ public class RecruitmentControllerTest {
 	@Test 
 	public void registerAlredyUsedUsername() throws Exception{
 		String body = setupBody("testa","testars","testayssss@gmail.com","9494256712","heja","då");
-		 registerRequest("A customer with the given username already exists!", body);
+		 registerRequest("A person with the given username already exists!", body);
 	}
 	@Test 
 	public void registerAlredyUsedEmail() throws Exception{
 		
 		String body = setupBody("testa","testars","testay@gmail.com","9563216789","hejaaa","då");
-		 registerRequest("A customer with the given email already exists!", body);
+		 registerRequest("A person with the given email already exists!", body);
 	}
 	@Test 
 	public void registerAlredyUsedSsn() throws Exception{
 		String body = setupBody("testa","testars","testayssss@gmail.com","9443528491","hejaaa","då");
-		 registerRequest("A customer with the given ssn already exists!", body);
+		 registerRequest("A person with the given ssn already exists!", body);
 		
 	}
 	
