@@ -15,10 +15,10 @@ public class DatabaseInit {
 	@Bean
 	CommandLineRunner initializeDatabase(PersonRepository personRepo) {
 		return null;
-		//Person p1 = new Person("testyy","testaryy","testay@gmail.com","9443528491","heja","då");
-		//return args ->{
-			//log.info("Inserting " + personRepo.save(p1));
-		//};
+		Person p1 = new Person("testyy","testaryy","testay@gmail.com","9443528491","heja","då");
+		return args ->{
+			log.info("Inserting " + personRepo.save(p1));
+		};
 		
 	}
 }
