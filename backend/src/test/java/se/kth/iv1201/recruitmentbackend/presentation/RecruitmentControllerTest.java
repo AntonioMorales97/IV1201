@@ -49,6 +49,7 @@ public class RecruitmentControllerTest {
 	}
 	@Test 
 	public void registerAlredyUsedUsername() throws Exception{
+		testSetup();
 		String body = setupBody("testa","testars","testayssss@gmail.com","9494256712","heja","då");
 		 registerRequest("A person with the given username already exists!", body);
 	}
@@ -68,7 +69,6 @@ public class RecruitmentControllerTest {
 	
 	
 	private void registerRequest(String msg, String body) throws Exception{
-		testSetup();
 		this.mvc.perform(post("/register").contentType(MediaType.APPLICATION_JSON)
                 .content(body.toString())).andDo(print())
                 .andExpect(status().isMethodNotAllowed())
