@@ -1,8 +1,8 @@
  matrix:
    include:
-      sudo: required
     - language: java
       jdk: oraclejdk11
+      sudo: required
       services:
        - postgresql
       before_install:
