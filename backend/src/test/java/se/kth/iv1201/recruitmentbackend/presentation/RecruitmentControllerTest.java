@@ -36,7 +36,7 @@ public class RecruitmentControllerTest {
 	}
 	@Test
 	public void regiterTestWorking()throws Exception{
-		String body = setupBody("test","testar","test@gmail.com","9403128491","hej","då");
+		String body = setupBody("test1","testar1","test@gmail.com","9403128491","hej","då");
 			 this.mvc.perform(post("/register").contentType(MediaType.APPLICATION_JSON)
 	                .content(body)).andDo(print())
 	                .andExpect(status().isCreated())
@@ -45,18 +45,18 @@ public class RecruitmentControllerTest {
 	}
 	@Test 
 	public void registerAlredyUsedUsername() throws Exception{
-		String body = setupBody("testa","testars","testayssss@gmail.com","9494256712","heja","då");
+		String body = setupBody("testa2","testars2","testayssss@gmail.com","9494256712","hej","då");
 		 registerRequest("A person with the given username already exists!", body);
 	}
 	@Test 
 	public void registerAlredyUsedEmail() throws Exception{
 		
-		String body = setupBody("testa","testars","testay@gmail.com","9563216789","hejaaa","då");
+		String body = setupBody("testar3","testars3","test@gmail.com","9563216789","hejaaa","då");
 		 registerRequest("A person with the given email already exists!", body);
 	}
 	@Test 
 	public void registerAlredyUsedSsn() throws Exception{
-		String body = setupBody("testa","testars","testayssss@gmail.com","9443528491","hejaaa","då");
+		String body = setupBody("testa4","test4","finnsej@gmail.com","9403128491","hejaaar","då");
 		 registerRequest("A person with the given ssn already exists!", body);
 		
 	}
