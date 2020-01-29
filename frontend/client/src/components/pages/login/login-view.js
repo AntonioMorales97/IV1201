@@ -28,46 +28,44 @@ const LoginView = props => {
     <div className='login'>
       {renderRedirect()}
       <Container>
-        <div className='light-overlay'>
-          <Container className='form-container'>
-            <div className='h3 text-center'>{t('login')}</div>
-            {errorMessage ? <Alert color='danger'>{errorMessage}</Alert> : null}
-            {successMessage ? (
-              <Alert color='success'>{successMessage}</Alert>
-            ) : null}
-            <Form onSubmit={onSubmit}>
-              <FormGroup className='mb-0'>
-                <Label for='email'>{t('email')}</Label>
-                <Input
-                  type='email'
-                  name='email'
-                  id='email'
-                  placeholder={t('email')}
-                  autoComplete='username email'
-                  className='mb-3'
-                  onChange={onChange}
-                />
-                <Label for='password'>{t('password')}</Label>
-                <Input
-                  type='password'
-                  name='password'
-                  id='password'
-                  placeholder={t('password')}
-                  autoComplete='current-password'
-                  className='mb-3'
-                  onChange={onChange}
-                />
-                <Button color='dark' style={{ marginTop: '2rem' }} block>
-                  {tryLogin ? <Spinner size='sm' /> : t('login')}
-                </Button>
-                <div className='text-center mt-3'>
-                  {t('missing_account?')}{' '}
-                  <Link to='/register'>{t('register')}</Link>
-                </div>
-              </FormGroup>
-            </Form>
-          </Container>
-        </div>
+        <Container className='form-container'>
+          <div className='h3 text-center'>{t('login')}</div>
+          {errorMessage ? <Alert color='danger'>{errorMessage}</Alert> : null}
+          {successMessage ? (
+            <Alert color='success'>{successMessage}</Alert>
+          ) : null}
+          <Form onSubmit={onSubmit}>
+            <FormGroup className='mb-0'>
+              <Label for='username'>{t('username')}</Label>
+              <Input
+                type='username'
+                name='username'
+                id='username'
+                placeholder={t('username')}
+                autoComplete='username'
+                className='mb-3'
+                onChange={onChange}
+              />
+              <Label for='password'>{t('password')}</Label>
+              <Input
+                type='password'
+                name='password'
+                id='password'
+                placeholder={t('password')}
+                autoComplete='current-password'
+                className='mb-3'
+                onChange={onChange}
+              />
+              <Button color='dark' style={{ marginTop: '2rem' }} block>
+                {tryLogin ? <Spinner size='sm' /> : t('login')}
+              </Button>
+              <div className='text-center mt-3'>
+                {t('missing_account?')}{' '}
+                <Link to='/register'>{t('register')}</Link>
+              </div>
+            </FormGroup>
+          </Form>
+        </Container>
       </Container>
     </div>
   );

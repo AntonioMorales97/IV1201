@@ -6,6 +6,11 @@
   "email": "Epost",
   "password": "Lösenord",
   "missing_account?": "Har du inget konto?",
+  "already_have_account?": "Har du redan ett konto?",
   "admin": "Admin",
-  "apply": "Ansök"
+  "apply": "Ansök",
+  "first_name": "Förnamn",
+  "last_name": "Efternamn",
+  "ssn": "Personummer",
+  "username": "Användarnamn"
 }
