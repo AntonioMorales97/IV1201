@@ -38,7 +38,7 @@ const LoginView = props => {
             <FormGroup className='mb-0'>
               <Label for='username'>{t('username')}</Label>
               <Input
-                type='username'
+                type='text'
                 name='username'
                 id='username'
                 placeholder={t('username')}
