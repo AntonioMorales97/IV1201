@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-import baseURL from './utils/api-url';
 import App from './App';
 import './i18n';
 import * as serviceWorker from './serviceWorker';
@@ -11,8 +10,15 @@ import $ from 'jquery';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-axios.defaults.baseURL = baseURL;
+console.log(production.env.NODE_ENV);
+
+axios.defaults.baseURL =
+  production.env.NODE_ENV === 'production'
+    ? production.env.REST_URL
+    : 'http://localhost:8080';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
+
+console.log(axios.defaults.baseURL + '<- index');
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

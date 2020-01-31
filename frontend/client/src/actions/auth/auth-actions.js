@@ -103,6 +103,8 @@ export const register = ({
     password
   });
 
+  console.log('Axios to:' + axios.defaults.baseURL);
+
   axios
     .post('/register', body)
     .then(res => {
