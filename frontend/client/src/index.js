@@ -10,11 +10,11 @@ import $ from 'jquery';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-console.log(production.env.NODE_ENV);
+console.log(process.env.NODE_ENV);
 
 axios.defaults.baseURL =
-  production.env.NODE_ENV === 'production'
-    ? production.env.REST_URL
+  process.env.NODE_ENV === 'production'
+    ? process.env.REST_URL
     : 'http://localhost:8080';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
