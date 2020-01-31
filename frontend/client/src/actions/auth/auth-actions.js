@@ -24,7 +24,7 @@ export const login = ({ username, password }) => dispatch => {
     .then(res => {
       dispatch({
         type: LOGIN_SUCCESS,
-        payload: { user: { role: 'admin' } } // Must be i payload of response from server
+        payload: { user: { role: 'admin' } } // Must be in payload of response from server
       });
     })
     .catch(err => {
