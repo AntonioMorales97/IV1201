@@ -18,6 +18,7 @@ axios.defaults.baseURL =
     : 'http://localhost:8080';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
+console.log(process.env.REST_URL);
 console.log(axios.defaults.baseURL + '<- index');
 
 ReactDOM.render(<App />, document.getElementById('root'));
