@@ -12,5 +12,8 @@
   "first_name": "First name",
   "last_name": "Last name",
   "ssn": "Social security number",
-  "username": "Username"
+  "username": "Username",
+  "please_enter_fields": "Please enter all fields!",
+  "ssn_atleast_10": "SSN must be atleast 10 digits!",
+  "successful_registration": "Successful registration, please login!"
 }

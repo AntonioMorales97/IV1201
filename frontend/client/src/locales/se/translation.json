@@ -11,6 +11,9 @@
   "apply": "Ansök",
   "first_name": "Förnamn",
   "last_name": "Efternamn",
-  "ssn": "Personummer",
-  "username": "Användarnamn"
+  "ssn": "Personnummer",
+  "username": "Användarnamn",
+  "please_enter_fields": "Vänligen fyll i alla rader!",
+  "ssn_atleast_10": "Personnummer måste vara 10 siffror!",
+  "successful_registration": "Registrering lyckades, vänligen logga in!"
 }

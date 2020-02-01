@@ -81,16 +81,12 @@ export const register = ({
   password
 }) => dispatch => {
   if (!firstName || !lastName || !ssn || !username || !email || !password) {
-    dispatch(
-      returnError({ msg: 'Please enter all fields' }, 400, REGISTER_FAIL)
-    );
+    dispatch(returnError({ msg: 'please_enter_fields' }, 400, REGISTER_FAIL));
     return;
   }
 
   if (ssn.length < 10) {
-    dispatch(
-      returnError({ msg: 'SSN must be atleast 10 digits' }, 400, REGISTER_FAIL)
-    );
+    dispatch(returnError({ msg: 'ssn_atleast_10' }, 400, REGISTER_FAIL));
     return;
   }
 
@@ -108,7 +104,7 @@ export const register = ({
     .then(res => {
       dispatch(
         returnSuccess(
-          { msg: 'Successful registration! Please login' },
+          { msg: 'successful_registration' },
           res.status,
           REGISTER_SUCCESS
         )
@@ -118,6 +114,9 @@ export const register = ({
       });
     })
     .catch(err => {
+      /**
+       * Handle error key!
+       */
       dispatch(
         returnError(
           { msg: err.response.data.message },
