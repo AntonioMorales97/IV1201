@@ -2,7 +2,9 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT_SUCCESS,
-  LOGOUT_FAIL
+  LOGOUT_FAIL,
+  REGISTER_SUCCESS,
+  REGISTER_FAIL
 } from '../../actions/auth/auth-types';
 
 const initialState = {
@@ -21,9 +23,15 @@ export default function(state = initialState, action) {
         isAuthenticated: true,
         isLoading: false
       };
+    case REGISTER_SUCCESS:
+      return {
+        ...state,
+        isAuthenticated: false
+      };
     case LOGIN_FAIL:
     case LOGOUT_FAIL:
     case LOGOUT_SUCCESS:
+    case REGISTER_FAIL:
       return {
         ...state,
         user: null,

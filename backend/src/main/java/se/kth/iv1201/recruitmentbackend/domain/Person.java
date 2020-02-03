@@ -1,10 +1,6 @@
 package se.kth.iv1201.recruitmentbackend.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -14,9 +10,13 @@ import lombok.Data;
 
 /**
  * Represents a Person in the database.
- * @author Gurk1
  *
  */
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Data
 @Entity
 public class Person {
@@ -57,12 +57,17 @@ public class Person {
 	@NotBlank(message = "{person.password.blank}")
     private String password;
 
-	
-   
-	public Person() {
-		
-	};
-	 /**
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "person")
+    private Set<Availability> availability = new HashSet<>();
+
+	@ManyToOne
+    @JoinColumn(name = "role_id", referencedColumnName = "role_id")
+    private Role role;
+
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "person")
+    private Set<CompetenceProfile> competenceProfile = new HashSet<>();
+
+    /**
      * Creates a new instance with the specified parameters.
      *
      * @param name     The user's name
@@ -72,6 +77,9 @@ public class Person {
      * @param username The user's username
      * @param password The user's password
      */
+    public Person() {
+		
+	};
     public Person(String name, String surname, String email, String ssn, String username, String password) {
         this.firstName = name;
         this.lastName = surname;

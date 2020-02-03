@@ -1,32 +1,35 @@
 import React, { Component } from 'react';
-import LoginView from './login-view';
+import RegisterView from './register-view';
 import { Redirect } from 'react-router-dom';
-
 import {
-  LOGIN_SUCCESS,
-  LOGIN_FAIL,
-  REGISTER_SUCCESS
+  REGISTER_SUCCESS,
+  REGISTER_FAIL
 } from '../../../actions/auth/auth-types';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { login } from '../../../actions/auth/auth-actions';
+import { register } from '../../../actions/auth/auth-actions';
 import { clearError } from '../../../actions/error/error-actions';
 import { clearSuccess } from '../../../actions/success/success-actions';
 
-class LoginContainer extends Component {
+class RegisterContainer extends Component {
   state = {
+    firstName: '',
+    lastName: '',
+    ssn: '',
     username: '',
+    email: '',
     password: '',
     errorMessage: null,
     successMessage: null,
-    tryLogin: false
+    tryRegister: false,
+    registerSuccess: false
   };
 
   static propTypes = {
     isAuthenticated: PropTypes.bool,
     error: PropTypes.object.isRequired,
     success: PropTypes.object.isRequired,
-    login: PropTypes.func.isRequired,
+    register: PropTypes.func.isRequired,
     clearError: PropTypes.func.isRequired,
     clearSuccess: PropTypes.func.isRequired
   };
@@ -35,28 +38,22 @@ class LoginContainer extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  componentDidMount() {
-    const { success } = this.props;
-    if (success.id === REGISTER_SUCCESS) {
-      this.setState({ successMessage: success.msg.msg });
-    }
-  }
-
   componentDidUpdate(prevProps) {
     const { error, success } = this.props;
     if (error !== prevProps.error) {
-      if (error.id === LOGIN_FAIL) {
-        this.setState({ errorMessage: error.msg.msg, tryLogin: false });
+      if (error.id === REGISTER_FAIL) {
+        this.setState({ errorMessage: error.msg.msg, tryRegister: false });
       } else {
         this.setState({ errorMessage: null });
       }
     }
 
     if (success !== prevProps.success) {
-      if (success.id === LOGIN_SUCCESS) {
+      if (success.id === REGISTER_SUCCESS) {
         this.setState({
           successMessage: success.msg.msg,
-          tryLogin: false
+          tryRegister: false,
+          registerSuccess: true
         });
       } else {
         this.setState({ successMessage: null });
@@ -67,19 +64,22 @@ class LoginContainer extends Component {
   componentWillUnmount() {
     //Clean before we leave
     this.props.clearError();
-    this.props.clearSuccess();
+    //this.props.clearSuccess();
   }
 
   renderRedirect = () => {
+    if (this.state.registerSuccess) {
+      return <Redirect to='/login' />;
+    }
     if (this.props.isAuthenticated) {
       if (this.props.user.role === 'admin') {
-        console.log('admin, redirect to admin'); //remove
+        console.log('admin, redirect to admin');
         const { from } = this.props.location.state || {
           from: { pathname: '/admin' }
         };
         return <Redirect to={from} />;
       }
-      console.log('applicant, redirect to apply'); //remove
+      console.log('applicant, redirect to apply');
       const { from } = this.props.location.state || {
         from: { pathname: '/apply' }
       };
@@ -89,32 +89,36 @@ class LoginContainer extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    if (this.state.tryLogin) return;
+    if (this.state.tryRegister) return;
     this.setState({
-      tryLogin: true
+      tryRegister: true
     });
     this.props.clearError();
     this.props.clearSuccess();
 
-    const { username, password } = this.state;
+    const { firstName, lastName, ssn, username, email, password } = this.state;
 
     const user = {
+      firstName,
+      lastName,
+      ssn,
       username,
+      email,
       password
     };
 
-    this.props.login(user);
+    this.props.register(user);
   };
 
   render() {
     return (
-      <LoginView
+      <RegisterView
         renderRedirect={this.renderRedirect}
         onSubmit={this.onSubmit}
         onChange={this.onChange}
         errorMessage={this.state.errorMessage}
         successMessage={this.state.successMessage}
-        tryLogin={this.state.tryLogin}
+        tryRegister={this.state.tryRegister}
       />
     );
   }
@@ -126,7 +130,6 @@ const mapStateToProps = state => ({
   error: state.error,
   success: state.success
 });
-export default connect(mapStateToProps, { login, clearError, clearSuccess })(
-  LoginContainer
+export default connect(mapStateToProps, { register, clearError, clearSuccess })(
+  RegisterContainer
 );
-//export default LoginContainer;
