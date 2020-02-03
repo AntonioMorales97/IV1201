@@ -21,9 +21,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
+import se.kth.iv1201.recruitmentbackend.presentation.models.LoginResponse;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -32,6 +35,8 @@ import io.jsonwebtoken.Jwts;
 public class AuthenticationControllerTest {
 	@Autowired
 	private MockMvc mvc;
+	@Autowired
+	ObjectMapper objectMapper;
 	@Value("${jwt.secret}")
 	private String secret;
 
@@ -52,8 +57,8 @@ public class AuthenticationControllerTest {
                 .content(user)).andDo(print())
                 .andExpect(status().isOk()).andReturn();
 		String result = res.getResponse().getContentAsString();
-		String token = result.substring(13, result.length()-2);
-		System.out.println("PRINTOUT: "+token);
+		LoginResponse response = objectMapper.readValue(result, LoginResponse.class);
+		String token = response.getJwtToken();
 		Jws<Claims> jws = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
 		assertEquals("heja", jws.getBody().getSubject());
 	}
