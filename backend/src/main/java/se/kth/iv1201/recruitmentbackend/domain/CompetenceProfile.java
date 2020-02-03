@@ -14,10 +14,12 @@ public class CompetenceProfile {
     @Column(name = "competence_profile_id")
     private long id;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "person_id")
     private Person person;
 
     @OneToOne
+    @JoinColumn(name = "competence_id")
     private Competence competence;
 
     @NotNull

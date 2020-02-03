@@ -9,7 +9,9 @@ import javax.validation.constraints.Pattern;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 
@@ -52,14 +54,15 @@ public class Person {
 	@NotBlank(message = "{person.password.blank}")
     private String password;
 
-	@OneToMany
-    private List<Availability> availability = new ArrayList<>();
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "person")
+    private Set<Availability> availability = new HashSet<>();
 
-	@OneToOne
+	@ManyToOne
+    @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Role role;
 
-	@OneToOne
-    private CompetenceProfile competenceProfile;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "person")
+    private Set<CompetenceProfile> competenceProfile = new HashSet<>();
 
     /**
      * Creates a new instance with the specified parameters.

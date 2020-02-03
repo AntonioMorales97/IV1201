@@ -11,8 +11,12 @@ import java.util.Calendar;
 public class Availability {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "competence_id")
+    @Column(name = "availability_id")
     private long id;
+
+    @ManyToOne
+    @JoinColumn(name = "person_id")
+    private Person person;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "from_date")
