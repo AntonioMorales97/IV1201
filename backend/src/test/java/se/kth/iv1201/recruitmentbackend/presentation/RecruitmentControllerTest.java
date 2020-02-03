@@ -32,8 +32,6 @@ public class RecruitmentControllerTest {
 	@Autowired
 	private MockMvc mvc;
 	
-	
-
 	@Test
 	public void registerTestBadRequest()throws Exception{
 		this.mvc.perform(post("/register")).andDo(print()).andExpect(status().isBadRequest());

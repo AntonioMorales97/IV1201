@@ -8,6 +8,10 @@ import lombok.extern.slf4j.Slf4j;
 import se.kth.iv1201.recruitmentbackend.domain.Person;
 import se.kth.iv1201.recruitmentbackend.repository.PersonRepository;
 
+/**
+ * Class used to initialize  the database with some data if need be.
+ *
+ */
 @Configuration
 @Slf4j
 public class DatabaseInit {

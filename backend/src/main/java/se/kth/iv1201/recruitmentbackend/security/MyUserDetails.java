@@ -6,7 +6,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import se.kth.iv1201.recruitmentbackend.domain.Person;
-
+/**
+ * Implements UserDetails, used to authentication of Persons.
+ *
+ */
 public class MyUserDetails implements UserDetails{
 	private static final long serialVersionUID = 1L;
 		
@@ -17,7 +20,6 @@ public class MyUserDetails implements UserDetails{
 	}
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		//person.getRole()
 		return null;
 	}
 	
@@ -62,5 +64,10 @@ public class MyUserDetails implements UserDetails{
 	public Person getPerson() {
 		return this.person;
 	}
-
+	/**
+	 * Gets the role of the current person, used to authorization.
+	 */
+	/*public getRole() {
+		this.person.getRole();
+	}*/
 }

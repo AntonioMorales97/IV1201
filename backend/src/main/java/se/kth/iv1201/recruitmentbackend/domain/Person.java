@@ -12,8 +12,12 @@ import javax.validation.constraints.Pattern;
 
 import lombok.Data;
 
+/**
+ * Represents a Person in the database.
+ * @author Gurk1
+ *
+ */
 @Data
-
 @Entity
 public class Person {
 	@Id
@@ -54,7 +58,11 @@ public class Person {
     private String password;
 
 	
-    /**
+   
+	public Person() {
+		
+	};
+	 /**
      * Creates a new instance with the specified parameters.
      *
      * @param name     The user's name
@@ -64,9 +72,6 @@ public class Person {
      * @param username The user's username
      * @param password The user's password
      */
-	public Person() {
-		
-	};
     public Person(String name, String surname, String email, String ssn, String username, String password) {
         this.firstName = name;
         this.lastName = surname;

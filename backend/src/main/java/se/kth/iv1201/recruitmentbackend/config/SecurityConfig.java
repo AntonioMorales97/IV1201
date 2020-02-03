@@ -18,7 +18,10 @@ import se.kth.iv1201.recruitmentbackend.jwt.filters.JwtExceptionHandlerFilter;
 import se.kth.iv1201.recruitmentbackend.jwt.filters.JwtRequestFilter;
 import se.kth.iv1201.recruitmentbackend.security.MyUserDetailsService;
 
-
+/**
+ * Sets up spring security.
+ *
+ */
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
@@ -30,11 +33,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private JwtExceptionHandlerFilter jwtExcFilter;
 	
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-		web.ignoring()
-		.antMatchers("/register", "/", "/authenticate");
-	}
 	/**
 	 *  configure so that AuthenticationManager knows where to load users to match credentials to.
 	 */
@@ -42,18 +40,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder authentication) throws Exception {
 		authentication.userDetailsService(myUserDetailsService).passwordEncoder(passwordEncoder());
 	}
+	/**
+	 * A layer abovew HttpSecurity, opens up /authetnication and /register.
+	 */
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+		web.ignoring()
+		.antMatchers("/authenticate", "/register");
+	}
+	/**
+	 * Layer below WebSecurity, sets up security against the api and adds filters.
+	 */
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
-		
-		httpSecurity.csrf().disable() // disables CSRF
+		httpSecurity.csrf().disable()
 		.authorizeRequests()
 		.antMatchers("/**")
 		.authenticated()
 		.and()
-		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // sessions wont be used to store user state.
+		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and()
-		.addFilterBefore(jwtReqFilter, UsernamePasswordAuthenticationFilter.class) // user the jwtReqFilter.
-		.addFilterBefore(jwtExcFilter, JwtRequestFilter.class); // add exception handler.
+		.addFilterBefore(jwtReqFilter, UsernamePasswordAuthenticationFilter.class)
+		.addFilterBefore(jwtExcFilter, JwtRequestFilter.class);
 	}
 	/**
 	 * Sets up bean for encryption of passwords.
@@ -63,6 +71,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder(13);
 	}
+	/**
+	 * Sets up the authenticationManager
+	 */
 	@Override
 	@Bean
 	public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -78,6 +89,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public FilterRegistrationBean<JwtRequestFilter> jwtFilterRegistration(JwtRequestFilter jwtFilter) {
 		FilterRegistrationBean<JwtRequestFilter> registration = new FilterRegistrationBean<JwtRequestFilter>(jwtFilter);
 		registration.setEnabled(false);
+		
 		return registration;
 	}
 

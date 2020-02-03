@@ -1,0 +1,1 @@
+01-02-2020 01:39:04.490 [http-nio-8080-exec-1] ERROR s.k.i.r.a.RecruitmentService.registerUser - A person with the given email already exists!

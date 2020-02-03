@@ -30,7 +30,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	private MyUserDetailsService userDetailsService;
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
-	
+	/**
+	 * internal filter to apply to requests.
+	 */
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
@@ -39,7 +41,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		String jwtToken = null;
 		if(requestHeader != null && requestHeader.startsWith(BEARER_START)) {
 				jwtToken = requestHeader.substring(BEARER_START.length());
+				
 				username = jwtTokenUtil.getTokenUsername(jwtToken);
+				
+
+				
 		}else {
 			logger.warn("Jwt Token does not begin with Bearer String");
 		}
@@ -53,9 +59,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 						, null, userDetails.getAuthorities());
 				userPassAuthToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 				SecurityContextHolder.getContext().setAuthentication(userPassAuthToken);
-				
 			}
+			
 		}
+		filterChain.doFilter(request, response);
 		
 	}
 

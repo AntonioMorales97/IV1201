@@ -2,7 +2,10 @@ package se.kth.iv1201.recruitmentbackend.presentation.error;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Holds all the Violations to be returned to the client.
+ *
+ */
 public class ViolationResponse {
 	private String logRef;
 	private String message;
