@@ -83,7 +83,7 @@ public class AuthenticationControllerTest {
 		
 	}
 	@Before
-	private void testSetup() throws Exception{
+	public void testSetup() throws Exception{
 		Role r1 = new Role("recruit");
 		Role r2 = new Role("applicant");
 		roleRepo.save(r1);
@@ -93,7 +93,7 @@ public class AuthenticationControllerTest {
 				.contentType(MediaType.APPLICATION_JSON).content(body.toString()));
 	}
 	@After
-	private void testDestructor() {
+	public void testDestructor() {
 		roleRepo.deleteAll();
 		personRepo.deleteById(personRepo.findByUsername("heja").getId());
 	}
