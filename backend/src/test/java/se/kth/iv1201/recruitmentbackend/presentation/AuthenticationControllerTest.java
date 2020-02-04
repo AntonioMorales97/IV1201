@@ -50,7 +50,10 @@ public class AuthenticationControllerTest {
 	}
 	@Test
 	public void registerTestSuccess()throws Exception{
-		testSetup();
+		//testSetup();
+		String body = setupBody("testyy","testaryy","hello@gmail.com","9443578491","hello","då");
+		this.mvc.perform(post("/register")
+				.contentType(MediaType.APPLICATION_JSON).content(body.toString()));
 		String user = setupUser("hello", "då");
 		
 		MvcResult res = this.mvc.perform(post("/authenticate").contentType(MediaType.APPLICATION_JSON)
@@ -60,6 +63,7 @@ public class AuthenticationControllerTest {
 		LoginResponse response = objectMapper.readValue(result, LoginResponse.class);
 		String token = response.getJwtToken();
 		Jws<Claims> jws = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
+		System.out.println(jws.getBody().getSubject());
 		assertEquals("hello", jws.getBody().getSubject());
 	}
 	
@@ -83,8 +87,6 @@ public class AuthenticationControllerTest {
 	}
 	private void testSetup() throws Exception{
 		
-		String body = setupBody("testyy","testaryy","hello@gmail.com","9443578491","hello","då");
-		this.mvc.perform(post("/register")
-				.contentType(MediaType.APPLICATION_JSON).content(body.toString()));
+		
 	}
 }
