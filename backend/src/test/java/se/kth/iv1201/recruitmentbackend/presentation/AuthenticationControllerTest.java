@@ -60,7 +60,7 @@ public class AuthenticationControllerTest {
 		LoginResponse response = objectMapper.readValue(result, LoginResponse.class);
 		String token = response.getJwtToken();
 		Jws<Claims> jws = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
-		assertEquals("heja", jws.getBody().getSubject());
+		assertEquals("hello", jws.getBody().getSubject());
 	}
 	
 	
