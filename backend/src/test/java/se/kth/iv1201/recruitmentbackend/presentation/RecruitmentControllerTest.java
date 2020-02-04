@@ -38,10 +38,11 @@ public class RecruitmentControllerTest {
 	}
 	@Test
 	public void regiterTestWorking()throws Exception{
-		String body = setupBody("test","testar","test@gmail.com","9403128491","hej","då");
+		String body = setupBody("test","testar","testis@gmail.com","9403128991","Testis","då");
 			 this.mvc.perform(post("/register").contentType(MediaType.APPLICATION_JSON)
 	                .content(body)).andDo(print())
-	                .andExpect(status().isCreated());		
+			 		.andExpect(status().isCreated());
+	                		
 	}
 	@Test 
 	public void registerAlredyUsedUsername() throws Exception{

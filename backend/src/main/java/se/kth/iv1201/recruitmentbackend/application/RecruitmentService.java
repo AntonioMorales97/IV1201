@@ -33,7 +33,7 @@ public class RecruitmentService {
 	 * @param personDTO The data that represents the user to add to the database.
 	 * @return the registered person. // COULD BE VOID ASWELL.
 	 */
-	public Person registerUser(PersonDTO personDTO) {
+	public void registerUser(PersonDTO personDTO) {
 		
 		if(usernameExists(personDTO.getUsername())) {
 			throw new IllegalTransactionException("A person with the given username already exists!",1);
@@ -50,7 +50,7 @@ public class RecruitmentService {
 				personDTO.getUsername(), passwordEncoder.encode(personDTO.getPassword()),roleRepo.findByName("applicant"));
 		this.personRepository.save(newPerson);
 		
-		return newPerson;
+		return;
 	}
 	
 	private boolean ssnExists(String ssn) {
