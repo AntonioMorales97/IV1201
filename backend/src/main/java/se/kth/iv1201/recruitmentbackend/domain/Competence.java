@@ -18,5 +18,9 @@ public class Competence {
     @NotNull(message = "{competence.name.missing}")
     @NotBlank(message = "{competence.name.blank}")
     private String name;
-
+    
+    public Competence() {}
+    public Competence(String name) {
+    	this.name= name;
+    }
 }

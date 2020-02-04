@@ -34,6 +34,14 @@ public class JwtTokenUtil  {
 		
 	}
 	/**
+	 * Extracts Roles from token.
+	 * @param token The jwt
+	 * @return role of the token.
+	 */
+	public String getTokenRole(String token) {
+		return exctractAllTokenClaims(token).get("roles").toString();
+	}
+	/**
 	 * Extracts expiration date from token.
 	 * @param token The JWT.
 	 * @return Date expiration date.
@@ -59,6 +67,7 @@ public class JwtTokenUtil  {
 	 */
 	public String createToken(UserDetails userDetails) {
 		Map<String, Object> claims = new HashMap<>();
+		claims.put("roles", userDetails.getAuthorities().toString());
 		return generateToken(claims, userDetails.getUsername());
 	}
 	/**
@@ -72,15 +81,15 @@ public class JwtTokenUtil  {
 		return (username.equals(userDetails.getUsername())&& !isTokenExpired(token));
 	}
 
+	
+	private String generateToken(Map<String, Object> claims, String username) {
+		return Jwts.builder().setClaims(claims).setSubject(username)
+				.setIssuedAt(new Date(System.currentTimeMillis()))
+				.setExpiration(new Date(System.currentTimeMillis()+JWT_EXPIRATION_TIME))
+				.signWith(SignatureAlgorithm.HS512, secret).compact();
+	}
 	private boolean isTokenExpired(String token) {
 		return getTokenExpirationDate(token).before(new Date());
-	}
-	private String generateToken(Map<String, Object> claims, String username) {
-		
-		return Jwts.builder().setClaims(claims).setSubject(username)
-					.setIssuedAt(new Date(System.currentTimeMillis()))
-					.setExpiration(new Date(System.currentTimeMillis()+JWT_EXPIRATION_TIME))
-					.signWith(SignatureAlgorithm.HS512, secret).compact();
 	}
 	private Claims exctractAllTokenClaims(String token) {
 		return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();

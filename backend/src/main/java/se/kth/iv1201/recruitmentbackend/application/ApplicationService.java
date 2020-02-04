@@ -22,6 +22,7 @@ import se.kth.iv1201.recruitmentbackend.repository.PersonRepository;
 public class ApplicationService {
 	@Autowired
 	private PersonRepository personRepository;
+	
 	/**
 	 * Gets a specific Persons from database.
 	 * @param id of person.
@@ -32,9 +33,8 @@ public class ApplicationService {
 		if(person.isEmpty()) {
 			throw new PersonNotFoundException("Person could not be found by id "+id, 4);
 		}
+		System.out.println(person.get());
 		ApplicationResponse application =createApplicationResponse(person.get()) ;
-		//new ApplicationResponse(foundPerson.getId(),foundPerson.getFirstName(), foundPerson.getLastName(),foundPerson.getSsn(),foundPerson.getEmail());
-				//foundPerson.getExperiance, foundPerson.getAvailablity);
 		return application;
 	}
 	/**
@@ -49,7 +49,8 @@ public class ApplicationService {
 		return applications;
 	}
 	private ApplicationResponse createApplicationResponse(Person person) {
-		ApplicationResponse application = new ApplicationResponse(person.getId(),person.getFirstName(), person.getLastName(),person.getSsn(),person.getEmail());
+		
+		ApplicationResponse application = new ApplicationResponse(person.getId(),person.getFirstName(), person.getLastName(),person.getSsn(),person.getEmail(), person.getCompetenceProfile(), person.getAvailability());
 		return application;
 	}
 

@@ -7,7 +7,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
-
 @Entity
 public class Role {
     @Id
@@ -17,6 +16,15 @@ public class Role {
 
     @NotNull(message = "{role.name.missing}")
     @NotBlank(message = "{role.name.blank}")
+    @Column(unique=true)
     private String name;
-
+    
+    
+    public Role() {
+    	
+    }
+    public Role(String name) {
+		this.name= name;
+	}
 }
+	

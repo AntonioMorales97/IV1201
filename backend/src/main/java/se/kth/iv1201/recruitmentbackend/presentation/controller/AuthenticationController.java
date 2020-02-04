@@ -45,7 +45,6 @@ public class AuthenticationController {
 	 */
 	@PostMapping("/authenticate")
 	public ResponseEntity<?> authenticate (@Valid @RequestBody LoginForm loginForm) throws Exception{
-		System.out.println("test");
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginForm.getUsername(), loginForm.getPassword()));
 		}catch(DisabledException ex) {
@@ -55,7 +54,6 @@ public class AuthenticationController {
 		}
 		UserDetails userDetails = userDetailsService.loadUserByUsername(loginForm.getUsername());
 		String token = jwtUtil.createToken(userDetails);
-		return ResponseEntity.ok(new LoginResponse(token));
-		
+		return ResponseEntity.ok(new LoginResponse(token, jwtUtil.getTokenRole(token)));
 	}
 }

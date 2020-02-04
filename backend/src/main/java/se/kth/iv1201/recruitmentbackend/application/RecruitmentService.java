@@ -10,6 +10,7 @@ import se.kth.iv1201.recruitmentbackend.application.exception.IllegalTransaction
 import se.kth.iv1201.recruitmentbackend.domain.Person;
 import se.kth.iv1201.recruitmentbackend.presentation.dto.PersonDTO;
 import se.kth.iv1201.recruitmentbackend.repository.PersonRepository;
+import se.kth.iv1201.recruitmentbackend.repository.RoleRepository;
 
 
 /**
@@ -24,6 +25,8 @@ public class RecruitmentService {
 	private PersonRepository personRepository;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private RoleRepository roleRepo;
 	
 	/**
 	 * Adds a specific Person to the database.
@@ -44,7 +47,7 @@ public class RecruitmentService {
 			throw new IllegalTransactionException("A person with the given ssn already exists!" ,3);
 		}
 		Person newPerson= new Person(personDTO.getFirstName(), personDTO.getLastName(), personDTO.getEmail(), personDTO.getSsn(), 
-				personDTO.getUsername(), passwordEncoder.encode(personDTO.getPassword()));
+				personDTO.getUsername(), passwordEncoder.encode(personDTO.getPassword()),roleRepo.findByName("applicant"));
 		this.personRepository.save(newPerson);
 		
 		return newPerson;
