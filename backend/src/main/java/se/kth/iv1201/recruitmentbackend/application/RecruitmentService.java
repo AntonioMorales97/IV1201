@@ -48,7 +48,7 @@ public class RecruitmentService {
 		}
 		Person newPerson= new Person(personDTO.getFirstName(), personDTO.getLastName(), personDTO.getEmail(), personDTO.getSsn(), 
 				personDTO.getUsername(), passwordEncoder.encode(personDTO.getPassword()),roleRepo.findByName("applicant"));
-		this.personRepository.save(newPerson);
+		this.personRepository.save(newPerson);  
 		
 		return;
 	}

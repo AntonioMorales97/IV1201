@@ -32,7 +32,7 @@ public class DatabaseInit {
 	CommandLineRunner initializeDatabase(PersonRepository personRepo, CompetenceRepository competenceRepo, RoleRepository roleRepo,
 			AvailabilityRepository availabilityRepo, CompetenceProfileRepository compPRepo) {
 		return null;
-		
+	
 		//FOP TESTING PURPOUSES LOCALLY
 		/*return args->{
 		Role r1 = new Role("recruit");

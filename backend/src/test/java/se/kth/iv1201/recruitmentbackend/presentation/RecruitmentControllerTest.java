@@ -3,7 +3,6 @@ package se.kth.iv1201.recruitmentbackend.presentation;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -18,9 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import org.springframework.transaction.annotation.Transactional;
-
-
-
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
@@ -36,14 +33,17 @@ public class RecruitmentControllerTest {
 	public void registerTestBadRequest()throws Exception{
 		this.mvc.perform(post("/register")).andDo(print()).andExpect(status().isBadRequest());
 	}
+	@Rollback(true)
 	@Test
-	public void regiterTestWorking()throws Exception{
+	public void registerTestWorking()throws Exception{
+	
 		String body = setupBody("test","testar","testis@gmail.com","9403128991","Testis","då");
 			 this.mvc.perform(post("/register").contentType(MediaType.APPLICATION_JSON)
 	                .content(body)).andDo(print())
 			 		.andExpect(status().isCreated());
 	                		
 	}
+	
 	@Test 
 	public void registerAlredyUsedUsername() throws Exception{
 		testSetup();
