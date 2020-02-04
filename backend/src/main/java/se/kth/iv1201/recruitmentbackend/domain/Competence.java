@@ -19,4 +19,8 @@ public class Competence {
     @NotBlank(message = "{competence.name.blank}")
     private String name;
 
+    public Competence(){
+
+    };
+
 }

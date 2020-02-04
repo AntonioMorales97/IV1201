@@ -25,4 +25,10 @@ public class CompetenceProfile {
     @NotNull
     @Column(name = "years_of_experience")
     private int yearsOfExperience;
+
+    public CompetenceProfile(){
+
+    };
 }
+
+

@@ -19,4 +19,8 @@ public class Role {
     @NotBlank(message = "{role.name.blank}")
     private String name;
 
+    public Role(){
+
+    };
+
 }

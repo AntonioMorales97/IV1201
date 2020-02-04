@@ -25,4 +25,8 @@ public class Availability {
     @Temporal(TemporalType.DATE)
     @Column(name = "to_date")
     private Calendar toDate;
+
+    public Availability(){
+
+    };
 }
