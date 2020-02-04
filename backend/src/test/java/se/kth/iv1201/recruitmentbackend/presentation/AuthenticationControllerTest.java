@@ -51,7 +51,7 @@ public class AuthenticationControllerTest {
 	@Test
 	public void registerTestSuccess()throws Exception{
 		testSetup();
-		String user = setupUser("heja", "då");
+		String user = setupUser("hello", "då");
 		
 		MvcResult res = this.mvc.perform(post("/authenticate").contentType(MediaType.APPLICATION_JSON)
                 .content(user)).andDo(print())
@@ -83,7 +83,7 @@ public class AuthenticationControllerTest {
 	}
 	private void testSetup() throws Exception{
 		
-		String body = setupBody("testyy","testaryy","testay@gmail.com","9443528491","heja","då");
+		String body = setupBody("testyy","testaryy","hello@gmail.com","9443578491","hello","då");
 		this.mvc.perform(post("/register")
 				.contentType(MediaType.APPLICATION_JSON).content(body.toString()));
 	}
