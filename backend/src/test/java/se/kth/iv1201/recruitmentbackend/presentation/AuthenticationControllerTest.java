@@ -35,7 +35,7 @@ import se.kth.iv1201.recruitmentbackend.repository.RoleRepository;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-@Transactional
+
 public class AuthenticationControllerTest {
 	@Autowired
 	private MockMvc mvc;
@@ -58,11 +58,10 @@ public class AuthenticationControllerTest {
 	}
 	
 
-	@Rollback(true)
+	
 	@Test
 	public void registerTestSuccess()throws Exception{ 
 		String user = setupUser("heja", "då");
-		
 		MvcResult res = this.mvc.perform(post("/authenticate").contentType(MediaType.APPLICATION_JSON)
                 .content(user)).andDo(print())
                 .andExpect(status().isOk()).andReturn();
@@ -86,16 +85,18 @@ public class AuthenticationControllerTest {
 	public void testSetup() throws Exception{
 		Role r1 = new Role("recruit");
 		Role r2 = new Role("applicant");
-		roleRepo.save(r1);
+		Role added = roleRepo.save(r1);
 		roleRepo.save(r2);
+		System.out.println(added);
 		String body = setupBody("testyy","testaryy","testay@gmail.com","9443528491","heja","då");
 		this.mvc.perform(post("/register")
 				.contentType(MediaType.APPLICATION_JSON).content(body.toString()));
 	}
 	@After
 	public void testDestructor() {
-		roleRepo.deleteAll();
 		personRepo.deleteById(personRepo.findByUsername("heja").getId());
+		roleRepo.deleteAll();
+		
 	}
 	private String setupBody(String firstName, String lastName, String email, String ssn, String username, String password) throws JSONException {
 		 JSONObject body = new JSONObject();
