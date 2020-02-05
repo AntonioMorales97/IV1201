@@ -15,7 +15,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import io.jsonwebtoken.ExpiredJwtException;
 import se.kth.iv1201.recruitmentbackend.jwt.JwtTokenUtil;
 import se.kth.iv1201.recruitmentbackend.security.MyUserDetailsService;
 /**
@@ -30,7 +29,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	private MyUserDetailsService userDetailsService;
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
-	
+	/**
+	 * internal filter to apply to requests.
+	 */
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
@@ -39,12 +40,16 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		String jwtToken = null;
 		if(requestHeader != null && requestHeader.startsWith(BEARER_START)) {
 				jwtToken = requestHeader.substring(BEARER_START.length());
+				
 				username = jwtTokenUtil.getTokenUsername(jwtToken);
+				
+
+				
 		}else {
 			logger.warn("Jwt Token does not begin with Bearer String");
 		}
 
-		// Once we get the token validate it.
+		// Once we get the token validate it against the username in token.
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
 			UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
@@ -53,9 +58,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 						, null, userDetails.getAuthorities());
 				userPassAuthToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 				SecurityContextHolder.getContext().setAuthentication(userPassAuthToken);
-				
 			}
+			
 		}
+		filterChain.doFilter(request, response);
 		
 	}
 

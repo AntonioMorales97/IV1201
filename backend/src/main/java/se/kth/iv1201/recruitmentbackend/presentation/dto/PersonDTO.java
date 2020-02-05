@@ -6,7 +6,10 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.NotNull;
 
 import lombok.Data;
-
+/**
+ * A PersonDTO that holds all the information required to create a person.
+ *
+ */
 @Data
 public class PersonDTO {
 	@Pattern(regexp = "^[\\p{L}\\p{M}*]*$", message = "Only letters are allowed")

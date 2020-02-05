@@ -1,5 +1,9 @@
 package se.kth.iv1201.recruitmentbackend.presentation.error;
 
+/**
+ * Represents a constraint violation with the field that got violated
+ * and the message. Used to return to the client.
+ */
 public class Violation {
 	private final String fieldName;
 	private final String message;

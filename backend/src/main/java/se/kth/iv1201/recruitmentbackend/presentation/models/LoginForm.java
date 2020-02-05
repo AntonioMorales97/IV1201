@@ -5,11 +5,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import lombok.Data;
-
+/**
+ * Represents a login attempt.
+ *
+ */
 @Data
 public class LoginForm {
 
-	
 	@NotNull(message = "Username missing")
 	@NotBlank(message = "Username cannot be blank")
     private final String username;

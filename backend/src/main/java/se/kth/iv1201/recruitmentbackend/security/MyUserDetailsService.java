@@ -6,9 +6,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import se.kth.iv1201.recruitmentbackend.domain.Person;
 import se.kth.iv1201.recruitmentbackend.repository.PersonRepository;
+
+/**
+ * Implements UserDetailsService. Used to authenticate Persons.
+ *
+ */
 @Service
 @Transactional
 public class MyUserDetailsService implements UserDetailsService {
@@ -18,9 +22,10 @@ public class MyUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Person person = this.personRepo.findByUsername(username);
+		
 		if(person == null)
 			throw new UsernameNotFoundException("person with username: " + username + ", was not found!");
-
+			
 		return new MyUserDetails(person);
 	}
 }

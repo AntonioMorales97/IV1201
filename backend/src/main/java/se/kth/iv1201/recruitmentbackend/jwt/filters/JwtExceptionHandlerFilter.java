@@ -17,7 +17,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
-
+/**
+ * A filter to handle exceptions thrown in the <code>JwtExceptionHandlerFilter</code>.
+ */
 @Component
 public class JwtExceptionHandlerFilter extends OncePerRequestFilter{
 
