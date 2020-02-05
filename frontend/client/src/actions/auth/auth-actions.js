@@ -16,7 +16,6 @@ export const login = ({ username, password }) => dispatch => {
     return;
   }
 
-  //const res = { user: { email, password, role: 'admin' } };
   const body = JSON.stringify({ username, password });
 
   axios
@@ -24,7 +23,7 @@ export const login = ({ username, password }) => dispatch => {
     .then(res => {
       dispatch({
         type: LOGIN_SUCCESS,
-        payload: { user: { role: 'admin' } } // Must be in payload of response from server
+        payload: { user: { role: res.data.role } }
       });
     })
     .catch(err => {
@@ -37,28 +36,6 @@ export const login = ({ username, password }) => dispatch => {
       );
       dispatch({ type: LOGIN_FAIL });
     });
-
-  /*
-  console.log(body);
-  if (email === 'pelle@kth.se' && password === '123123') {
-    dispatch(
-      returnSuccess(
-        {
-          msg: 'Login success'
-        },
-        200,
-        LOGIN_SUCCESS
-      )
-    );
-    dispatch({
-      type: LOGIN_SUCCESS,
-      payload: res
-    });
-  } else {
-    dispatch(returnError({ msg: 'Wrong credentials' }, 400, LOGIN_FAIL));
-    dispatch({ type: LOGIN_FAIL });
-  }
-  */
 };
 
 export const logout = () => dispatch => {
