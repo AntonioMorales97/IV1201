@@ -1,19 +1,20 @@
 package se.kth.iv1201.recruitmentbackend.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
-
 @Entity
 public class Person {
 	@Id
@@ -53,7 +54,20 @@ public class Person {
 	@NotBlank(message = "{person.password.blank}")
     private String password;
 
-	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "person")
+	@EqualsAndHashCode.Exclude
+	@JsonBackReference
+    private Set<Availability> availability = new HashSet<>();
+
+	@ManyToOne
+    @JoinColumn(name = "role_id", referencedColumnName = "role_id")
+    private Role role;
+
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "person")
+	@EqualsAndHashCode.Exclude
+	@JsonBackReference
+    private Set<CompetenceProfile> competenceProfile = new HashSet<>();
+
     /**
      * Creates a new instance with the specified parameters.
      *
@@ -64,16 +78,19 @@ public class Person {
      * @param username The user's username
      * @param password The user's password
      */
-	public Person() {
+    public Person() {
 		
 	};
-    public Person(String name, String surname, String email, String ssn, String username, String password) {
+    public Person(String name, String surname, String email, String ssn, String username, String password, Role role) {
         this.firstName = name;
         this.lastName = surname;
         this.email = email;
         this.ssn = ssn;
         this.username = username;
         this.password = password;
+        this.role = role;
       
     }
+    
+   
 }

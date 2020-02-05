@@ -1,19 +1,19 @@
 package se.kth.iv1201.recruitmentbackend.presentation.util;
 
-import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.server.RepresentationModelAssembler;
+import se.kth.iv1201.recruitmentbackend.presentation.controller.ApplicationController;
+import se.kth.iv1201.recruitmentbackend.presentation.models.ApplicationResponse;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import org.springframework.stereotype.Component;
-
-import se.kth.iv1201.recruitmentbackend.domain.Person;
-
+/**
+ * Uses Hateos to add hypermedia links to different response entities of the rest api.
+ *
+ */
 @Component
-public class ResourceAssembler implements RepresentationModelAssembler<Person, EntityModel<Person>>{
+public class ResourceAssembler {
 
-	@Override
-	public EntityModel<Person> toModel(Person entity) {
-		
-		return null; // lägg till när vi har applications.
+	public void addLinksToApplicationResponse(ApplicationResponse applicationResponse){
+		applicationResponse.add(linkTo(methodOn(ApplicationController.class).getApplication(applicationResponse.getId())).withSelfRel());
 	}
-	
-
 }

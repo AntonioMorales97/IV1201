@@ -5,31 +5,37 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import se.kth.iv1201.recruitmentbackend.application.ApplicationService;
 import se.kth.iv1201.recruitmentbackend.application.RecruitmentService;
-import se.kth.iv1201.recruitmentbackend.domain.Person;
 import se.kth.iv1201.recruitmentbackend.presentation.dto.PersonDTO;
-
+/**
+ * Controller to handle the registration for new applicants.
+ * @author Gurk1
+ *
+ */
 @RestController
-@CrossOrigin
+@Validated
 public class RecruitmentController {
 	@Autowired
 	RecruitmentService recruitmentSerivce;
-	
-
-	
+	@Autowired
+	ApplicationService applicantService;
+	/**
+	 * Handles a new request for a registration.
+	 * @param personDTO The information of the newly registrerd person.
+	 * @param request request information of the httpservlet request.
+	 * @return 200 OK if successful.
+	 */
 	@PostMapping("/register")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Person registerPerson(@RequestBody @Valid PersonDTO personDTO, HttpServletRequest request) {
-		Person person = this.recruitmentSerivce.registerUser(personDTO); 
-		return person;
+	public  void registerPerson(@RequestBody @Valid PersonDTO personDTO, HttpServletRequest request) {
+		this.recruitmentSerivce.registerUser(personDTO); 
 	}
 	
 }
