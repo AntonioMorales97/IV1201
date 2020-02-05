@@ -39,7 +39,9 @@ public class JwtTokenUtil  {
 	 * @return role of the token.
 	 */
 	public String getTokenRole(String token) {
-		return exctractAllTokenClaims(token).get("roles").toString();
+		String sub =exctractAllTokenClaims(token).get("roles").toString().substring(6);
+		return sub.substring(0, sub.length()-1);
+		
 	}
 	/**
 	 * Extracts expiration date from token.

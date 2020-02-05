@@ -43,7 +43,7 @@ public class DatabaseInit {
 		Competence c2 = new Competence("Korvgrillning");
 		competenceRepo.save(c1);
 		competenceRepo.save(c2);
-		Person p2 = personRepo.findByUsername("flunsasa");
+		Person p2 = personRepo.findByUsername("fa");
 		
 		Optional<Competence> c3 = competenceRepo.findById((long) 2);
 		System.out.println(c3.get());
