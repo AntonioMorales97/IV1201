@@ -7,7 +7,7 @@
   "password": "Password",
   "missing_account?": "Don't you have an account?",
   "already_have_account?": "Already have an account?",
-  "admin": "Admin",
+  "recruit": "Recruit",
   "apply": "Apply",
   "first_name": "First name",
   "last_name": "Last name",
@@ -32,5 +32,6 @@
   "from": "From",
   "to": "To",
   "back_to_applications": "Back to applications",
-  "view_application": "View application"
+  "view_application": "View application",
+  "logout": "Logout"
 }

@@ -2,13 +2,13 @@ import axios from 'axios';
 import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  LOGOUT_FAIL,
-  LOGOUT_SUCCESS,
+  LOGOUT,
   REGISTER_SUCCESS,
   REGISTER_FAIL
 } from './auth-types';
 import { returnError } from '../error/error-actions';
 import { returnSuccess } from '../success/success-actions';
+import { setAuthToken, deleteAuthToken } from '../../utils/config-auth-token';
 
 export const login = ({ username, password }) => dispatch => {
   if (!username || !password) {
@@ -21,9 +21,10 @@ export const login = ({ username, password }) => dispatch => {
   axios
     .post('/authenticate', body)
     .then(res => {
+      setAuthToken(res.data.token);
       dispatch({
         type: LOGIN_SUCCESS,
-        payload: { user: { role: res.data.role } }
+        payload: { user: { role: res.data.role }, token: res.data.jwtToken }
       });
     })
     .catch(err => {
@@ -39,14 +40,8 @@ export const login = ({ username, password }) => dispatch => {
 };
 
 export const logout = () => dispatch => {
-  /**
-   * Axios below...
-   */
-  dispatch({ type: LOGOUT_SUCCESS });
-  /**
-   * or fail
-   */
-  console.log('Logout fail is not used' + LOGOUT_FAIL);
+  deleteAuthToken();
+  dispatch({ type: LOGOUT });
 };
 
 export const register = ({

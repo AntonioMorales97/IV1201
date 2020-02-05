@@ -7,7 +7,7 @@
   "password": "Lösenord",
   "missing_account?": "Har du inget konto?",
   "already_have_account?": "Har du redan ett konto?",
-  "admin": "Admin",
+  "recruit": "Rekrytera",
   "apply": "Ansök",
   "first_name": "Förnamn",
   "last_name": "Efternamn",
@@ -32,5 +32,6 @@
   "from": "Från",
   "to": "Till",
   "back_to_applications": "Tillbaka till ansökan",
-  "view_application": "Se ansökan"
+  "view_application": "Se ansökan",
+  "logout": "Logga ut"
 }

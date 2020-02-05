@@ -23,7 +23,8 @@ const HeaderView = props => {
     currentLanguage,
     languageCodeToName,
     dropDownItems,
-    auth
+    auth,
+    logout
   } = props;
 
   const guestLinks = (
@@ -46,7 +47,7 @@ const HeaderView = props => {
     </Fragment>
   );
 
-  const adminLinks = (
+  const recruitLinks = (
     <Fragment>
       <NavItem>
         <NavLink tag={Link} to='/' onClick={toggle}>
@@ -54,8 +55,13 @@ const HeaderView = props => {
         </NavLink>
       </NavItem>
       <NavItem>
-        <NavLink tag={Link} to='/admin' onClick={toggle}>
-          {t('admin')}
+        <NavLink tag={Link} to='/recruit' onClick={toggle}>
+          {t('recruit')}
+        </NavLink>
+      </NavItem>
+      <NavItem>
+        <NavLink tag={Link} to='/login' onClick={logout}>
+          {t('logout')}
         </NavLink>
       </NavItem>
     </Fragment>
@@ -73,6 +79,11 @@ const HeaderView = props => {
           {t('apply')}
         </NavLink>
       </NavItem>
+      <NavItem>
+        <NavLink tag={Link} to='/login' onClick={logout}>
+          {t('logout')}
+        </NavLink>
+      </NavItem>
     </Fragment>
   );
 
@@ -87,8 +98,8 @@ const HeaderView = props => {
 
   const links = () => {
     if (auth.isAuthenticated) {
-      if (auth.user.role === 'admin') {
-        return adminLinks;
+      if (auth.user.role === 'RECRUIT') {
+        return recruitLinks;
       } else {
         return applicantLinks;
       }
