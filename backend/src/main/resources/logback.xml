@@ -40,17 +40,35 @@
   </rollingPolicy>
 </appender>
 
+<appender name="MIGRATION-SAVE-TO-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+  <file>./logs/migration-error.log</file>
+  <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+    <Pattern>
+      %d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %msg%n
+    </Pattern>
+  </encoder>
+  <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+    <fileNamePattern>
+     ./logs/migration-archived/log_%d{dd-MM-yyyy}.log
+    </fileNamePattern>
+    <maxHistory>10</maxHistory>
+    <totalSizeCap>100MB</totalSizeCap>
+  </rollingPolicy>
+</appender>
+
 
 
  <root level="info" additivity="false">
     <appender-ref ref="STDOUT"/>
   </root>
-<logger name="se.kth.iv1201.recruitmentbackend" additivity="false" level="WARN">
+<logger name="se.kth.iv1201.recruitmentbackend.presentation.error.ExceptionHandlers" additivity="false" level="ERROR">
   <appender-ref ref="CUSTOM-SAVE-TO-FILE"/>
 </logger>
-<logger name="org.springframework.web" additivity="false" level="DEBUG">
+<logger name="org.springframework.web" additivity="false" level="FATAL">
   <appender-ref ref="SPRING-SAVE-TO-FILE"/>
 </logger>
-
+<logger name="se.kth.iv1201.recruitmentbackend.migration" additivity="false" level="ERROR">
+  <appender-ref ref="MIGRATION-SAVE-TO-FILE"/>
+</logger>
 
 </configuration>

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import ch.qos.logback.classic.Logger;
 import se.kth.iv1201.recruitmentbackend.domain.Availability;
 import se.kth.iv1201.recruitmentbackend.domain.Competence;
 import se.kth.iv1201.recruitmentbackend.domain.CompetenceProfile;

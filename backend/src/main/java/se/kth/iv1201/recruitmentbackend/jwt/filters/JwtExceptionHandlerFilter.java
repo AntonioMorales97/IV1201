@@ -7,6 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
@@ -17,20 +19,24 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureException;
+import se.kth.iv1201.recruitmentbackend.presentation.error.ExceptionHandlers;
 /**
  * A filter to handle exceptions thrown in the <code>JwtExceptionHandlerFilter</code>.
  */
 @Component
 public class JwtExceptionHandlerFilter extends OncePerRequestFilter{
-
+	private static final Logger logger = LoggerFactory.getLogger(ExceptionHandlers.class);
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		try {
 			filterChain.doFilter(request, response);
-		} catch (MalformedJwtException | ExpiredJwtException exc) {
+		} catch (MalformedJwtException | ExpiredJwtException | SignatureException exc) {
+			logger.error(exc.getMessage());
 			sendErrorResponse(HttpStatus.BAD_REQUEST, exc.getMessage(), response);
 		} catch (UsernameNotFoundException exc) {
+			logger.error(exc.getMessage());
 			sendErrorResponse(HttpStatus.NOT_FOUND, exc.getMessage(), response);
 		}
 		

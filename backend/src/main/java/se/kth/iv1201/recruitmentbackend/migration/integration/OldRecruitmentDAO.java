@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import se.kth.iv1201.recruitmentbackend.migration.dto.AvailabilityDTO;
 import se.kth.iv1201.recruitmentbackend.migration.dto.CompetenceDTO;
 import se.kth.iv1201.recruitmentbackend.migration.dto.CompetenceProfileDTO;
@@ -18,6 +21,7 @@ import se.kth.iv1201.recruitmentbackend.migration.dto.RoleDTO;
 public class OldRecruitmentDAO {
 	private OldDbConnection oldDbConn;
 	private Connection conn;
+	private static final Logger logger = LoggerFactory.getLogger(OldDbConnection.class);
 	
 	public OldRecruitmentDAO() {
 		try {
@@ -25,7 +29,7 @@ public class OldRecruitmentDAO {
 			this.conn = this.oldDbConn.getConnection();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			//Log?
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -34,7 +38,7 @@ public class OldRecruitmentDAO {
 			this.oldDbConn.disconnect();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			//Log?
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -57,7 +61,7 @@ public class OldRecruitmentDAO {
 				personDTOs.add(new PersonDTO(id, name, surname, ssn, email, password, username, role));
 			}
 		} catch (SQLException e) {
-			//Log?
+			logger.error(e.getMessage());
 			e.printStackTrace();
 		}
 		return personDTOs;
@@ -77,7 +81,7 @@ public class OldRecruitmentDAO {
 				availabilitiesDTOs.add(new AvailabilityDTO(from, to));
 			}
 		} catch (SQLException e) {
-			//Log?
+			logger.error(e.getMessage());
 			e.printStackTrace();
 		}
 		return availabilitiesDTOs;
@@ -95,7 +99,7 @@ public class OldRecruitmentDAO {
 				competenceProfileDTOs.add(new CompetenceProfileDTO(rs.getString("competence"), rs.getDouble("years_of_experience")));
 			}
 		} catch (SQLException e) {
-			//Log?
+			logger.error(e.getMessage());
 			e.printStackTrace();
 		}
 		return competenceProfileDTOs;
@@ -113,7 +117,7 @@ public class OldRecruitmentDAO {
 				competenceDTOs.add(new CompetenceDTO(name));
 			}		
 		} catch (SQLException e) {
-			//Log?
+			logger.error(e.getMessage());
 			e.printStackTrace();
 		}
 		return competenceDTOs;
@@ -131,7 +135,7 @@ public class OldRecruitmentDAO {
 				roleDTOs.add(new RoleDTO(name));			
 			}
 		} catch (SQLException e) {
-			//Log?
+			logger.error(e.getMessage());
 			e.printStackTrace();
 		}
 		return roleDTOs;
