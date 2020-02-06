@@ -7,7 +7,7 @@ const redirectToLogin = location => (
   <Redirect to={{ pathname: '/login', state: { from: location } }} />
 );
 
-const redirectToAdmin = () => <Redirect to={{ pathname: '/admin' }} />;
+const redirectToRecruit = () => <Redirect to={{ pathname: '/recruit' }} />;
 
 const ApplicantRoute = ({
   component: Component,
@@ -20,10 +20,10 @@ const ApplicantRoute = ({
       if (!isAuthenticated && !isLoading) {
         return redirectToLogin(props.location);
       } else {
-        if (user.role === 'applicant') {
+        if (user.role === 'APPLICANT') {
           return <Component {...props} />;
         } else {
-          return redirectToAdmin();
+          return redirectToRecruit();
         }
       }
     }}

@@ -1,6 +1,6 @@
 import Login from './login';
 import Apply from './apply';
-import Admin from './admin';
+import Recruit from './recruit';
 import Register from './register';
 
-export { Login, Apply, Admin, Register };
+export { Login, Apply, Recruit, Register };
