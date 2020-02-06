@@ -32,16 +32,16 @@ public class Person {
 	@NotBlank(message = "{person.lastName.blank}")
     private String lastName;
 
-	@NotNull(message = "{person.email.missing}")
-	@NotBlank(message = "{person.email.blank}")
-	@Email(message ="Email should be valid")
-    @Column(unique = true)
+	//@NotNull(message = "{person.email.missing}")
+	//@NotBlank(message = "{person.email.blank}")
+	//@Email(message ="Email should be valid")
+	//@Column(unique = true)
     private String email;
 
-	@NotBlank(message = "{person.personalNumber.blank}")
-	@NotNull(message = "{person.personalNumber.missing}")
-	@Pattern(regexp="[\\d]{10}", message = "Personal number must be 10 digits")
-    @Column(unique = true)
+	//@NotBlank(message = "{person.personalNumber.blank}")
+	//@NotNull(message = "{person.personalNumber.missing}")
+	//@Pattern(regexp="[\\d]{10}", message = "Personal number must be 10 digits")
+    //@Column(unique = true)
     private String ssn;
 
 	
@@ -54,7 +54,7 @@ public class Person {
 	@NotBlank(message = "{person.password.blank}")
     private String password;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "person")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "person")
 	@EqualsAndHashCode.Exclude
 	@JsonBackReference
     private Set<Availability> availability = new HashSet<>();
@@ -63,7 +63,7 @@ public class Person {
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Role role;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "person")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "person")
 	@EqualsAndHashCode.Exclude
 	@JsonBackReference
     private Set<CompetenceProfile> competenceProfile = new HashSet<>();
