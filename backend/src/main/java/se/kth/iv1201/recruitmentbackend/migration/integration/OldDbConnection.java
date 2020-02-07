@@ -10,7 +10,8 @@ import org.slf4j.Logger;
 
 
 public class OldDbConnection {
-	private final String dbUrl = System.getenv("HEROKU_POSTGRESQL_CRIMSON_JDBC_URL"); //"jdbc:postgresql://localhost/old_recruitment?user=recruitment_acc&password=123123";
+	private final String OLD_DB_KEY = System.getenv("OLD_DB");
+	private final String dbUrl = System.getenv(OLD_DB_KEY); //"jdbc:postgresql://localhost/old_recruitment?user=recruitment_acc&password=123123";
 	private static final String SQL_DRIVER = "org.postgresql.Driver";
 	private Connection conn;
 	private static final Logger logger = LoggerFactory.getLogger(OldDbConnection.class);
