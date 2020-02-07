@@ -22,8 +22,8 @@ public class OldDbConnection {
 			e.printStackTrace();
 			logger.error(e.getMessage());
 		}
-		this.conn = DriverManager.getConnection(dbUrl);
 		System.out.println(System.getenv("HEROKU_POSTGRESQL_CRIMSON_URL"));
+		this.conn = DriverManager.getConnection(dbUrl);
 		this.conn.setAutoCommit(false);
 	}
 	
