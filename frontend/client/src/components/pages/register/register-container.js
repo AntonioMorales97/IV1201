@@ -19,8 +19,8 @@ class RegisterContainer extends Component {
     username: '',
     email: '',
     password: '',
-    errorMessage: null,
-    successMessage: null,
+    errorMessageKey: null,
+    successMessageKey: null,
     tryRegister: false,
     registerSuccess: false
   };
@@ -42,21 +42,21 @@ class RegisterContainer extends Component {
     const { error, success } = this.props;
     if (error !== prevProps.error) {
       if (error.id === REGISTER_FAIL) {
-        this.setState({ errorMessage: error.msg.msg, tryRegister: false });
+        this.setState({ errorMessageKey: error.msg.msg, tryRegister: false });
       } else {
-        this.setState({ errorMessage: null });
+        this.setState({ errorMessageKey: null });
       }
     }
 
     if (success !== prevProps.success) {
       if (success.id === REGISTER_SUCCESS) {
         this.setState({
-          successMessage: success.msg.msg,
+          successMessageKey: success.msg.msg,
           tryRegister: false,
           registerSuccess: true
         });
       } else {
-        this.setState({ successMessage: null });
+        this.setState({ successMessageKey: null });
       }
     }
   }
@@ -116,8 +116,8 @@ class RegisterContainer extends Component {
         renderRedirect={this.renderRedirect}
         onSubmit={this.onSubmit}
         onChange={this.onChange}
-        errorMessage={this.state.errorMessage}
-        successMessage={this.state.successMessage}
+        errorMessageKey={this.state.errorMessageKey}
+        successMessageKey={this.state.successMessageKey}
         tryRegister={this.state.tryRegister}
       />
     );

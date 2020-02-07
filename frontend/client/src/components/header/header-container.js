@@ -3,7 +3,7 @@ import HeaderView from './header-view';
 import _ from 'lodash';
 import { withTranslation } from 'react-i18next';
 import { DropdownItem } from 'reactstrap';
-
+import { logout } from '../../actions/auth/auth-actions';
 import { connect } from 'react-redux';
 
 const languageMappings = {
@@ -20,6 +20,11 @@ class HeaderContainer extends Component {
     this.setState({
       isOpen: !this.state.isOpen
     });
+  };
+
+  logout = () => {
+    this.toggle();
+    this.props.logout();
   };
 
   languageCodeToName = languageCode => {
@@ -52,6 +57,7 @@ class HeaderContainer extends Component {
         currentLanguage={currentLanguage}
         languageCodeToName={this.languageCodeToName}
         auth={auth}
+        logout={this.logout}
       />
     );
   }
@@ -62,7 +68,6 @@ const mapStateToProps = state => ({
 });
 
 export { HeaderContainer };
-export default connect(
-  mapStateToProps,
-  null
-)(withTranslation()(HeaderContainer));
+export default connect(mapStateToProps, { logout })(
+  withTranslation()(HeaderContainer)
+);

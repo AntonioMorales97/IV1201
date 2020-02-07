@@ -20,8 +20,8 @@ const RegisterView = props => {
     onSubmit,
     onChange,
     tryRegister,
-    errorMessage,
-    successMessage,
+    errorMessageKey,
+    successMessageKey,
     renderRedirect
   } = props;
   return (
@@ -30,9 +30,11 @@ const RegisterView = props => {
       <Container>
         <Container className='form-container'>
           <div className='h3 text-center'>{t('register')}</div>
-          {errorMessage ? <Alert color='danger'>{errorMessage}</Alert> : null}
-          {successMessage ? (
-            <Alert color='success'>{successMessage}</Alert>
+          {errorMessageKey ? (
+            <Alert color='danger'>{t(errorMessageKey)}</Alert>
+          ) : null}
+          {successMessageKey ? (
+            <Alert color='success'>{t(successMessageKey)}</Alert>
           ) : null}
           <Form onSubmit={onSubmit}>
             <FormGroup className='mb-0'>

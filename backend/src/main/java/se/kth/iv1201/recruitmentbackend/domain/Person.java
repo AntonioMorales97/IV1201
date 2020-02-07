@@ -6,15 +6,15 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import java.util.ArrayList;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Data
-
 @Entity
 public class Person {
 	@Id
@@ -55,6 +55,8 @@ public class Person {
     private String password;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "person")
+	@EqualsAndHashCode.Exclude
+	@JsonBackReference
     private Set<Availability> availability = new HashSet<>();
 
 	@ManyToOne
@@ -62,6 +64,8 @@ public class Person {
     private Role role;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "person")
+	@EqualsAndHashCode.Exclude
+	@JsonBackReference
     private Set<CompetenceProfile> competenceProfile = new HashSet<>();
 
     /**
@@ -74,16 +78,19 @@ public class Person {
      * @param username The user's username
      * @param password The user's password
      */
-	public Person() {
+    public Person() {
 		
 	};
-    public Person(String name, String surname, String email, String ssn, String username, String password) {
+    public Person(String name, String surname, String email, String ssn, String username, String password, Role role) {
         this.firstName = name;
         this.lastName = surname;
         this.email = email;
         this.ssn = ssn;
         this.username = username;
         this.password = password;
+        this.role = role;
       
     }
+    
+   
 }

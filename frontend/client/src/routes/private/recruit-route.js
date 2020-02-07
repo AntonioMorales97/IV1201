@@ -9,7 +9,7 @@ const redirectToLogin = location => (
 
 const redirectToApply = () => <Redirect to={{ pathname: '/apply' }} />;
 
-const AdminRoute = ({
+const RecruitRoute = ({
   component: Component,
   auth: { isAuthenticated, isLoading, user },
   ...rest
@@ -20,7 +20,7 @@ const AdminRoute = ({
       if (!isAuthenticated && !isLoading) {
         return redirectToLogin(props.location);
       } else {
-        if (user.role === 'admin') {
+        if (user.role === 'RECRUIT') {
           return <Component {...props} />;
         } else {
           return redirectToApply();
@@ -30,7 +30,7 @@ const AdminRoute = ({
   />
 );
 
-AdminRoute.propTypes = {
+RecruitRoute.propTypes = {
   auth: PropTypes.object.isRequired
 };
 
@@ -38,4 +38,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps)(AdminRoute);
+export default connect(mapStateToProps)(RecruitRoute);

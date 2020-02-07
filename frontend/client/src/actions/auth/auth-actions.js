@@ -2,13 +2,13 @@ import axios from 'axios';
 import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  LOGOUT_FAIL,
-  LOGOUT_SUCCESS,
+  LOGOUT,
   REGISTER_SUCCESS,
   REGISTER_FAIL
 } from './auth-types';
 import { returnError } from '../error/error-actions';
 import { returnSuccess } from '../success/success-actions';
+import { setAuthToken, deleteAuthToken } from '../../utils/config-auth-token';
 
 export const login = ({ username, password }) => dispatch => {
   if (!username || !password) {
@@ -16,15 +16,15 @@ export const login = ({ username, password }) => dispatch => {
     return;
   }
 
-  //const res = { user: { email, password, role: 'admin' } };
   const body = JSON.stringify({ username, password });
 
   axios
     .post('/authenticate', body)
     .then(res => {
+      setAuthToken(res.data.token);
       dispatch({
         type: LOGIN_SUCCESS,
-        payload: { user: { role: 'admin' } } // Must be in payload of response from server
+        payload: { user: { role: res.data.role }, token: res.data.jwtToken }
       });
     })
     .catch(err => {
@@ -37,39 +37,11 @@ export const login = ({ username, password }) => dispatch => {
       );
       dispatch({ type: LOGIN_FAIL });
     });
-
-  /*
-  console.log(body);
-  if (email === 'pelle@kth.se' && password === '123123') {
-    dispatch(
-      returnSuccess(
-        {
-          msg: 'Login success'
-        },
-        200,
-        LOGIN_SUCCESS
-      )
-    );
-    dispatch({
-      type: LOGIN_SUCCESS,
-      payload: res
-    });
-  } else {
-    dispatch(returnError({ msg: 'Wrong credentials' }, 400, LOGIN_FAIL));
-    dispatch({ type: LOGIN_FAIL });
-  }
-  */
 };
 
 export const logout = () => dispatch => {
-  /**
-   * Axios below...
-   */
-  dispatch({ type: LOGOUT_SUCCESS });
-  /**
-   * or fail
-   */
-  console.log('Logout fail is not used' + LOGOUT_FAIL);
+  deleteAuthToken();
+  dispatch({ type: LOGOUT });
 };
 
 export const register = ({
@@ -81,16 +53,12 @@ export const register = ({
   password
 }) => dispatch => {
   if (!firstName || !lastName || !ssn || !username || !email || !password) {
-    dispatch(
-      returnError({ msg: 'Please enter all fields' }, 400, REGISTER_FAIL)
-    );
+    dispatch(returnError({ msg: 'please_enter_fields' }, 400, REGISTER_FAIL));
     return;
   }
 
   if (ssn.length < 10) {
-    dispatch(
-      returnError({ msg: 'SSN must be atleast 10 digits' }, 400, REGISTER_FAIL)
-    );
+    dispatch(returnError({ msg: 'ssn_atleast_10' }, 400, REGISTER_FAIL));
     return;
   }
 
@@ -108,7 +76,7 @@ export const register = ({
     .then(res => {
       dispatch(
         returnSuccess(
-          { msg: 'Successful registration! Please login' },
+          { msg: 'successful_registration' },
           res.status,
           REGISTER_SUCCESS
         )
@@ -118,6 +86,9 @@ export const register = ({
       });
     })
     .catch(err => {
+      /**
+       * Handle error key!
+       */
       dispatch(
         returnError(
           { msg: err.response.data.message },

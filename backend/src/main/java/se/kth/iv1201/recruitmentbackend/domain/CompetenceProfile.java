@@ -1,12 +1,14 @@
 package se.kth.iv1201.recruitmentbackend.domain;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-@Data
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+@Data
 @Entity
 public class CompetenceProfile {
     @Id
@@ -16,6 +18,8 @@ public class CompetenceProfile {
 
     @ManyToOne
     @JoinColumn(name = "person_id")
+    @ToString.Exclude
+    @JsonIgnore
     private Person person;
 
     @OneToOne
@@ -24,11 +28,15 @@ public class CompetenceProfile {
 
     @NotNull
     @Column(name = "years_of_experience")
-    private int yearsOfExperience;
-
-    public CompetenceProfile(){
-
-    };
+    private double yearsOfExperience;
+    
+    public CompetenceProfile() {}
+    
+    public CompetenceProfile(Person person, Competence competence, double yearsOfExperience) {
+    	this.person=person;
+    	this.competence=competence;
+    	this.yearsOfExperience=yearsOfExperience;
+    }
 }
 
 
