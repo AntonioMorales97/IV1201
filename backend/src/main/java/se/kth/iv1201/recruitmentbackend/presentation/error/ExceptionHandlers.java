@@ -2,6 +2,8 @@ package se.kth.iv1201.recruitmentbackend.presentation.error;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -25,6 +27,7 @@ import se.kth.iv1201.recruitmentbackend.application.exception.IllegalTransaction
 public class ExceptionHandlers {
 	private final String INVALID_METHOD_ARGUMENTS = "Invalid method arguments";
 	private final String METHOD_ARGUMENT_TYPE_MISMATCH = "The type of the given arguments are wrong";
+	private static final Logger logger = LoggerFactory.getLogger(ExceptionHandlers.class);
 	
 	/**
 	 * Handles <code>IllegalTransactionException</code>s.
@@ -35,7 +38,7 @@ public class ExceptionHandlers {
 	@ExceptionHandler(IllegalTransactionException.class)
 	@ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
 	ErrorResponse illegalTransactionExceptionHandler(IllegalTransactionException exc) {
-		
+		logger.error(exc.getMessage());
 		return new ErrorResponse(HttpStatus.METHOD_NOT_ALLOWED.getReasonPhrase(), exc.getMessage(),exc.getCode());
 	}
 	/**
@@ -51,6 +54,7 @@ public class ExceptionHandlers {
 		ViolationResponse vr = new ViolationResponse(HttpStatus.BAD_REQUEST.getReasonPhrase(), INVALID_METHOD_ARGUMENTS);
 		List<Violation> violations = vr.getViolations();
 		exc.getBindingResult().getFieldErrors().forEach(fieldError -> {
+			logger.error(fieldError.getDefaultMessage());
 			violations.add(new Violation(fieldError.getField(), fieldError.getDefaultMessage()));
 		});
 		return vr;
@@ -65,6 +69,7 @@ public class ExceptionHandlers {
 	@ExceptionHandler(NoHandlerFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	ErrorResponse noHandlerFoundExceptionHandler(NoHandlerFoundException exc) {
+		logger.error(exc.getMessage());
 		return new ErrorResponse(HttpStatus.NOT_FOUND.getReasonPhrase(), exc.getMessage());
 	}
 	/**
@@ -76,6 +81,7 @@ public class ExceptionHandlers {
 	@ExceptionHandler(MissingServletRequestParameterException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	ErrorResponse missingServletRequestParameterExceptionHandler( MissingServletRequestParameterException exc){
+		logger.error(exc.getMessage());
 		return new ErrorResponse(HttpStatus.BAD_REQUEST.getReasonPhrase(), exc.getMessage());
 	}
 	
@@ -88,6 +94,7 @@ public class ExceptionHandlers {
 	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
 	@ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
 	ErrorResponse methodNotAllowedHandler(HttpRequestMethodNotSupportedException exc) {
+		logger.error(exc.getMessage());
 		return new ErrorResponse(HttpStatus.METHOD_NOT_ALLOWED.getReasonPhrase(), exc.getMessage());
 	}
 	
@@ -100,6 +107,7 @@ public class ExceptionHandlers {
 	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	ErrorResponse methodArgumentTypeMismatchHandler(MethodArgumentTypeMismatchException exc) {
+		logger.error(exc.getMessage());
 		return new ErrorResponse(HttpStatus.BAD_REQUEST.getReasonPhrase(), METHOD_ARGUMENT_TYPE_MISMATCH
 				+ ", expected: " + exc.getRequiredType().getSimpleName());
 	}
@@ -114,6 +122,7 @@ public class ExceptionHandlers {
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	ErrorResponse messageNotReadableExceptionHandler(HttpMessageNotReadableException exc) {
+		logger.error(exc.getMessage());
 		return new ErrorResponse(HttpStatus.BAD_REQUEST.getReasonPhrase(), "Could not read the message!:(");
 	}
 
@@ -128,6 +137,7 @@ public class ExceptionHandlers {
 	ErrorResponse generalExceptionHandler(Exception exc) {
 		System.out.println(exc.getClass());
 		exc.printStackTrace();
+		logger.error("Error: "+exc.getClass() + "With message: "+exc.getMessage());
 		return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), exc.getMessage());
 	}
 	

@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring()
-		.antMatchers("/authenticate", "/register");
+		.antMatchers("/authenticate", "/register", "/migrate");
 	}
 	/**
 	 * Layer below WebSecurity, sets up security against the api and adds filters.
