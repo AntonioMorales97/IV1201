@@ -33,5 +33,10 @@
   "to": "Till",
   "back_to_applications": "Tillbaka till ansökan",
   "view_application": "Se ansökan",
-  "logout": "Logga ut"
+  "logout": "Logga ut",
+  "no_applications": "Finns inga ansökan",
+  "no_experiences": "Inga tidiga erfarenheter",
+  "no_availability": "Ingen tillgänglighet",
+  "Karuselldrift": "Karuselldrift",
+  "Korvgrillning": "Korvgrillning"
 }

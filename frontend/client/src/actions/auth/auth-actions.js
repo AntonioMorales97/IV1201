@@ -21,7 +21,7 @@ export const login = ({ username, password }) => dispatch => {
   axios
     .post('/authenticate', body)
     .then(res => {
-      setAuthToken(res.data.token);
+      setAuthToken(res.data.jwtToken);
       dispatch({
         type: LOGIN_SUCCESS,
         payload: { user: { role: res.data.role }, token: res.data.jwtToken }

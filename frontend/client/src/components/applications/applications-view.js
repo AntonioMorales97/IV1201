@@ -5,17 +5,21 @@ import ApplicationItem from './application-item';
 
 import './applications.css';
 
-const ApplicationsView = () => {
+const ApplicationsView = props => {
   const { t } = useTranslation();
-
+  const { applications } = props;
+  console.log(applications);
   return (
     <Container className='applications'>
       <h1>{t('applications')}</h1>
       <ListGroup>
-        <ApplicationItem />
-        <ApplicationItem />
-        <ApplicationItem />
-        <ApplicationItem />
+        {applications.length > 0 ? (
+          applications.map(application => (
+            <ApplicationItem key={application.id} application={application} />
+          ))
+        ) : (
+          <h4>{t('no_applications')}</h4>
+        )}
       </ListGroup>
     </Container>
   );
