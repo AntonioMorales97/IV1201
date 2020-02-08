@@ -1,6 +1,9 @@
 import React from 'react';
 import {View, ActivityIndicator} from 'react-native';
-
+/**
+ * Rendered whenever loading is indicated.
+ * @param {} param0 
+ */
 const Loading=({size})=>{
 return(
     <View style ={styles.spinnerContainer}>

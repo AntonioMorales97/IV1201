@@ -1,7 +1,9 @@
 import React , {Component} from 'react';
 import {View} from 'react-native';
 import {Login, Registration} from '../components';
-
+/**
+ * Handles Authentication choices.
+ */
 export default class Auth extends Component{
     constructor(props){
         super(props);
@@ -11,11 +13,17 @@ export default class Auth extends Component{
         this.whichForm = this.whichForm.bind(this);
         this.authSwitch = this.authSwitch.bind(this);
     }
+    /**
+     * Used to swap the state showLogin.
+     */
      authSwitch() {
     this.setState({
       showLogin: !this.state.showLogin
     });
   }
+  /**
+   * Function that handles the rendering of the different views.
+   */
  whichForm() {
     if(!this.state.showLogin){
       return(

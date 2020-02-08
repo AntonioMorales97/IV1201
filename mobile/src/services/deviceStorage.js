@@ -1,5 +1,11 @@
 import {AsyncStorage} from 'react-native';
+/**
+ * A class to handle all the device storage. 
+ */
 const deviceStorage={
+  /**
+   * Loads the jwt from the device storage.
+   */
     async loadJWT(){
         try{
             const value = await AsyncStorage.getItem('id_token');
@@ -17,6 +23,11 @@ const deviceStorage={
             console.log("getItem "+ error.message);
         }
     },
+    /**
+     * saves a key value pair in the local device storage.
+     * @param {*} key the key to connect the value to.
+     * @param {*} value the acctual value to save.
+     */
     async saveItem(key, value){
         try{
             await AsyncStorage.setItem(key, value);
@@ -24,6 +35,9 @@ const deviceStorage={
             console.log("Set item error: "+err.message);
         }
     },
+    /**
+     * Delte the jwt web token from local storage.
+     */
      async deleteJWT() {
     try{
       await AsyncStorage.removeItem('id_token')

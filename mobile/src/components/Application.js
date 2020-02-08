@@ -2,7 +2,10 @@
 import React from 'react';
 import {View, Text, ScrollView} from 'react-native';
 
-
+/**
+ * Class that renders a specific application.
+ * @param {*} param0 The application to show.
+ */
 const Application = ({application}) => {   
 
  

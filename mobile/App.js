@@ -17,6 +17,12 @@ export default class App extends Component {
     this.loadJWT = deviceStorage.loadJWT.bind(this);
     this.loadJWT();
   }
+  /**
+   * Adds a jwt to the state, along with its username, and role.
+   * @param {*} jwt jsonwebToken.
+   * @param {*} user Username of the jwt.
+   * @param {*} role Role of the jwt.
+   */
   newJWT(jwt, user, role){
     this.setState({
       jwt: jwt,
@@ -24,7 +30,9 @@ export default class App extends Component {
       role: role,
     });
   }  
-
+/**
+ * The Entry point of the app.
+ */
   render() {
     if(this.state.loading){
       return(

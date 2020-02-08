@@ -3,7 +3,9 @@ import { Text, View } from 'react-native';
 import { Input, TextLink, Loading, Button } from './common';
 import axios from 'axios';
 import deviceStorage from '../services/deviceStorage';
-
+/**
+ * A class that handles the login of the application, holds the view and the acctual login logic.
+ */
 class Login extends Component {
   constructor(props){
     super(props);
@@ -15,6 +17,9 @@ class Login extends Component {
     };
     this.loginUser = this.loginUser.bind(this);
   }
+  /**
+   * Function to login a specific user.
+   */
     loginUser(){
         const {username, password} = this.state;
         this.setState({error:'', loading: 'true'});

@@ -4,7 +4,9 @@ import { ScrollView ,View, Text, FlatList} from 'react-native';
 import { Button ,Input} from '../components/common';
 import axios from 'axios';
 import {ApplicationList, Application} from '../components';
-
+/**
+ * Class tha handles the recruiters view.
+ */
 export default class Recruiter extends Component {
   constructor(props){
     super(props);
@@ -17,6 +19,9 @@ export default class Recruiter extends Component {
     this.selectingApplication=this.selectApplication.bind(this);
     this.goBackToList =this.goBackToList.bind(this);
   }
+  /**
+   * Function to get a speicifc applications data.
+   */
   selectApplication=(id)=>{
       //axios.get("https://iv1201-backend.herokuapp.com/applications",
        axios.get("http://192.168.0.3:8080/application/"+id, {
@@ -34,6 +39,9 @@ export default class Recruiter extends Component {
                 this.setState({error:err.response.data.message});
             });
   }
+  /**
+   * Function that changes the status of a specific application.
+   */
   changeStatus=(status)=>{
        let body = {
     status: status
@@ -53,9 +61,15 @@ export default class Recruiter extends Component {
                 this.setState({error:err.response.data.message});
             });
   }
+  /**
+   * Sets the currently watching application sate to '', used to go back to application list view.
+   */
   goBackToList(){
       this.setState({watchingApplication:''});
   }
+  /**
+   * Renders all applications.
+   */
   renderApplications(){
     return this.props.applications.map(application =>{
         

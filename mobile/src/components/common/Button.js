@@ -1,6 +1,9 @@
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
-
+/**
+ * A button commonly used in the application.
+ * @param {} param0 
+ */
 const Button=({
     onPress, children    
 }) =>{

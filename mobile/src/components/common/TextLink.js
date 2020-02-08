@@ -1,6 +1,9 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-
+/**
+ * A text link.
+ * @param {*} param0 
+ */
 const TextLink = ({ onPress, children }) => {
   const { button, text } = styles;
   return (

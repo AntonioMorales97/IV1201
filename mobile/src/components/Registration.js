@@ -2,7 +2,9 @@ import React, {Component, Fragment } from 'react';
 import {View, Text} from 'react-native';
 import {Input, TextLink, Button, Loading} from './common';
 import axios from 'axios';
-
+/**
+ * A registration class, that handles rendering of the registration view, aswell as registering a person..
+ */
 class Registration extends Component {
     constructor(props){
         super(props);
@@ -18,6 +20,9 @@ class Registration extends Component {
         };
         this.registerUser = this.registerUser.bind(this);
     }
+    /**
+     * Function to acctuly register a user.
+     */
     registerUser(){
             const {surName, lastName, ssn, email, username, password} = this.state; 
             this.setState({error:'',loading:true});
