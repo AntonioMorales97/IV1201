@@ -14,8 +14,8 @@ const Routes = () => {
       <Route exact path='/register' component={Register} />
       <RecruitRoute exact path='/recruit' component={Recruit} />
       <ApplicantRoute exact path='/apply' component={Apply} />
-      <Route exact path='/applications/:id' component={Application} />
-      <Route exact path='/applications' component={Applications} />
+      <RecruitRoute exact path='/applications/:id' component={Application} />
+      <RecruitRoute exact path='/applications' component={Applications} />
     </Switch>
   );
 };

@@ -7,10 +7,18 @@ import './application.css';
 
 const ApplicationView = props => {
   const { t } = useTranslation();
+  const {
+    id,
+    firstName,
+    lastName,
+    date_of_birth,
+    email,
+    status,
+    experiences,
+    availabilities
+  } = props.application;
 
-  const status = 'rejected';
-
-  const id = props.id;
+  const { acceptApplication, rejectApplication, unhandleApplication } = props;
 
   const badgeStatus = () => {
     if (status === 'accepted') {
@@ -44,50 +52,62 @@ const ApplicationView = props => {
           <h2>{t('personal_info')}</h2>
           <ListGroup className='list-group-horizontal-lg'>
             <ListGroupItem>
-              <span className='bold'>{t('first_name')}: </span>Pelle
+              <span className='bold'>{t('first_name')}: </span>
+              {firstName}
             </ListGroupItem>
             <ListGroupItem>
-              <span className='bold'>{t('last_name')}: </span>Polle
+              <span className='bold'>{t('last_name')}: </span>
+              {lastName}
             </ListGroupItem>
             <ListGroupItem>
-              <span className='bold'>{t('birth_date')}: </span>1997-06-02
+              <span className='bold'>{t('birth_date')}: </span>
+              {date_of_birth}
             </ListGroupItem>
             <ListGroupItem>
-              <span className='bold'>{t('email')}: </span>pelle@kth.se
+              <span className='bold'>{t('email')}: </span>
+              {email}
             </ListGroupItem>
           </ListGroup>
         </div>
         <div className='experience mt-2'>
           <h2>{t('experience')}</h2>
           <ListGroup className='list-group list-group-horizontal-lg'>
-            <ListGroupItem>
-              <span className='bold'>Baking</span>
-            </ListGroupItem>
-            <ListGroupItem>
-              <span className='bold'>Drinking</span>
-            </ListGroupItem>
-            <ListGroupItem>
-              <span className='bold'>Driving</span>
-            </ListGroupItem>
+            {experiences.length > 0 ? (
+              experiences.map(experience => (
+                <ListGroupItem key={experience.id}>
+                  <span className='bold'>{t(experience.name)}</span>
+                </ListGroupItem>
+              ))
+            ) : (
+              <h4>{t('no_experiences')}</h4>
+            )}
           </ListGroup>
         </div>
         <div className='availibility mt-2'>
           <h2>{t('availability')}</h2>
-          <ListGroup className='list-group-horizontal-lg'>
-            <ListGroupItem>
-              <span className='bold'>{t('from')} </span> 2020-02-10{' '}
-              <span className='bold'>{t('to')} </span> 2020-03-10
-            </ListGroupItem>
-            <ListGroupItem>
-              <span className='bold'>{t('from')} </span> 2020-05-10{' '}
-              <span className='bold'>{t('to')} </span> 2020-06-10
-            </ListGroupItem>
+          <ListGroup className='list-group list-group-horizontal-lg'>
+            {availabilities.length > 0 ? (
+              availabilities.map(availability => (
+                <ListGroupItem key={availability.id}>
+                  <span className='bold'>{t('from')} </span> {availability.from}{' '}
+                  <span className='bold'>{t('to')} </span> {availability.to}
+                </ListGroupItem>
+              ))
+            ) : (
+              <h4>{t('no_availability')}</h4>
+            )}
           </ListGroup>
         </div>
         <div className='actions mt-3'>
-          <Button className='btn-success mr-1'>{t('accept')}</Button>
-          <Button className='btn-danger mr-1'>{t('reject')}</Button>
-          <Button className='secondary'>{t('unhandle')}</Button>
+          <Button className='btn-success mr-1' onClick={acceptApplication}>
+            {t('accept')}
+          </Button>
+          <Button className='btn-danger mr-1' onClick={rejectApplication}>
+            {t('reject')}
+          </Button>
+          <Button className='secondary' onClick={unhandleApplication}>
+            {t('unhandle')}
+          </Button>
         </div>
       </div>
     </Container>

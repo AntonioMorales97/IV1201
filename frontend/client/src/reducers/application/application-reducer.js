@@ -8,7 +8,38 @@ import {
 
 const initialState = {
   application: null,
-  applications: [],
+  applications: [
+    {
+      id: 2,
+      firstName: 'Per',
+      lastName: 'Strand',
+      email: 'per@strand.kth.se',
+      status: 'accepted',
+      _links: {
+        self: 'http://localhost:8080/application/2'
+      }
+    },
+    {
+      id: 3,
+      firstName: 'Per',
+      lastName: 'Strand',
+      email: 'per@strand.kth.se',
+      status: 'rejected',
+      _links: {
+        self: 'http://localhost:8080/application/3'
+      }
+    },
+    {
+      id: 4,
+      firstName: 'Per',
+      lastName: 'Strand',
+      email: 'per@strand.kth.se',
+      status: 'unhandled',
+      _links: {
+        self: 'http://localhost:8080/application/4'
+      }
+    }
+  ],
   loading: true,
   error: {}
 };

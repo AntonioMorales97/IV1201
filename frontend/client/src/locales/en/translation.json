@@ -33,5 +33,10 @@
   "to": "To",
   "back_to_applications": "Back to applications",
   "view_application": "View application",
-  "logout": "Logout"
+  "logout": "Logout",
+  "no_applications": "There is no applications",
+  "no_experiences": "No experiences",
+  "no_availability": "No availability",
+  "Karuselldrift": "Carousel operation",
+  "Korvgrillning": "Sausage barbecue"
 }

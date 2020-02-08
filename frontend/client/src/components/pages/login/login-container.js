@@ -74,7 +74,7 @@ class LoginContainer extends Component {
     if (this.props.isAuthenticated) {
       if (this.props.user.role === 'RECRUITER') {
         const { from } = this.props.location.state || {
-          from: { pathname: '/admin' }
+          from: { pathname: '/applications' }
         };
         return <Redirect to={from} />;
       }

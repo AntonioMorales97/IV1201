@@ -4,8 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ListGroupItem } from 'reactstrap';
 
 const ApplicationItem = props => {
-  const id = 1;
-  const status = 'accepted';
+  const { id, firstName, lastName, email, status } = props.application;
   const { t } = useTranslation();
 
   const badgeStatus = () => {
@@ -19,8 +18,8 @@ const ApplicationItem = props => {
   };
   return (
     <ListGroupItem className='row d-flex'>
-      <div className='col-12 col-md-3'>Pelle Polle</div>
-      <div className='col-12 col-md-3'>pelle@kth.se</div>
+      <div className='col-12 col-md-3'>{firstName + ' ' + lastName}</div>
+      <div className='col-12 col-md-3'>{email}</div>
       <div className='col-12 col-md-3'>
         <span className={'badge ' + badgeStatus()}>{t(status)}</span>
       </div>
