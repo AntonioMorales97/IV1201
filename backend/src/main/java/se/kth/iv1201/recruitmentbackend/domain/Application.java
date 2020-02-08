@@ -1,5 +1,6 @@
 package se.kth.iv1201.recruitmentbackend.domain;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,10 +15,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Version;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.hateoas.RepresentationModel;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -33,6 +42,14 @@ public class Application extends RepresentationModel<Application>{
     @Column(name = "application_id")
     private long id;
 	
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "create_date")
+	private Date createDate;
+
+	@JsonIgnore
+	@Version
+	private long version;
 	@ManyToOne
     @JoinColumn(name = "status_id", referencedColumnName = "status_id")
     private Status status;
@@ -59,6 +76,7 @@ public Application(){
 public Application(Status status, Person person) {
 	this.status = status;
 	this.person=person;
+	
 }
 public Application(Status status) {
 	this.status = status;

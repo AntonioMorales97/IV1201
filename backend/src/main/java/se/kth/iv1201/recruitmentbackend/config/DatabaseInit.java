@@ -59,7 +59,7 @@ public class DatabaseInit {
 		statusRepo.save(s2);
 		statusRepo.save(s3);
 		Optional<Competence> c3 = competenceRepo.findById((long) 2);
-		Application a1 = new Application(statusRepo.findByName("unhandled"),personRepo.findByUsername("fa"));
+		Application a1 = new Application(statusRepo.findByName("unhandled").get(),personRepo.findByUsername("fa"));
 		
 		applicationRepo.save(a1);
 				
@@ -69,8 +69,8 @@ public class DatabaseInit {
 		Availability av1 = new Availability(a1, new Date(2014/02/23),new Date(2014/05/25));
 		availabilityRepo.save(av1);
 		a1.getAvailability().add(av1);
-		};
-		*/
+		};*/
+		
 	}
 }
 
