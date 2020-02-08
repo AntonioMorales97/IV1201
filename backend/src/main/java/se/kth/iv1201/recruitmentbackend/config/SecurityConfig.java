@@ -19,7 +19,7 @@ import se.kth.iv1201.recruitmentbackend.jwt.filters.JwtRequestFilter;
 import se.kth.iv1201.recruitmentbackend.security.MyUserDetailsService;
 
 /**
- * Sets up spring security.
+ * Sets up spring security with custom configurations.
  *
  */
 @EnableWebSecurity
@@ -34,14 +34,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private JwtExceptionHandlerFilter jwtExcFilter;
 	
 	/**
-	 *  configure so that AuthenticationManager knows where to load users to match credentials to.
+	 *  Configures so that <code>AuthenticationManager</code> knows where to
+	 *  load users to match credentials to.
+	 *  
+	 *  @param authentication The <code>AuthenticationManagerBuilder</code>.
 	 */
 	@Override
 	protected void configure(AuthenticationManagerBuilder authentication) throws Exception {
 		authentication.userDetailsService(myUserDetailsService).passwordEncoder(passwordEncoder());
 	}
+	
 	/**
-	 * A layer abovew HttpSecurity, opens up /authetnication and /register.
+	 * A layer above HttpSecurity. Opens up /authentication and /register.
+	 * 
+	 * @param web The <code>WebSecurity</code> to configure.
 	 */
 	@Override
 	public void configure(WebSecurity web) throws Exception {
@@ -49,11 +55,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/authenticate", "/register", "/migrate");
 	}
 	/**
-	 * Layer below WebSecurity, sets up security against the api and adds filters.
+	 * Layer below WebSecurity. Sets up security against the API and adds filters.
+	 * 
+	 * @param httpSecurity The <code>HttpSecurity</code> to configure.
 	 */
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable()
+		.cors()
+		.and()
 		.authorizeRequests()
 		//.antMatchers("/application","/applications").hasRole("ADMIN")
 		.antMatchers("/**")
@@ -72,6 +82,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder(13);
 	}
+	
 	/**
 	 * Sets up the authenticationManager
 	 */
@@ -106,5 +117,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		registration.setEnabled(false);
 		return registration;
 	}
-	
 }
