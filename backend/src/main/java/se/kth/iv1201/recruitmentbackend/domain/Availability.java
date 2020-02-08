@@ -18,10 +18,10 @@ public class Availability {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "person_id")
+    @JoinColumn(name = "application_id")
     @ToString.Exclude
     @JsonIgnore
-    private Person person;
+    private Application application;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "from_date")
@@ -32,8 +32,8 @@ public class Availability {
     private Date toDate;
     
     
-    public Availability(Person person, Date from, Date to) {
-    	this.person= person;
+    public Availability(Application application, Date from, Date to) {
+    	this.application= application;
     	this.fromDate= from;
     	this.toDate=to;
     	

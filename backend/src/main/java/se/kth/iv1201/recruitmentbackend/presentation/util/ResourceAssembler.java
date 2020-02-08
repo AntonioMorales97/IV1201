@@ -1,7 +1,9 @@
 package se.kth.iv1201.recruitmentbackend.presentation.util;
 
+import se.kth.iv1201.recruitmentbackend.domain.Application;
 import se.kth.iv1201.recruitmentbackend.presentation.controller.ApplicationController;
-import se.kth.iv1201.recruitmentbackend.presentation.models.ApplicationResponse;
+import se.kth.iv1201.recruitmentbackend.presentation.models.ApplicationListResponse;
+
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
@@ -13,7 +15,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class ResourceAssembler {
 
-	public void addLinksToApplicationResponse(ApplicationResponse applicationResponse){
+	public void addLinksToApplicationResponse(Application applicationResponse){
 		applicationResponse.add(linkTo(methodOn(ApplicationController.class).getApplication(applicationResponse.getId())).withSelfRel());
+	}
+
+	public Object addLinksToApplicationResponse(ApplicationListResponse applicationResponse) {
+		applicationResponse.add(linkTo(methodOn(ApplicationController.class).getApplication(applicationResponse.getId())).withSelfRel());
+		return null;
 	}
 }

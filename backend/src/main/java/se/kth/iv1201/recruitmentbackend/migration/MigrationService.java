@@ -30,6 +30,7 @@ import se.kth.iv1201.recruitmentbackend.repository.RoleRepository;
 @Service
 @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
 public class MigrationService {
+	/*
 	private static final String RECRUIT_ROLE = "recruit";
 	private OldRecruitmentDAO oldRecruitmentDAO = new OldRecruitmentDAO();
 	
@@ -124,5 +125,5 @@ public class MigrationService {
 		});
 	}
 	
-	
+	*/
 }

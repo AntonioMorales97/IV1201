@@ -17,10 +17,10 @@ public class CompetenceProfile {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "person_id")
+    @JoinColumn(name = "application_id")
     @ToString.Exclude
     @JsonIgnore
-    private Person person;
+    private Application application;
 
     @OneToOne
     @JoinColumn(name = "competence_id")
@@ -32,8 +32,8 @@ public class CompetenceProfile {
     
     public CompetenceProfile() {}
     
-    public CompetenceProfile(Person person, Competence competence, double yearsOfExperience) {
-    	this.person=person;
+    public CompetenceProfile(Application application, Competence competence, double yearsOfExperience) {
+    	this.application=application;
     	this.competence=competence;
     	this.yearsOfExperience=yearsOfExperience;
     }

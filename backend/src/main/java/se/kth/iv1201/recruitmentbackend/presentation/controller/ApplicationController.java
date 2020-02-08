@@ -2,16 +2,26 @@ package se.kth.iv1201.recruitmentbackend.presentation.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
 import se.kth.iv1201.recruitmentbackend.application.ApplicationService;
-import se.kth.iv1201.recruitmentbackend.presentation.models.ApplicationResponse;
+import se.kth.iv1201.recruitmentbackend.domain.Application;
+import se.kth.iv1201.recruitmentbackend.presentation.dto.PersonDTO;
+import se.kth.iv1201.recruitmentbackend.presentation.dto.StatusDTO;
+import se.kth.iv1201.recruitmentbackend.presentation.models.ApplicationListResponse;
 import se.kth.iv1201.recruitmentbackend.presentation.util.ResourceAssembler;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -30,10 +40,11 @@ public class ApplicationController {
 	 * @return a CollectionModell with all the applications embedded.
 	 */
 	@GetMapping("/applications")
-	public CollectionModel<ApplicationResponse> getAllApplications(){
-		List<ApplicationResponse> applicationResponses = applicationService.findAllApplications();
-		applicationResponses.forEach(applicationResponse->resourceAssembler.addLinksToApplicationResponse(applicationResponse));
-		return new CollectionModel<ApplicationResponse> (applicationResponses, linkTo(methodOn(ApplicationController.class).getAllApplications()).withSelfRel());
+	public CollectionModel<ApplicationListResponse> getAllApplications(){
+		List<ApplicationListResponse> applications = applicationService.findAllApplications();
+		applications.forEach(applicationResponse->resourceAssembler.addLinksToApplicationResponse(applicationResponse));
+		System.out.println(applications);
+		return new CollectionModel<ApplicationListResponse> (applications, linkTo(methodOn(ApplicationController.class).getAllApplications()).withSelfRel());
 		
 	}
 	/**
@@ -42,11 +53,19 @@ public class ApplicationController {
 	 * @return ApplicationResponse.
 	 */
 	@GetMapping("/application/{id}")
-	public ApplicationResponse getApplication(@PathVariable Long id) {
-		ApplicationResponse applicationResponse =applicationService.findApplication(id);
-		resourceAssembler.addLinksToApplicationResponse(applicationResponse);
+	public Application getApplication(@PathVariable Long id) {
+		Application application =applicationService.findApplication(id);
+		resourceAssembler.addLinksToApplicationResponse(application);
 		
-		return applicationResponse;		
+		return application;		
+	}
+	@PutMapping("/alterstatus/{id}")
+	@ResponseStatus(HttpStatus.OK)
+	public Application alterStatus(@RequestBody @Valid StatusDTO statusDTO, @PathVariable Long id) {
+
+		Application application = applicationService.ChangeStatus(id, statusDTO);
+		resourceAssembler.addLinksToApplicationResponse(application);
+		return application;
 	}
 }
 

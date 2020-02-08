@@ -1,18 +1,11 @@
 package se.kth.iv1201.recruitmentbackend.domain;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Data
 @Entity
@@ -53,20 +46,12 @@ public class Person {
 	@NotNull(message = "{person.password.missing}")
 	@NotBlank(message = "{person.password.blank}")
     private String password;
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "person")
-	@EqualsAndHashCode.Exclude
-	@JsonBackReference
-    private Set<Availability> availability = new HashSet<>();
-
+	
 	@ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Role role;
+	
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "person")
-	@EqualsAndHashCode.Exclude
-	@JsonBackReference
-    private Set<CompetenceProfile> competenceProfile = new HashSet<>();
 
     /**
      * Creates a new instance with the specified parameters.
