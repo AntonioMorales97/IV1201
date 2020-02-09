@@ -7,11 +7,7 @@ import java.sql.SQLException;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
-
-
 public class OldDbConnection {
-	private final String OLD_DB_KEY = System.getenv("OLD_DB");
-	private final String dbUrl = System.getenv(OLD_DB_KEY); //"jdbc:postgresql://localhost/old_recruitment?user=recruitment_acc&password=123123";
 	private static final String SQL_DRIVER = "org.postgresql.Driver";
 	private Connection conn;
 	private static final Logger logger = LoggerFactory.getLogger(OldDbConnection.class);
@@ -23,6 +19,8 @@ public class OldDbConnection {
 			e.printStackTrace();
 			logger.error(e.getMessage());
 		}
+		String oldDbKey = System.getenv("OLD_DB");
+		String dbUrl = System.getenv(oldDbKey); //"jdbc:postgresql://localhost/old_recruitment?user=recruitment_acc&password=123123";
 		this.conn = DriverManager.getConnection(dbUrl);
 		this.conn.setAutoCommit(false);
 	}

@@ -34,7 +34,7 @@ import se.kth.iv1201.recruitmentbackend.repository.StatusRepository;
 public class MigrationService {
 	private static final String RECRUIT_ROLE = "recruit";
 	private static final String UNHANDLED_STATUS = "unhandled";
-	private OldRecruitmentDAO oldRecruitmentDAO = new OldRecruitmentDAO();
+	private OldRecruitmentDAO oldRecruitmentDAO;
 	
 	@Autowired
 	PasswordEncoder encoder;
@@ -55,9 +55,11 @@ public class MigrationService {
 	private ApplicationRepository applicationRepo;
 	
 	public void migrate() {
+		this.oldRecruitmentDAO = new OldRecruitmentDAO();
 		insertCompetences();
 		insertRoles();
 		insertPersons();
+		oldRecruitmentDAO.closeConnection();
 	}
 	
 	private void insertPersons() {
