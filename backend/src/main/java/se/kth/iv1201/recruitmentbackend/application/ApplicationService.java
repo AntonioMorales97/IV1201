@@ -1,6 +1,5 @@
 package se.kth.iv1201.recruitmentbackend.application;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import se.kth.iv1201.recruitmentbackend.application.exception.PersonNotFoundException;
+
+import se.kth.iv1201.recruitmentbackend.application.exception.ApplicationNotFoundException;
 import se.kth.iv1201.recruitmentbackend.domain.Application;
 import se.kth.iv1201.recruitmentbackend.domain.Status;
 import se.kth.iv1201.recruitmentbackend.presentation.dto.StatusDTO;
-import se.kth.iv1201.recruitmentbackend.presentation.models.ApplicationListResponse;
 import se.kth.iv1201.recruitmentbackend.repository.ApplicationRepository;
 import se.kth.iv1201.recruitmentbackend.repository.StatusRepository;
 
@@ -41,7 +40,7 @@ public class ApplicationService {
 		Optional<Application> application = applicationRepo.findById(id);
 
 		if (application.isEmpty()) {
-			throw new PersonNotFoundException("Person could not be found by id " + id, 4);
+			throw new ApplicationNotFoundException("Application could not be found by id " + id, 4);
 		}
 
 		return application.get();
@@ -52,11 +51,11 @@ public class ApplicationService {
 	 * 
 	 * @return List containing all the applications.
 	 */
-	public List<ApplicationListResponse> findAllApplications() {
-		List<ApplicationListResponse> applicationList = new ArrayList<ApplicationListResponse>();
+	public List<Application> findAllApplications() {
+		
 		List<Application> applications = applicationRepo.findAll();
-		applications.forEach(application -> applicationList.add(createApplicationResponse(application)));
-		return applicationList;
+		
+		return applications;
 
 	}
 
@@ -70,22 +69,16 @@ public class ApplicationService {
 	public Application ChangeStatus(Long id, @Valid StatusDTO statusDTO) {
 		Optional<Application> application = applicationRepo.findById(id);
 		if (application.isEmpty()) {
-			// THROW APPLICATAION NOT FOUND ERROR.
+			throw new ApplicationNotFoundException("Application could not be found by id " + id, 4);
 		}
 		Optional<Status> status = statusRepo.findByName(statusDTO.getName());
 		if (status.isEmpty()) {
-			// THROW STATUS NOT FOUND ERROR.
+			throw new ApplicationNotFoundException("Application could not be found by id " + id, 4);
 		}
 		application.get().setStatus(status.get());
 		return application.get();
 	}
 
-	private ApplicationListResponse createApplicationResponse(Application applicataion) {
-		ApplicationListResponse application = new ApplicationListResponse(applicataion.getId(),
-				applicataion.getPerson().getFirstName(), applicataion.getPerson().getLastName(),
-				applicataion.getPerson().getSsn(), applicataion.getPerson().getEmail(), applicataion.getStatus(),
-				applicataion.getCreateDate());
-		return application;
-	}
+	
 
 }

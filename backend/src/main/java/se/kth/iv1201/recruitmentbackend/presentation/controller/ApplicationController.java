@@ -1,5 +1,6 @@
 package se.kth.iv1201.recruitmentbackend.presentation.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -40,10 +41,17 @@ public class ApplicationController {
 	 */
 	@GetMapping("/applications")
 	public CollectionModel<ApplicationListResponse> getAllApplications() {
-		List<ApplicationListResponse> applications = applicationService.findAllApplications();
-		applications
-				.forEach(applicationResponse -> resourceAssembler.addLinksToApplicationResponse(applicationResponse));
-		return new CollectionModel<ApplicationListResponse>(applications,
+		List<Application> applications = applicationService.findAllApplications();
+		List<ApplicationListResponse> applicationList = new ArrayList<ApplicationListResponse>();
+		applications.forEach(application -> {
+			applicationList.add(createApplicationResponse(application));
+			resourceAssembler.addLinksToApplicationResponse(application);
+			
+		});
+		
+		//applications
+				//.forEach(applicationResponse -> resourceAssembler.addLinksToApplicationResponse(applicationResponse));
+		return new CollectionModel<ApplicationListResponse>(applicationList,
 				linkTo(methodOn(ApplicationController.class).getAllApplications()).withSelfRel());
 
 	}
@@ -66,6 +74,13 @@ public class ApplicationController {
 	public Application alterStatus(@RequestBody @Valid StatusDTO statusDTO, @PathVariable Long id) {
 		Application application = applicationService.ChangeStatus(id, statusDTO);
 		resourceAssembler.addLinksToApplicationResponse(application);
+		return application;
+	}
+	private ApplicationListResponse createApplicationResponse(Application applicataion) {
+		ApplicationListResponse application = new ApplicationListResponse(applicataion.getId(),
+				applicataion.getPerson().getFirstName(), applicataion.getPerson().getLastName(),
+				applicataion.getPerson().getSsn(), applicataion.getPerson().getEmail(), applicataion.getStatus(),
+				applicataion.getCreateDate());
 		return application;
 	}
 }
