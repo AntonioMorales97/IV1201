@@ -29,15 +29,17 @@ class Login extends Component {
     password: password
 }
 
-        //axios.post("https://iv1201-backend.herokuapp.com/authenticate",sendData)
-        axios.post("http://192.168.0.3:8080/authenticate",sendData)
+        axios.post("https://iv1201-backend-dev.herokuapp.com/authenticate",sendData)
+        //axios.post("http://192.168.0.3:8080/authenticate",sendData)
         .then((response) =>{
             deviceStorage.saveItem('username', username);
+          
             deviceStorage.saveItem('role', response.data.role);
             deviceStorage.saveItem("id_token", response.data.jwtToken);
             this.props.newJWT(response.data.jwtToken, username, response.data.role);
+            
             }).catch((err)=>{
-                console.log(err.data);
+              
                 this.setState({loading:false});
                 this.setState({error:err.response.data.message});
             });

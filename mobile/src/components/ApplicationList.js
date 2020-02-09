@@ -10,7 +10,13 @@ const ApplicationList = ({application, selectApplication}) => {
         <TouchableOpacity style ={styles.list} onPress={() => selectApplication(application.id)} >
             <View style ={styles.listItemView}>
                 <Text styles={styles.listItemText}>
-                      {application.id} 
+                    {application.firstName}
+                </Text>
+                <Text styles={styles.listItemText}>
+                    {application.lastName}
+                </Text>
+                <Text styles={styles.listItemText}>
+                    {application.creationDate}
                 </Text>
             </View>
         </TouchableOpacity>

@@ -14,23 +14,52 @@ export default class Recruiter extends Component {
       watchingApplication:'',
       status:'',
       error:'',
+      applications:[],
       loading: true,
     }
-    this.selectingApplication=this.selectApplication.bind(this);
+    //this.selectingApplication=this.selectApplication.bind(this);
     this.goBackToList =this.goBackToList.bind(this);
+    
   }
-  /**
-   * Function to get a speicifc applications data.
-   */
-  selectApplication=(id)=>{
-      //axios.get("https://iv1201-backend.herokuapp.com/applications",
-       axios.get("http://192.168.0.3:8080/application/"+id, {
+  
+  
+    /**
+    *  Loads all applications. SHOULD BE MOVED TO RECRUITER VIEW.
+    */
+  componentDidMount(){
+     axios.get("https://iv1201-backend-dev.herokuapp.com/applications",{
+       //axios.get("http://192.168.0.3:8080/applications", {
          headers:{
            Authorization: 'Bearer ' + this.props.jwt
          }
        }
         ).then((response) => {
-            
+          //console.error(response)
+          if(response.data._embedded==undefined){
+            this.setState({error:"No applictaions to show!"});
+          }
+          
+          this.setState({applications: response.data._embedded.applicationListResponses}) 
+         
+            }).catch((err)=>{
+                console.log(err);
+                this.setState({loading:false});
+                this.setState({error:err.response.data.message});
+            });
+ 
+  }
+   /**
+   * Function to get a speicifc applications data.
+   */
+  selectApplication=(id)=>{
+      axios.get("https://iv1201-backend-dev.herokuapp.com/application/"+id,{
+       //axios.get("http://192.168.0.3:8080/application/"+id, {
+         headers:{
+           Authorization: 'Bearer ' + this.props.jwt
+         }
+       }
+        ).then((response) => {
+               
           this.setState({watchingApplication: response.data}) 
          
             }).catch((err)=>{
@@ -44,16 +73,17 @@ export default class Recruiter extends Component {
    */
   changeStatus=(status)=>{
        let body = {
-    status: status
-}
-      //axios.get("https://iv1201-backend.herokuapp.com/applications",
-       axios.get("http://192.168.0.3:8080/StatusChange/"+this.state.watchingApplication.id, {
+    name: status
+  }
+      axios.get("https://iv1201-backend-dev.herokuapp.com/StatusChange/"+this.state.watchingApplication.id,{
+       //axios.get("http://192.168.0.3:8080/StatusChange/"+this.state.watchingApplication.id, {
          headers:{
            Authorization: 'Bearer ' + this.props.jwt
          }, body
        }
         ).then((response) => {
-        
+       
+          this.setState({watchingApplication: response.data})
          
             }).catch((err)=>{
                 console.log(err.response.data.message);
@@ -71,7 +101,8 @@ export default class Recruiter extends Component {
    * Renders all applications.
    */
   renderApplications(){
-    return this.props.applications.map(application =>{
+   
+    return this.state.applications.map(application =>{
         
       return <ApplicationList selectApplication = {this.selectApplication} application= {application}/>
     })
@@ -83,6 +114,9 @@ export default class Recruiter extends Component {
     return(
       <View style={styles.container}>
         <Text style ={styles.welcomeText}>Applications</Text>
+        <Text style={styles.errorTextStyle}>
+                        {this.state.error}
+                    </Text>
         {this.renderApplications()}
         <Button style={styles.button} onPress ={this.props.deleteJWT}>
           Logout
@@ -136,6 +170,7 @@ const styles = {
         borderColor:'#eee',
   },
   welcomeText: {
+    
     position: 'absolute',
     top: 0,
     fontSize: 30,

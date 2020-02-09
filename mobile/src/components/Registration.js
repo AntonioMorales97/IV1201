@@ -28,8 +28,8 @@ class Registration extends Component {
             this.setState({error:'',loading:true});
 
             
-           //axios.post("https://iv1201-backend.herokuapp.com/register",
-            axios.post("http://192.168.0.3:8080/register",{
+           axios.post("https://iv1201-backend-dev.herokuapp.com/register",{
+            //axios.post("http://192.168.0.3:8080/register",{
                 firstName: surName,
                 lastName: lastName,
                 email: email,

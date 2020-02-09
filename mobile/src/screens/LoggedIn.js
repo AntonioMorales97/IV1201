@@ -15,7 +15,7 @@ export default class LoggedIn extends Component {
       jwt: this.props.jwt,
       username: this.props.username,
       role: this.props.role,
-      applications: [],
+     // applications: [],
   
       loading: true,
     }
@@ -23,7 +23,7 @@ export default class LoggedIn extends Component {
   /**
    *  Loads all applications. SHOULD BE MOVED TO RECRUITER VIEW.
    */
-  componentDidMount(){
+  /*componentDidMount(){
      //axios.get("https://iv1201-backend.herokuapp.com/applications",
        axios.get("http://192.168.0.3:8080/applications", {
          headers:{
@@ -39,15 +39,15 @@ export default class LoggedIn extends Component {
                 this.setState({error:err.response.data.message});
             });
  
-  }
+  }*/
 
     
   render() {
    
-    if(this.state.role =="RECRUIT"){
+    if(this.state.role =="APPLICANT"){
     return(
       <View style={styles.container}>
-      <Recruiter deleteJWT={this.props.deleteJWT} jwt ={this.state.jwt} username={this.state.username} applications={this.state.applications} />
+      <Recruiter deleteJWT={this.props.deleteJWT} jwt ={this.state.jwt} username={this.state.username} /*applications={this.state.applications}*/ />
       </View>
     );
     }
