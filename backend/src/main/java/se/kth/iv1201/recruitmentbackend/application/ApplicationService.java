@@ -66,7 +66,7 @@ public class ApplicationService {
 	 * @param statusDTO the new status.
 	 * @return the updated Application
 	 */
-	public Application ChangeStatus(Long id, @Valid StatusDTO statusDTO) {
+	public Application changeStatus(Long id, @Valid StatusDTO statusDTO) {
 		Optional<Application> application = applicationRepo.findById(id);
 		if (application.isEmpty()) {
 			throw new ApplicationNotFoundException("Application could not be found by id " + id, 4);

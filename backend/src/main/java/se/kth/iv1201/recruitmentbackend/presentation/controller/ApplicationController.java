@@ -72,7 +72,7 @@ public class ApplicationController {
 	@PutMapping("/alterstatus/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public Application alterStatus(@RequestBody @Valid StatusDTO statusDTO, @PathVariable Long id) {
-		Application application = applicationService.ChangeStatus(id, statusDTO);
+		Application application = applicationService.changeStatus(id, statusDTO);
 		resourceAssembler.addLinksToApplicationResponse(application);
 		return application;
 	}
