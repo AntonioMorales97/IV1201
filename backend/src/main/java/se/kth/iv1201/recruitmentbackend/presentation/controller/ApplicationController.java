@@ -66,7 +66,7 @@ public class ApplicationController {
 		return application;
 	}
 
-	@PutMapping("/alter_status/{id}")
+	@PutMapping("/alter-status/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public Application alterStatus(@RequestBody @Valid StatusDTO statusDTO, @PathVariable Long id) {
 		Application application = applicationService.changeStatus(id, statusDTO);

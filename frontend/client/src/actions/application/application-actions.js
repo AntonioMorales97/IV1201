@@ -40,7 +40,7 @@ export const updateApplication = (id, status) => dispatch => {
   const body = JSON.stringify({ name: status });
 
   axios
-    .put(`/alter_status/${id}`, body)
+    .put(`/alter-status/${id}`, body)
     .then(res => {
       dispatch({
         type: UPDATE_APPLICATION,
