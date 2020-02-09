@@ -1,6 +1,7 @@
 package se.kth.iv1201.recruitmentbackend.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -27,14 +28,14 @@ public class Person {
 
 	//@NotNull(message = "{person.email.missing}")
 	//@NotBlank(message = "{person.email.blank}")
-	//@Email(message ="Email should be valid")
-	//@Column(unique = true)
+	@Email(message ="Email should be valid")
+	@Column(unique = true)
     private String email;
 
 	//@NotBlank(message = "{person.personalNumber.blank}")
 	//@NotNull(message = "{person.personalNumber.missing}")
 	//@Pattern(regexp="[\\d]{10}", message = "Personal number must be 10 digits")
-    //@Column(unique = true)
+    @Column(unique = true)
     private String ssn;
 
 	
@@ -50,7 +51,9 @@ public class Person {
 	@ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Role role;
-
+ 
+    public Person() {};
+    
     /**
      * Creates a new instance with the specified parameters.
      *
@@ -61,8 +64,6 @@ public class Person {
      * @param username The user's username
      * @param password The user's password
      */
-    public Person() {};
-    
     public Person(String name, String surname, String email, String ssn, String username, String password, Role role) {
         this.firstName = name;
         this.lastName = surname;

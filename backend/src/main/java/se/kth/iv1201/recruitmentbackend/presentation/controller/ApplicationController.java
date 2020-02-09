@@ -66,18 +66,19 @@ public class ApplicationController {
 		return application;
 	}
 
-	@PutMapping("/alterstatus/{id}")
+	@PutMapping("/alter_status/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public Application alterStatus(@RequestBody @Valid StatusDTO statusDTO, @PathVariable Long id) {
 		Application application = applicationService.changeStatus(id, statusDTO);
 		resourceAssembler.addLinksToApplicationResponse(application);
 		return application;
 	}
-	private ApplicationListResponse createApplicationResponse(Application applicataion) {
-		ApplicationListResponse application = new ApplicationListResponse(applicataion.getId(),
-				applicataion.getPerson().getFirstName(), applicataion.getPerson().getLastName(),
-				applicataion.getPerson().getSsn(), applicataion.getPerson().getEmail(), applicataion.getStatus(),
-				applicataion.getCreateDate());
-		return application;
+	
+	private ApplicationListResponse createApplicationResponse(Application application) {
+		ApplicationListResponse applicationResponse = new ApplicationListResponse(application.getId(),
+				application.getPerson().getFirstName(), application.getPerson().getLastName(),
+				application.getPerson().getEmail(), application.getPerson().getSsn(), application.getStatus(),
+				application.getCreateDate());
+		return applicationResponse;
 	}
 }

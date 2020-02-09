@@ -56,13 +56,13 @@ public class Application extends RepresentationModel<Application> {
 	private Person person;
 
 	@JsonManagedReference
-	@JsonIgnoreProperties(value = { "id" }, allowSetters = true)
+	@JsonIgnoreProperties(allowSetters = true)
 	@EqualsAndHashCode.Exclude
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "application", orphanRemoval = true)
 	private Set<Availability> availability = new HashSet<>();
 	
 	@JsonManagedReference
-	@JsonIgnoreProperties(value = { "id" }, allowSetters = true)
+	@JsonIgnoreProperties(allowSetters = true)
 	@EqualsAndHashCode.Exclude
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "application", orphanRemoval = true)
 	private Set<CompetenceProfile> competenceProfile = new HashSet<>();

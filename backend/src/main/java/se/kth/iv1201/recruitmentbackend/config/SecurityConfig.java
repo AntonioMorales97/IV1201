@@ -67,7 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.cors()
 		.and()
 		.authorizeRequests()
-		.antMatchers("/application/*","/applications","alterstatus/*").hasRole(RECRUIT_ROLE)
+		.antMatchers("/application/*","/applications","alter_status/*").hasRole(RECRUIT_ROLE)
 		.antMatchers("/**")
 		.authenticated()
 		.and()
