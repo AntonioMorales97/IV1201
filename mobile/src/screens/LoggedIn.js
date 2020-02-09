@@ -10,44 +10,22 @@ import Recruiter from './Recruiter';
  */
 export default class LoggedIn extends Component {
   constructor(props){
+
     super(props);
        this.state = {
       jwt: this.props.jwt,
-      username: this.props.username,
-      role: this.props.role,
-     // applications: [],
-  
+      username: this.props.user,
+      role: this.props.role,  
       loading: true,
     }
   }
-  /**
-   *  Loads all applications. SHOULD BE MOVED TO RECRUITER VIEW.
-   */
-  /*componentDidMount(){
-     //axios.get("https://iv1201-backend.herokuapp.com/applications",
-       axios.get("http://192.168.0.3:8080/applications", {
-         headers:{
-           Authorization: 'Bearer ' + this.props.jwt
-         }
-       }
-        ).then((response) => {
-          this.setState({applications: response.data._embedded.applicationResponses}) 
-         
-            }).catch((err)=>{
-                console.log(err);
-                this.setState({loading:false});
-                this.setState({error:err.response.data.message});
-            });
- 
-  }*/
-
-    
-  render() {
    
-    if(this.state.role =="APPLICANT"){
+  render() {
+    
+    if(this.state.role =="RECRUIT"){
     return(
       <View style={styles.container}>
-      <Recruiter deleteJWT={this.props.deleteJWT} jwt ={this.state.jwt} username={this.state.username} /*applications={this.state.applications}*/ />
+      <Recruiter deleteJWT={this.props.deleteJWT} jwt ={this.state.jwt} username={this.state.username} />
       </View>
     );
     }

@@ -12,7 +12,7 @@ export default class App extends Component {
       role: '',
       loading: true
     }
-    this.newJWT = this.newJWT.bind(this);
+    this.newUser = this.newUser.bind(this);
     this.deleteJWT = deviceStorage.deleteJWT.bind(this);
     this.loadJWT = deviceStorage.loadJWT.bind(this);
     this.loadJWT();
@@ -23,7 +23,7 @@ export default class App extends Component {
    * @param {*} user Username of the jwt.
    * @param {*} role Role of the jwt.
    */
-  newJWT(jwt, user, role){
+  newUser(jwt, user, role){
     this.setState({
       jwt: jwt,
       user: user,
@@ -40,7 +40,7 @@ export default class App extends Component {
       );
     }else if (!this.state.jwt) {
       return (
-        <Auth newJWT={this.newJWT} />
+        <Auth newUser={this.newUser} />
       );
     } else if (this.state.jwt) {
       return (

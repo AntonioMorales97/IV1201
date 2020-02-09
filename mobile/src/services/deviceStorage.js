@@ -9,9 +9,13 @@ const deviceStorage={
     async loadJWT(){
         try{
             const value = await AsyncStorage.getItem('id_token');
+            const username = await AsyncStorage.getItem('username');
+            const role = await AsyncStorage.getItem('role');
             if(value !== null){
                 this.setState({
                     jwt: value,
+                    user: username,
+                    role: role,
                     loading:false
                 });
             }else{

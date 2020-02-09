@@ -34,7 +34,7 @@ export default class Recruiter extends Component {
          }
        }
         ).then((response) => {
-          //console.error(response)
+          
           if(response.data._embedded==undefined){
             this.setState({error:"No applictaions to show!"});
           }
@@ -59,7 +59,7 @@ export default class Recruiter extends Component {
          }
        }
         ).then((response) => {
-               
+          console.log(response.data)
           this.setState({watchingApplication: response.data}) 
          
             }).catch((err)=>{
@@ -75,7 +75,7 @@ export default class Recruiter extends Component {
        let body = {
     name: status
   }
-      axios.get("https://iv1201-backend-dev.herokuapp.com/StatusChange/"+this.state.watchingApplication.id,{
+      axios.put("https://iv1201-backend-dev.herokuapp.com/alterstatus/"+this.state.watchingApplication.id,{
        //axios.get("http://192.168.0.3:8080/StatusChange/"+this.state.watchingApplication.id, {
          headers:{
            Authorization: 'Bearer ' + this.props.jwt
@@ -95,6 +95,7 @@ export default class Recruiter extends Component {
    * Sets the currently watching application sate to '', used to go back to application list view.
    */
   goBackToList(){
+      this.setState({error:''});
       this.setState({watchingApplication:''});
   }
   /**
@@ -113,10 +114,10 @@ export default class Recruiter extends Component {
     if(!this.state.watchingApplication){
     return(
       <View style={styles.container}>
-        <Text style ={styles.welcomeText}>Applications</Text>
+        <Text style ={styles.welcomeText}>Welcome recruiter {this.props.username}</Text>
         <Text style={styles.errorTextStyle}>
-                        {this.state.error}
-                    </Text>
+            {this.state.error}
+        </Text>
         {this.renderApplications()}
         <Button style={styles.button} onPress ={this.props.deleteJWT}>
           Logout
@@ -127,18 +128,23 @@ export default class Recruiter extends Component {
     else{
       return(
         <View style={styles.container}> 
-            <Text style ={styles.welcomeText}>Viewing Application</Text>
+            <Text style ={styles.welcomeText}>Status: {this.state.watchingApplication.status.name}</Text>
             <ScrollView >
+
                 <Application   application ={this.state.watchingApplication}/>
                 <View style={styles.form}>
                     <Input
                     placeholder="New Status"
-                    label="status"
+                    label="New Status"
                     value={status}
                     onChangeText={status => this.setState({ status })}
                     />
                 </View>
-                <Button onPress ={this.changeStatus(this.state.status)}>Alter status</Button>
+                <Text style={styles.errorTextStyle}>
+                  {this.state.error}
+                </Text>
+                <Button onPress ={() =>this.changeStatus(this.state.status)}>Alter status</Button>
+                
             </ScrollView>
             <View style ={styles.buttons}>
                 <View style={styles.buttonView}> 
@@ -164,7 +170,7 @@ const styles = {
     justifyContent: 'center'
   },
   form: {
-    
+        
         backgroundColor: '#f8f8f8',
         borderBottomWidth:1,
         borderColor:'#eee',
@@ -174,7 +180,6 @@ const styles = {
     position: 'absolute',
     top: 0,
     fontSize: 30,
-   
     alignSelf: 'center',
   },
   item: {
@@ -187,6 +192,7 @@ const styles = {
     fontSize: 32,
   },
   buttons:{
+    
       flexDirection:'row',
       left:0,
   }
@@ -197,9 +203,10 @@ const styles = {
   buttonView:{
       flex:1,
   },
+  errorTextStyle: {
+    alignSelf: 'center',
+    fontSize: 18,
+    color: 'red'
+  }
  
 };
-/* <FlatList 
-          data = {this.state.applications}
-          renderItem={({application}) =>  <Application application={application}/>}
-        />*/

@@ -33,10 +33,9 @@ class Login extends Component {
         //axios.post("http://192.168.0.3:8080/authenticate",sendData)
         .then((response) =>{
             deviceStorage.saveItem('username', username);
-          
             deviceStorage.saveItem('role', response.data.role);
             deviceStorage.saveItem("id_token", response.data.jwtToken);
-            this.props.newJWT(response.data.jwtToken, username, response.data.role);
+            this.props.newUser(response.data.jwtToken, username, response.data.role);
             
             }).catch((err)=>{
               

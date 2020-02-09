@@ -48,9 +48,6 @@ public class ApplicationController {
 			resourceAssembler.addLinksToApplicationResponse(application);
 			
 		});
-		
-		//applications
-				//.forEach(applicationResponse -> resourceAssembler.addLinksToApplicationResponse(applicationResponse));
 		return new CollectionModel<ApplicationListResponse>(applicationList,
 				linkTo(methodOn(ApplicationController.class).getAllApplications()).withSelfRel());
 

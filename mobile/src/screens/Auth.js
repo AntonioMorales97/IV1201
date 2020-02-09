@@ -31,7 +31,7 @@ export default class Auth extends Component{
       );
     } else {
       return(
-        <Login newJWT={this.props.newJWT} authSwitch={this.authSwitch}/>
+        <Login newUser={this.props.newUser} authSwitch={this.authSwitch}/>
       );
     }
   }
