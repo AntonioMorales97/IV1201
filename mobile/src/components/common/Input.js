@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, TextInput,Text } from 'react-native';
+import { View, TextInput, Text } from 'react-native';
 /**
  * Handles user inputs.
  * @param {} param0 
  */
 const Input = ({ label, value, onChangeText, placeholder, secureTextEntry, multiline, numberOfLines }) => {
-  const {inputStyle, labelStyle, containerStyle } = styles;
+  const { inputStyle, labelStyle, containerStyle } = styles;
 
   return (
     <View style={containerStyle}>

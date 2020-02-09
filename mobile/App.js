@@ -23,30 +23,30 @@ export default class App extends Component {
    * @param {*} user Username of the jwt.
    * @param {*} role Role of the jwt.
    */
-  newUser(jwt, user, role){
+  newUser(jwt, user, role) {
     this.setState({
       jwt: jwt,
       user: user,
       role: role,
     });
-  }  
-/**
- * The Entry point of the app.
- */
+  }
+  /**
+   * The Entry point of the app.
+   */
   render() {
-    if(this.state.loading){
-      return(
+    if (this.state.loading) {
+      return (
         <Loading size={'large'} />
       );
-    }else if (!this.state.jwt) {
+    } else if (!this.state.jwt) {
       return (
         <Auth newUser={this.newUser} />
       );
     } else if (this.state.jwt) {
       return (
-        <LoggedIn deleteJWT={this.deleteJWT} jwt ={this.state.jwt} user={this.state.user} role= {this.state.role}/>
+        <LoggedIn deleteJWT={this.deleteJWT} jwt={this.state.jwt} user={this.state.user} role={this.state.role} />
       );
-        
+
     }
   }
 }

@@ -1,20 +1,18 @@
 
 import React from 'react';
-import {View, Text, ScrollView} from 'react-native';
+import { View, Text } from 'react-native';
 
 /**
  * Class that renders a specific application.
  * @param {*} param0 The application to show.
  */
-const Application = ({application}) => {   
-
- 
+const Application = ({ application }) => {
     return (
         <View style={styles.container}>
 
             <View style={styles.list}>
                 <Text>
-                    <Text style={styles.listHeader}>Id:</Text> 
+                    <Text style={styles.listHeader}>Id:</Text>
                     <Text style={styles.listItemText}> {application.id} </Text>
                 </Text>
             </View>
@@ -43,57 +41,57 @@ const Application = ({application}) => {
                 </Text>
             </View>
             <Text style={styles.listHeader}>Competence List: </Text>
-            {application.competenceProfile.map((competence)=>{
-            return <View style={styles.list}> 
-                <Text>
-                    <Text style ={styles.listHeader}>Competence:</Text>
-                    <Text style = {styles.listItemText}> {competence.competence.name }</Text> 
-                    <Text style ={styles.listHeader}>- Years:</Text> 
-                    <Text style ={styles.listItemText}>{competence.yearsOfExperience}</Text>
-                </Text>
-            </View>
+            {application.competenceProfile.map((competence) => {
+                return <View style={styles.list}>
+                    <Text>
+                        <Text style={styles.listHeader}>Competence:</Text>
+                        <Text style={styles.listItemText}> {competence.competence.name}</Text>
+                        <Text style={styles.listHeader}>- Years:</Text>
+                        <Text style={styles.listItemText}>{competence.yearsOfExperience}</Text>
+                    </Text>
+                </View>
             })}
-       
+
             <Text style={styles.listHeader}>Availability List: </Text>
-        
-            {application.availability.map((availability)=>{
-            return <View style={styles.list}> 
-                <Text>
-                    <Text style ={styles.listHeader}>From:</Text>
-                    <Text style = {styles.listItemText}> {availability.fromDate }</Text> 
-                    <Text style ={styles.listHeader}>- To:</Text> 
-                    <Text style ={styles.listItemText}>{availability.toDate}</Text>
-                </Text>
-            </View>
+
+            {application.availability.map((availability) => {
+                return <View style={styles.list}>
+                    <Text>
+                        <Text style={styles.listHeader}>From:</Text>
+                        <Text style={styles.listItemText}> {availability.fromDate}</Text>
+                        <Text style={styles.listHeader}>- To:</Text>
+                        <Text style={styles.listItemText}>{availability.toDate}</Text>
+                    </Text>
+                </View>
             })}
-           
-       </View>
+
+        </View>
     )
 }
 
-const styles ={
-    container:{
+const styles = {
+    container: {
         top: 50,
-       
+
     },
-      list:{
-        padding:15,
+    list: {
+        padding: 15,
         backgroundColor: '#f8f8f8',
-        borderBottomWidth:1,
-        borderColor:'#eee',
+        borderBottomWidth: 1,
+        borderColor: '#eee',
     },
-    listitem:{
-        fontWeight:'bold',
-    },
-    listHeader:{
-        fontSize: 20,
-        padding:15,
-        backgroundColor: '#f8f8f8',
-        borderBottomWidth:1,
-        borderColor:'#eee',
+    listitem: {
         fontWeight: 'bold',
     },
-    listItemText:{
+    listHeader: {
+        fontSize: 20,
+        padding: 15,
+        backgroundColor: '#f8f8f8',
+        borderBottomWidth: 1,
+        borderColor: '#eee',
+        fontWeight: 'bold',
+    },
+    listItemText: {
         fontSize: 18,
     }
 }

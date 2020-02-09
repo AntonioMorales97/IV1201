@@ -1,163 +1,97 @@
 import React, { Component } from 'react';
-import { ScrollView ,View, Text, FlatList} from 'react-native';
+import { ScrollView, View, Text } from 'react-native';
 
-import { Button ,Input} from '../components/common';
-import axios from 'axios';
-import {ApplicationList, Application} from '../components';
+import { Button, Input } from '../components/common';
+
+import { ApplicationList, Application } from '../components';
+import backendCalls from '../services/backendCalls';
 /**
  * Class tha handles the recruiters view.
  */
 export default class Recruiter extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-      this.state = {
-      watchingApplication:'',
-      status:'',
-      error:'',
-      applications:[],
+    this.state = {
+      watchingApplication: '',
+      status: '',
+      error: '',
+      applications: [],
       loading: true,
     }
-    //this.selectingApplication=this.selectApplication.bind(this);
-    this.goBackToList =this.goBackToList.bind(this);
-    
-  }
-  
-  
-    /**
-    *  Loads all applications. SHOULD BE MOVED TO RECRUITER VIEW.
-    */
-  componentDidMount(){
-     axios.get("https://iv1201-backend-dev.herokuapp.com/applications",{
-       //axios.get("http://192.168.0.3:8080/applications", {
-         headers:{
-           Authorization: 'Bearer ' + this.props.jwt
-         }
-       }
-        ).then((response) => {
-          
-          if(response.data._embedded==undefined){
-            this.setState({error:"No applictaions to show!"});
-          }
-          
-          this.setState({applications: response.data._embedded.applicationListResponses}) 
-         
-            }).catch((err)=>{
-                console.log(err);
-                this.setState({loading:false});
-                this.setState({error:err.response.data.message});
-            });
- 
-  }
-   /**
-   * Function to get a speicifc applications data.
-   */
-  selectApplication=(id)=>{
-      axios.get("https://iv1201-backend-dev.herokuapp.com/application/"+id,{
-       //axios.get("http://192.168.0.3:8080/application/"+id, {
-         headers:{
-           Authorization: 'Bearer ' + this.props.jwt
-         }
-       }
-        ).then((response) => {
-          this.setState({watchingApplication: response.data}) 
-         
-            }).catch((err)=>{
-                console.log(err.response.data.message);
-                this.setState({loading:false});
-                this.setState({error:err.response.data.message});
-            });
-  }
-  /**
-   * Function that changes the status of a specific application.
-   */
-  changeStatus=(status)=>{
-       let body = {
-    name: status
-  }
-  
-      axios.put("https://iv1201-backend-dev.herokuapp.com/alterstatus/"+this.state.watchingApplication.id,body,{
-       //axios.get("http://192.168.0.3:8080/StatusChange/"+this.state.watchingApplication.id, {
-         headers:{
-           Authorization: 'Bearer ' + this.props.jwt
-         }
-       }
-        ).then((response) => {
-       
-          this.setState({watchingApplication: response.data})
-         
-            }).catch((err)=>{
-                console.log(err.response.data.message);
-                this.setState({loading:false});
-                this.setState({error:err.response.data.message});
-            });
+    this.getAllApplications = backendCalls.getAllApplications.bind(this);
+    this.selectApplication = backendCalls.selectApplication.bind(this);
+    this.changeStatus = backendCalls.changeStatus.bind(this);
+    this.getAllApplications(this.props.jwt);
+    this.goBackToList = this.goBackToList.bind(this);
+
   }
   /**
    * Sets the currently watching application sate to '', used to go back to application list view.
    */
-  goBackToList(){
-      this.setState({error:''});
-      this.setState({watchingApplication:''});
+  goBackToList() {
+    this.setState({ error: '' });
+    this.setState({ watchingApplication: '' });
   }
   /**
    * Renders all applications.
    */
-  renderApplications(){
-   
-    return this.state.applications.map(application =>{
-        
-      return <ApplicationList selectApplication = {this.selectApplication} application= {application}/>
+  renderApplications() {
+
+    return this.state.applications.map(application => {
+
+      return <ApplicationList selectApplication={this.selectApplication} application={application} />
     })
   }
 
   render() {
-   const status = this.state.status;
-    if(!this.state.watchingApplication){
-    return(
-      <View style={styles.container}>
-        <Text style ={styles.welcomeText}>Welcome recruiter {this.props.username}</Text>
-        <Text style={styles.errorTextStyle}>
+    const status = this.state.status;
+    if (!this.state.watchingApplication) {
+      return (
+        <View style={styles.container}>
+          <Text style={styles.welcomeText}>Welcome recruiter {this.props.username}</Text>
+          <Text style={styles.errorTextStyle}>
             {this.state.error}
-        </Text>
-        {this.renderApplications()}
-        <Button style={styles.button} onPress ={this.props.deleteJWT}>
-          Logout
+          </Text>
+          {this.renderApplications()}
+          <Button style={styles.button} onPress={this.props.deleteJWT}>
+            Logout
         </Button>
-      </View>
-    );
+        </View>
+      );
     }
-    else{
-      return(
-        <View style={styles.container}> 
-            <Text style ={styles.welcomeText}>Status: {this.state.watchingApplication.status.name}</Text>
-            <ScrollView >
+    else {
+      return (
+        <View style={styles.container}>
+          <Text style={styles.welcomeText}>Status: {this.state.watchingApplication.status.name}</Text>
+          <ScrollView >
 
-                <Application   application ={this.state.watchingApplication}/>
-                <View style={styles.form}>
-                    <Input
-                    placeholder="New Status"
-                    label="New Status"
-                    value={status}
-                    onChangeText={status => this.setState({ status })}
-                    />
-                </View>
-                <Text style={styles.errorTextStyle}>
-                  {this.state.error}
-                </Text>
-                <Button onPress ={() =>this.changeStatus(this.state.status)}>Alter status</Button>
-                
-            </ScrollView>
-            <View style ={styles.buttons}>
-                <View style={styles.buttonView}> 
-                    <Button  onPress ={this.goBackToList} style ={styles.logout}>
-                        Go back to List
-                    </Button>
-                </View>
-                <View style={styles.buttonView}> 
-                    <Button onPress ={this.props.deleteJWT} style ={styles.logout}>
-                        Logout
-                    </Button>
-                </View>
+            <Application application={this.state.watchingApplication} />
+            <View style={styles.form}>
+              <Input
+                placeholder="New Status"
+                label="New Status"
+                value={status}
+                onChangeText={status => this.setState({ status })}
+              />
             </View>
+            <Text style={styles.errorTextStyle}>
+              {this.state.error}
+            </Text>
+            <Button onPress={() => this.changeStatus(this.state.status)}>Alter status</Button>
+
+          </ScrollView>
+          <View style={styles.buttons}>
+            <View style={styles.buttonView}>
+              <Button onPress={this.goBackToList} style={styles.logout}>
+                Go back to List
+                    </Button>
+            </View>
+            <View style={styles.buttonView}>
+              <Button onPress={this.props.deleteJWT} style={styles.logout}>
+                Logout
+                    </Button>
+            </View>
+          </View>
         </View>
       )
     }
@@ -170,13 +104,13 @@ const styles = {
     justifyContent: 'center'
   },
   form: {
-        
-        backgroundColor: '#f8f8f8',
-        borderBottomWidth:1,
-        borderColor:'#eee',
+
+    backgroundColor: '#f8f8f8',
+    borderBottomWidth: 1,
+    borderColor: '#eee',
   },
   welcomeText: {
-    
+
     position: 'absolute',
     top: 0,
     fontSize: 30,
@@ -191,22 +125,22 @@ const styles = {
   title: {
     fontSize: 32,
   },
-  buttons:{
-    
-      flexDirection:'row',
-      left:0,
+  buttons: {
+
+    flexDirection: 'row',
+    left: 0,
   }
   ,
-  logout:{
+  logout: {
     justifyContent: 'flex-end'
   },
-  buttonView:{
-      flex:1,
+  buttonView: {
+    flex: 1,
   },
   errorTextStyle: {
     alignSelf: 'center',
     fontSize: 18,
     color: 'red'
   }
- 
+
 };

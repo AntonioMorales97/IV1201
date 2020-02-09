@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
+
 /**
  * Class that renders a application in the applicationList view.
  * @param {*} param0 

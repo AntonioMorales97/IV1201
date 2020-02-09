@@ -3,11 +3,12 @@ import { Text, View } from 'react-native';
 import { Input, TextLink, Loading, Button } from './common';
 import axios from 'axios';
 import deviceStorage from '../services/deviceStorage';
+import backendCalls from '../services/backendCalls';
 /**
  * A class that handles the login of the application, holds the view and the acctual login logic.
  */
 class Login extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       username: '',
@@ -15,34 +16,10 @@ class Login extends Component {
       error: '',
       loading: false
     };
-    this.loginUser = this.loginUser.bind(this);
+    this.loginUser = backendCalls.loginUser.bind(this);
   }
-  /**
-   * Function to login a specific user.
-   */
-    loginUser(){
-        const {username, password} = this.state;
-        this.setState({error:'', loading: 'true'});
 
-        let sendData = {
-    username: username,
-    password: password
-}
 
-        axios.post("https://iv1201-backend-dev.herokuapp.com/authenticate",sendData)
-        //axios.post("http://192.168.0.3:8080/authenticate",sendData)
-        .then((response) =>{
-            deviceStorage.saveItem('username', username);
-            deviceStorage.saveItem('role', response.data.role);
-            deviceStorage.saveItem("id_token", response.data.jwtToken);
-            this.props.newUser(response.data.jwtToken, username, response.data.role);
-            
-            }).catch((err)=>{
-              
-                this.setState({loading:false});
-                this.setState({error:err.response.data.message});
-            });
-    }
   render() {
     const { username, password, error, loading } = this.state;
     const { form, section, errorTextStyle } = styles;

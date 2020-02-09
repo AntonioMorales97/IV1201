@@ -7,7 +7,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 const TextLink = ({ onPress, children }) => {
   const { button, text } = styles;
   return (
-    <View style={{flexDirection: 'row'}}>
+    <View style={{ flexDirection: 'row' }}>
       <TouchableOpacity onPress={onPress} style={button}>
         <Text style={text}>
           {children}
