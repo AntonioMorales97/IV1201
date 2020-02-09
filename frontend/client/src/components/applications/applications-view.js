@@ -8,7 +8,6 @@ import './applications.css';
 const ApplicationsView = props => {
   const { t } = useTranslation();
   const { applications } = props;
-  console.log(applications);
   return (
     <Container className='applications'>
       <h1>{t('applications')}</h1>

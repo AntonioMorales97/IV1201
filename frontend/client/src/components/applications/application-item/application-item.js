@@ -4,13 +4,13 @@ import { useTranslation } from 'react-i18next';
 import { ListGroupItem } from 'reactstrap';
 
 const ApplicationItem = props => {
-  const { id, firstName, lastName, email, status } = props.application;
+  const { id, firstName, lastName, ssn, status } = props.application;
   const { t } = useTranslation();
 
   const badgeStatus = () => {
-    if (status === 'accepted') {
+    if (status.name === 'accepted') {
       return 'badge-success';
-    } else if (status === 'rejected') {
+    } else if (status.name === 'rejected') {
       return 'badge-danger';
     } else {
       return 'badge-secondary';
@@ -19,9 +19,9 @@ const ApplicationItem = props => {
   return (
     <ListGroupItem className='row d-flex'>
       <div className='col-12 col-md-3'>{firstName + ' ' + lastName}</div>
-      <div className='col-12 col-md-3'>{email}</div>
+      <div className='col-12 col-md-3'>{ssn}</div>
       <div className='col-12 col-md-3'>
-        <span className={'badge ' + badgeStatus()}>{t(status)}</span>
+        <span className={'badge ' + badgeStatus()}>{t(status.name)}</span>
       </div>
       <div className='col-12 col-md-3'>
         <Link to={`/applications/${id}`}>{t('view_application')}</Link>

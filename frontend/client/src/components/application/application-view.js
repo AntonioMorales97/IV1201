@@ -9,21 +9,20 @@ const ApplicationView = props => {
   const { t } = useTranslation();
   const {
     id,
-    firstName,
-    lastName,
-    date_of_birth,
-    email,
     status,
-    experiences,
-    availabilities
+    person,
+    competenceProfile,
+    availability
   } = props.application;
+
+  const { firstName, lastName, email, ssn } = person;
 
   const { acceptApplication, rejectApplication, unhandleApplication } = props;
 
   const badgeStatus = () => {
-    if (status === 'accepted') {
+    if (status.name === 'accepted') {
       return 'badge-success';
-    } else if (status === 'rejected') {
+    } else if (status.name === 'rejected') {
       return 'badge-danger';
     } else {
       return 'badge-secondary';
@@ -45,7 +44,7 @@ const ApplicationView = props => {
         <ListGroup className='list-group-horizontal-md'>
           <ListGroupItem>
             <span className='bold'>{t('status')}: </span>
-            <span className={'badge ' + badgeStatus()}>{t(status)}</span>
+            <span className={'badge ' + badgeStatus()}>{t(status.name)}</span>
           </ListGroupItem>
         </ListGroup>
         <div className='personal-info mt-3'>
@@ -60,8 +59,8 @@ const ApplicationView = props => {
               {lastName}
             </ListGroupItem>
             <ListGroupItem>
-              <span className='bold'>{t('birth_date')}: </span>
-              {date_of_birth}
+              <span className='bold'>{t('ssn')}: </span>
+              {ssn}
             </ListGroupItem>
             <ListGroupItem>
               <span className='bold'>{t('email')}: </span>
@@ -72,10 +71,10 @@ const ApplicationView = props => {
         <div className='experience mt-2'>
           <h2>{t('experience')}</h2>
           <ListGroup className='list-group list-group-horizontal-lg'>
-            {experiences.length > 0 ? (
-              experiences.map(experience => (
+            {competenceProfile.length > 0 ? (
+              competenceProfile.map(experience => (
                 <ListGroupItem key={experience.id}>
-                  <span className='bold'>{t(experience.name)}</span>
+                  <span className='bold'>{t(experience.competence.name)}</span>
                 </ListGroupItem>
               ))
             ) : (
@@ -86,11 +85,12 @@ const ApplicationView = props => {
         <div className='availibility mt-2'>
           <h2>{t('availability')}</h2>
           <ListGroup className='list-group list-group-horizontal-lg'>
-            {availabilities.length > 0 ? (
-              availabilities.map(availability => (
-                <ListGroupItem key={availability.id}>
-                  <span className='bold'>{t('from')} </span> {availability.from}{' '}
-                  <span className='bold'>{t('to')} </span> {availability.to}
+            {availability.length > 0 ? (
+              availability.map(avail => (
+                <ListGroupItem key={avail.id}>
+                  <span className='bold'>{t('fromDate')} </span>{' '}
+                  {avail.fromDate} <span className='bold'>{t('toDate')} </span>{' '}
+                  {avail.toDate}
                 </ListGroupItem>
               ))
             ) : (
