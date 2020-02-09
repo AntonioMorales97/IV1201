@@ -1,18 +1,11 @@
 package se.kth.iv1201.recruitmentbackend.config;
 
+import java.util.Optional;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
-import lombok.extern.slf4j.Slf4j;
-import se.kth.iv1201.recruitmentbackend.domain.Application;
-import se.kth.iv1201.recruitmentbackend.domain.Availability;
-import se.kth.iv1201.recruitmentbackend.domain.Competence;
-import se.kth.iv1201.recruitmentbackend.domain.CompetenceProfile;
-import se.kth.iv1201.recruitmentbackend.domain.Person;
-import se.kth.iv1201.recruitmentbackend.domain.Role;
 import se.kth.iv1201.recruitmentbackend.domain.Status;
 import se.kth.iv1201.recruitmentbackend.repository.ApplicationRepository;
 import se.kth.iv1201.recruitmentbackend.repository.AvailabilityRepository;
@@ -22,23 +15,40 @@ import se.kth.iv1201.recruitmentbackend.repository.PersonRepository;
 import se.kth.iv1201.recruitmentbackend.repository.RoleRepository;
 import se.kth.iv1201.recruitmentbackend.repository.StatusRepository;
 
-import java.util.Date;
-import java.util.Optional;
 /**
  * Class used to initialize  the database with some data if need be.
  *
  */
-@SuppressWarnings("unused")
 @Configuration
-@Slf4j
-
 public class DatabaseInit {
+	private static final String UNHANDLED_STATUS = "unhandled";
+	private static final String ACCEPTED_STATUS = "accepted";
+	private static final String REJECTED_STATUS = "rejected";
 
 
 	@Bean
 	CommandLineRunner initializeDatabase(PersonRepository personRepo, CompetenceRepository competenceRepo, RoleRepository roleRepo,
 			AvailabilityRepository availabilityRepo, CompetenceProfileRepository compPRepo, StatusRepository statusRepo, ApplicationRepository applicationRepo) {
-		return null;
+		
+		return args->{
+			Optional<Status> optAccepted = statusRepo.findByName(ACCEPTED_STATUS);
+			if(optAccepted.isEmpty()) {
+				Status accepted = new Status(ACCEPTED_STATUS);
+				statusRepo.save(accepted);
+			}
+			
+			Optional<Status> optRejected = statusRepo.findByName(REJECTED_STATUS);
+			if(optRejected.isEmpty()) {
+				Status rejected = new Status(REJECTED_STATUS);
+				statusRepo.save(rejected);
+			}
+			
+			Optional<Status> optUnhandled = statusRepo.findByName(UNHANDLED_STATUS);
+			if(optUnhandled.isEmpty()) {
+				Status unhandled = new Status(UNHANDLED_STATUS);
+				statusRepo.save(unhandled);
+			}
+		};
 	
 		//FOP TESTING PURPOUSES LOCALLY
 		/*return args->{				

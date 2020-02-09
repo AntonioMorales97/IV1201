@@ -12,7 +12,6 @@ import se.kth.iv1201.recruitmentbackend.migration.MigrationService;
 @RestController
 @CrossOrigin
 public class MigrationController {
-	/*
 	@Autowired
 	private MigrationService migrationService;
 	
@@ -20,7 +19,5 @@ public class MigrationController {
 	@ResponseStatus(HttpStatus.OK)
 	public void migrate() {
 		this.migrationService.migrate();
-	}*/
-	
-	
+	}
 }

@@ -5,9 +5,11 @@ import java.util.Date;
 import org.springframework.hateoas.RepresentationModel;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import se.kth.iv1201.recruitmentbackend.domain.Status;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class ApplicationListResponse extends RepresentationModel<ApplicationListResponse>{
 private Long id;
 private String firstName;
