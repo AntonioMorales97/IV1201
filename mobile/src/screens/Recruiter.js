@@ -59,7 +59,6 @@ export default class Recruiter extends Component {
          }
        }
         ).then((response) => {
-          console.log(response.data)
           this.setState({watchingApplication: response.data}) 
          
             }).catch((err)=>{
@@ -75,11 +74,12 @@ export default class Recruiter extends Component {
        let body = {
     name: status
   }
-      axios.put("https://iv1201-backend-dev.herokuapp.com/alterstatus/"+this.state.watchingApplication.id,{
+  
+      axios.put("https://iv1201-backend-dev.herokuapp.com/alterstatus/"+this.state.watchingApplication.id,body,{
        //axios.get("http://192.168.0.3:8080/StatusChange/"+this.state.watchingApplication.id, {
          headers:{
            Authorization: 'Bearer ' + this.props.jwt
-         }, body
+         }
        }
         ).then((response) => {
        

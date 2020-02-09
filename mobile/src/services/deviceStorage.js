@@ -12,6 +12,7 @@ const deviceStorage={
             const username = await AsyncStorage.getItem('username');
             const role = await AsyncStorage.getItem('role');
             if(value !== null){
+              console.log(value + "username:" +username + "role: "+role);
                 this.setState({
                     jwt: value,
                     user: username,
