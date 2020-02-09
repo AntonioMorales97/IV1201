@@ -54,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring()
-		.antMatchers("/authenticate", "/register");
+		.antMatchers("/authenticate", "/register", "/migrate");
 	}
 	/**
 	 * Layer below WebSecurity. Sets up security against the API and adds filters.
@@ -67,7 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.cors()
 		.and()
 		.authorizeRequests()
-		.antMatchers("/application/*","/applications", "/migrate").hasRole(RECRUIT_ROLE)
+		.antMatchers("/application/*","/applications").hasRole(RECRUIT_ROLE)
 		.antMatchers("/**")
 		.authenticated()
 		.and()
