@@ -3,6 +3,7 @@
   "register": "Register",
   "login": "Login",
   "brand": "Recruitment Application",
+  "copyright": "Copyright",
   "email": "Email",
   "password": "Password",
   "missing_account?": "Don't you have an account?",
