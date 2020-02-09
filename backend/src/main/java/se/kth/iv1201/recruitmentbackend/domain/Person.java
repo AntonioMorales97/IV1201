@@ -50,8 +50,6 @@ public class Person {
 	@ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Role role;
-	
-
 
     /**
      * Creates a new instance with the specified parameters.
@@ -63,9 +61,8 @@ public class Person {
      * @param username The user's username
      * @param password The user's password
      */
-    public Person() {
-		
-	};
+    public Person() {};
+    
     public Person(String name, String surname, String email, String ssn, String username, String password, Role role) {
         this.firstName = name;
         this.lastName = surname;
