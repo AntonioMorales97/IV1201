@@ -24,6 +24,8 @@ import se.kth.iv1201.recruitmentbackend.security.MyUserDetailsService;
  */
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+	private static final String RECRUIT_ROLE = "RECRUIT";
+	
 	@Autowired
 	private MyUserDetailsService myUserDetailsService;
 
@@ -52,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring()
-		.antMatchers("/authenticate", "/register", "/migrate");
+		.antMatchers("/authenticate", "/register");
 	}
 	/**
 	 * Layer below WebSecurity. Sets up security against the API and adds filters.
@@ -65,7 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.cors()
 		.and()
 		.authorizeRequests()
-		//.antMatchers("/application","/applications").hasRole("ADMIN")
+		.antMatchers("/application/*","/applications", "/migrate").hasRole(RECRUIT_ROLE)
 		.antMatchers("/**")
 		.authenticated()
 		.and()
