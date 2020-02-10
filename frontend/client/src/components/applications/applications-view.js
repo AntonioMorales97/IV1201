@@ -10,14 +10,14 @@ const ApplicationsView = props => {
   const { applications } = props;
   return (
     <Container className='applications'>
-      <h1>{t('applications')}</h1>
+      <h1>{t('application.applications')}</h1>
       <ListGroup>
         {applications.length > 0 ? (
           applications.map(application => (
             <ApplicationItem key={application.id} application={application} />
           ))
         ) : (
-          <h4>{t('no_applications')}</h4>
+          <h4>{t('application.no_applications')}</h4>
         )}
       </ListGroup>
     </Container>

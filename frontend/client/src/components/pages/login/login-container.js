@@ -17,8 +17,8 @@ class LoginContainer extends Component {
   state = {
     username: '',
     password: '',
-    errorMessage: null,
-    successMessage: null,
+    errorMessageKey: null,
+    successMessageKey: null,
     tryLogin: false
   };
 
@@ -38,7 +38,7 @@ class LoginContainer extends Component {
   componentDidMount() {
     const { success } = this.props;
     if (success.id === REGISTER_SUCCESS) {
-      this.setState({ successMessage: success.msg.msg });
+      this.setState({ successMessageKey: success.msg.msg });
     }
   }
 
@@ -46,20 +46,20 @@ class LoginContainer extends Component {
     const { error, success } = this.props;
     if (error !== prevProps.error) {
       if (error.id === LOGIN_FAIL) {
-        this.setState({ errorMessage: error.msg.msg, tryLogin: false });
+        this.setState({ errorMessageKey: error.msg.msg, tryLogin: false });
       } else {
-        this.setState({ errorMessage: null });
+        this.setState({ errorMessageKey: null });
       }
     }
 
     if (success !== prevProps.success) {
       if (success.id === LOGIN_SUCCESS) {
         this.setState({
-          successMessage: success.msg.msg,
+          successMessageKey: success.msg.msg,
           tryLogin: false
         });
       } else {
-        this.setState({ successMessage: null });
+        this.setState({ successMessageKey: null });
       }
     }
   }
@@ -110,8 +110,8 @@ class LoginContainer extends Component {
         renderRedirect={this.renderRedirect}
         onSubmit={this.onSubmit}
         onChange={this.onChange}
-        errorMessage={this.state.errorMessage}
-        successMessage={this.state.successMessage}
+        errorMessageKey={this.state.errorMessageKey}
+        successMessageKey={this.state.successMessageKey}
         tryLogin={this.state.tryLogin}
       />
     );
@@ -127,4 +127,3 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, { login, clearError, clearSuccess })(
   LoginContainer
 );
-//export default LoginContainer;

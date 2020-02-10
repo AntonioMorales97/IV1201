@@ -20,8 +20,8 @@ const LoginView = props => {
     onSubmit,
     onChange,
     tryLogin,
-    errorMessage,
-    successMessage,
+    errorMessageKey,
+    successMessageKey,
     renderRedirect
   } = props;
   return (
@@ -30,28 +30,30 @@ const LoginView = props => {
       <Container>
         <Container className='form-container'>
           <div className='h3 text-center'>{t('login')}</div>
-          {errorMessage ? <Alert color='danger'>{errorMessage}</Alert> : null}
-          {successMessage ? (
-            <Alert color='success'>{successMessage}</Alert>
+          {errorMessageKey ? (
+            <Alert color='danger'>{t(errorMessageKey)}</Alert>
+          ) : null}
+          {successMessageKey ? (
+            <Alert color='success'>{t(successMessageKey)}</Alert>
           ) : null}
           <Form onSubmit={onSubmit}>
             <FormGroup className='mb-0'>
-              <Label for='username'>{t('username')}</Label>
+              <Label for='username'>{t('personal.username')}</Label>
               <Input
                 type='text'
                 name='username'
                 id='username'
-                placeholder={t('username')}
+                placeholder={t('personal.username')}
                 autoComplete='username'
                 className='mb-3'
                 onChange={onChange}
               />
-              <Label for='password'>{t('password')}</Label>
+              <Label for='password'>{t('personal.password')}</Label>
               <Input
                 type='password'
                 name='password'
                 id='password'
-                placeholder={t('password')}
+                placeholder={t('personal.password')}
                 autoComplete='current-password'
                 className='mb-3'
                 onChange={onChange}
@@ -60,7 +62,7 @@ const LoginView = props => {
                 {tryLogin ? <Spinner size='sm' /> : t('login')}
               </Button>
               <div className='text-center mt-3'>
-                {t('missing_account?')}{' '}
+                {t('form.missing_account?')}{' '}
                 <Link to='/register'>{t('register')}</Link>
               </div>
             </FormGroup>
@@ -76,8 +78,8 @@ LoginView.propTypes = {
   onChange: PropTypes.func.isRequired,
   renderRedirect: PropTypes.func.isRequired,
   tryLogin: PropTypes.bool,
-  errorMessage: PropTypes.string,
-  successMessage: PropTypes.string
+  errorMessageKey: PropTypes.string,
+  successMessageKey: PropTypes.string
 };
 
 export default LoginView;

@@ -56,7 +56,7 @@ const HeaderView = props => {
       </NavItem>
       <NavItem>
         <NavLink tag={Link} to='/applications' onClick={toggle}>
-          {t('applications')}
+          {t('application.applications')}
         </NavLink>
       </NavItem>
       <NavItem>

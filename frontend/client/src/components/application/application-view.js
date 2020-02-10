@@ -35,78 +35,85 @@ const ApplicationView = props => {
         <div className='back'>
           <Link to='/applications'>
             <i className='fas fa-angle-double-left'></i>{' '}
-            <span className='back-text'>{t('back_to_applications')}</span>
+            <span className='back-text'>
+              {t('application.back_to_applications')}
+            </span>
           </Link>
         </div>
         <h1>
-          {t('application')} #{id}
+          {t('application.application')} #{id}
         </h1>
         <ListGroup className='list-group-horizontal-md'>
           <ListGroupItem>
-            <span className='bold'>{t('status')}: </span>
-            <span className={'badge ' + badgeStatus()}>{t(status.name)}</span>
+            <span className='bold'>{t('application.status')}: </span>
+            <span className={'badge ' + badgeStatus()}>
+              {t(`application.${status.name}`)}
+            </span>
           </ListGroupItem>
         </ListGroup>
         <div className='personal-info mt-3'>
-          <h2>{t('personal_info')}</h2>
+          <h2>{t('application.personal_info')}</h2>
           <ListGroup className='list-group-horizontal-lg'>
             <ListGroupItem>
-              <span className='bold'>{t('first_name')}: </span>
+              <span className='bold'>{t('personal.first_name')}: </span>
               {firstName}
             </ListGroupItem>
             <ListGroupItem>
-              <span className='bold'>{t('last_name')}: </span>
+              <span className='bold'>{t('personal.last_name')}: </span>
               {lastName}
             </ListGroupItem>
             <ListGroupItem>
-              <span className='bold'>{t('ssn')}: </span>
+              <span className='bold'>{t('personal.ssn')}: </span>
               {ssn}
             </ListGroupItem>
             <ListGroupItem>
-              <span className='bold'>{t('email')}: </span>
+              <span className='bold'>{t('personal.email')}: </span>
               {email}
             </ListGroupItem>
           </ListGroup>
         </div>
         <div className='experience mt-2'>
-          <h2>{t('experience')}</h2>
+          <h2>{t('application.experience')}</h2>
           <ListGroup className='list-group list-group-horizontal-lg'>
             {competenceProfile.length > 0 ? (
               competenceProfile.map(experience => (
                 <ListGroupItem key={experience.id}>
-                  <span className='bold'>{t(experience.competence.name)}</span>
+                  <span className='bold'>
+                    {t(`application.competence.${experience.competence.name}`)}
+                  </span>
                 </ListGroupItem>
               ))
             ) : (
-              <h4>{t('no_experiences')}</h4>
+              <h4>{t('application.no_experiences')}</h4>
             )}
           </ListGroup>
         </div>
         <div className='availibility mt-2'>
-          <h2>{t('availability')}</h2>
+          <h2>{t('application.availability')}</h2>
           <ListGroup className='list-group list-group-horizontal-lg'>
             {availability.length > 0 ? (
               availability.map(avail => (
                 <ListGroupItem key={avail.id}>
-                  <span className='bold'>{t('fromDate')} </span>{' '}
-                  {avail.fromDate} <span className='bold'>{t('toDate')} </span>{' '}
+                  <span className='bold'>{t('application.fromDate')} </span>{' '}
+                  {avail.fromDate}{' '}
+                  <span className='bold'>{t('application.toDate')} </span>{' '}
                   {avail.toDate}
                 </ListGroupItem>
               ))
             ) : (
-              <h4>{t('no_availability')}</h4>
+              <h4>{t('application.no_availability')}</h4>
             )}
           </ListGroup>
         </div>
         <div className='actions mt-3'>
           <Button className='btn-success mr-1' onClick={acceptApplication}>
-            {t('accept')}
+            {t('application.accept')}
           </Button>
           <Button className='btn-danger mr-1' onClick={rejectApplication}>
-            {t('reject')}
+            {t('application.reject')}
           </Button>
           <Button className='secondary' onClick={unhandleApplication}>
-            {t('unhandle')}
+            {t('application.unhandle')}
           </Button>
         </div>
       </div>

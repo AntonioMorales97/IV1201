@@ -2,42 +2,59 @@
   "home": "Home",
   "register": "Register",
   "login": "Login",
+  "logout": "Logout",
   "brand": "Recruitment Application",
   "copyright": "Copyright",
-  "email": "Email",
-  "password": "Password",
-  "missing_account?": "Don't you have an account?",
-  "already_have_account?": "Already have an account?",
   "recruit": "Recruit",
   "apply": "Apply",
-  "first_name": "First name",
-  "last_name": "Last name",
-  "ssn": "Social security number",
-  "username": "Username",
-  "birth_date": "Birth date",
-  "please_enter_fields": "Please enter all fields!",
-  "ssn_atleast_10": "SSN must be atleast 10 digits!",
-  "successful_registration": "Successful registration, please login!",
-  "application": "Application",
-  "applications": "Applications",
-  "status": "Status",
-  "accepted": "Accepted",
-  "accept": "Accept",
-  "rejected": "Rejected",
-  "reject": "Reject",
-  "unhandled": "Unhandled",
-  "unhandle": "Unhandle",
-  "personal_info": "Personal information",
-  "experience": "Experience",
-  "availability": "Availability",
-  "fromDate": "From",
-  "toDate": "To",
-  "back_to_applications": "Back to applications",
-  "view_application": "View application",
-  "logout": "Logout",
-  "no_applications": "There is no applications",
-  "no_experiences": "No experiences",
-  "no_availability": "No availability",
-  "Karuselldrift": "Carousel operation",
-  "Korvgrillning": "Sausage barbecue"
+
+  "personal": {
+    "email": "Email",
+    "password": "Password",
+    "first_name": "First name",
+    "last_name": "Last name",
+    "ssn": "Social security number",
+    "username": "Username",
+    "birth_date": "Birth date"
+  },
+
+  "form": {
+    "missing_account?": "Don't have an account?",
+    "already_have_account?": "Already have an account?"
+  },
+
+  "error": {
+    "1": "Please enter all fields!",
+    "2": "SSN must be atleast 10 digits!"
+  },
+
+  "success": {
+    "1": "Successful registration, please login!"
+  },
+
+  "application": {
+    "application": "Application",
+    "applications": "Applications",
+    "status": "Status",
+    "personal_info": "Personal information",
+    "experience": "Experience",
+    "availability": "Availability",
+    "fromDate": "From",
+    "toDate": "To",
+    "back_to_applications": "Back to applications",
+    "view_application": "View application",
+    "no_applications": "There is no applications",
+    "no_experiences": "No experiences",
+    "no_availability": "No availability",
+    "accepted": "Accepted",
+    "rejected": "Rejected",
+    "unhandled": "Unhandled",
+    "accept": "Accept",
+    "reject": "Reject",
+    "unhandle": "Unhandle",
+    "competence": {
+      "Karuselldrift": "Carousel operation",
+      "Korvgrillning": "Sausage barbecue"
+    }
+  }
 }

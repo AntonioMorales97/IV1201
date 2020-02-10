@@ -21,10 +21,14 @@ const ApplicationItem = props => {
       <div className='col-12 col-md-3'>{firstName + ' ' + lastName}</div>
       <div className='col-12 col-md-3'>{ssn}</div>
       <div className='col-12 col-md-3'>
-        <span className={'badge ' + badgeStatus()}>{t(status.name)}</span>
+        <span className={'badge ' + badgeStatus()}>
+          {t(`application.${status.name}`)}
+        </span>
       </div>
       <div className='col-12 col-md-3'>
-        <Link to={`/applications/${id}`}>{t('view_application')}</Link>
+        <Link to={`/applications/${id}`}>
+          {t('application.view_application')}
+        </Link>
       </div>
     </ListGroupItem>
   );

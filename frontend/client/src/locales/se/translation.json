@@ -2,42 +2,59 @@
   "home": "Hem",
   "register": "Registrera",
   "login": "Logga in",
+  "logout": "Logga ut",
   "brand": "Rekryteringsapplikation",
   "copyright": "Upphovsrätt",
-  "email": "Epost",
-  "password": "Lösenord",
-  "missing_account?": "Har du inget konto?",
-  "already_have_account?": "Har du redan ett konto?",
   "recruit": "Rekrytera",
   "apply": "Ansök",
-  "first_name": "Förnamn",
-  "last_name": "Efternamn",
-  "ssn": "Personnummer",
-  "username": "Användarnamn",
-  "birth_date": "Födelsedatum",
-  "please_enter_fields": "Vänligen fyll i alla rader!",
-  "ssn_atleast_10": "Personnummer måste vara 10 siffror!",
-  "successful_registration": "Registrering lyckades, vänligen logga in!",
-  "application": "Ansökan",
-  "applications": "Ansökan",
-  "status": "Status",
-  "accepted": "Accepterad",
-  "accept": "Acceptera",
-  "reject": "Neka",
-  "rejected": "Nekad",
-  "unhandled": "Ohanterad",
-  "unhandle": "Ohantera",
-  "personal_info": "Personlig information",
-  "experience": "Erfarenhet",
-  "availability": "Tillgänglighet",
-  "fromDate": "Från",
-  "toDate": "Till",
-  "back_to_applications": "Tillbaka till ansökan",
-  "view_application": "Se ansökan",
-  "logout": "Logga ut",
-  "no_applications": "Finns inga ansökan",
-  "no_experiences": "Inga tidiga erfarenheter",
-  "no_availability": "Ingen tillgänglighet",
-  "Karuselldrift": "Karuselldrift",
-  "Korvgrillning": "Korvgrillning"
+
+  "personal": {
+    "email": "Epost",
+    "password": "Lösenord",
+    "first_name": "Förnamn",
+    "last_name": "Efternamn",
+    "ssn": "Personnummer",
+    "username": "Användarnamn",
+    "birth_date": "Födelsedatum"
+  },
+
+  "form": {
+    "missing_account?": "Har du inget konto?",
+    "already_have_account?": "Har du redan ett konto?"
+  },
+
+  "error": {
+    "1": "Vänligen fyll i alla rader!",
+    "2": "Personnummer måste vara 10 siffror!"
+  },
+
+  "success": {
+    "1": "Registrering lyckades, vänligen logga in!"
+  },
+
+  "application": {
+    "application": "Ansökan",
+    "applications": "Ansökan",
+    "status": "Status",
+    "personal_info": "Personlig information",
+    "experience": "Erfarenhet",
+    "availability": "Tillgänglighet",
+    "fromDate": "Från",
+    "toDate": "Till",
+    "view_application": "Se ansökan",
+    "back_to_applications": "Tillbaka till ansökan",
+    "no_applications": "Finns inga ansökan",
+    "no_experiences": "Inga tidiga erfarenheter",
+    "no_availability": "Ingen tillgänglighet",
+    "accepted": "Accepterad",
+    "rejected": "Nekad",
+    "unhandled": "Ohanterad",
+    "accept": "Acceptera",
+    "reject": "Neka",
+    "unhandle": "Ohantera",
+    "competence": {
+      "Karuselldrift": "Karuselldrift",
+      "Korvgrillning": "Korvgrillning"
+    }
+  }
 }
