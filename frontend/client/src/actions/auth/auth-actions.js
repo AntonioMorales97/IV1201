@@ -12,7 +12,7 @@ import { setAuthToken, deleteAuthToken } from '../../utils/config-auth-token';
 
 export const login = ({ username, password }) => dispatch => {
   if (!username || !password) {
-    dispatch(returnError({ msg: 'Please enter all fields' }, 400, LOGIN_FAIL));
+    dispatch(returnError({ msg: 'error.1' }, 400, LOGIN_FAIL));
     return;
   }
 
@@ -30,7 +30,7 @@ export const login = ({ username, password }) => dispatch => {
     .catch(err => {
       dispatch(
         returnError(
-          { msg: err.response.data.message },
+          { msg: err.response.data.message }, //handle this error key
           err.response.status,
           LOGIN_FAIL
         )
@@ -53,12 +53,12 @@ export const register = ({
   password
 }) => dispatch => {
   if (!firstName || !lastName || !ssn || !username || !email || !password) {
-    dispatch(returnError({ msg: 'please_enter_fields' }, 400, REGISTER_FAIL));
+    dispatch(returnError({ msg: 'error.1' }, 400, REGISTER_FAIL));
     return;
   }
 
   if (ssn.length < 10) {
-    dispatch(returnError({ msg: 'ssn_atleast_10' }, 400, REGISTER_FAIL));
+    dispatch(returnError({ msg: 'error.2' }, 400, REGISTER_FAIL));
     return;
   }
 
@@ -75,11 +75,7 @@ export const register = ({
     .post('/register', body)
     .then(res => {
       dispatch(
-        returnSuccess(
-          { msg: 'successful_registration' },
-          res.status,
-          REGISTER_SUCCESS
-        )
+        returnSuccess({ msg: 'success.1' }, res.status, REGISTER_SUCCESS)
       );
       dispatch({
         type: REGISTER_SUCCESS
