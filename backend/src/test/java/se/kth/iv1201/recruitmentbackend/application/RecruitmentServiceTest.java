@@ -1,6 +1,7 @@
-/*package se.kth.iv1201.recruitmentbackend.application;
+package se.kth.iv1201.recruitmentbackend.application;
 
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -41,13 +42,21 @@ public void registrationTest() throws Exception{
 	System.out.println("\n"+countBefore+"\n");
 	register("funkar", "Det","Här@gmail.com", "9403021583", "Kanske", "Detkanske");
 	final long countAfter = personRepo.count();
+	
 	System.out.println("\n"+countAfter+"\n");
 	assertGreaterThan(countAfter,countBefore);	
 }
-@Test(expected= IllegalTransactionException.class)
+@Test
 public void registrationUsernameExistTest() throws Exception{
+	try {
 	register("funkar", "Det","då@gmail.com", "9403521583", "tagen", "Detkanske");
-	
+	}
+	catch(IllegalTransactionException e) {
+		String message= "A person with that given username already exists";
+		assertEquals(message, e.getMessage());
+		throw e;
+	}
+	fail("IllegalTransactionException did not get thrown");
 }
 @Test(expected= IllegalTransactionException.class)
 public void registrationEmailExistTest() throws Exception{
@@ -65,23 +74,28 @@ public void destructUser() {
 	deleteUser("Kanske");
 	
 }
-public static void assertGreaterThan(long countAfter, long countBefore) {
-    assertGreaterThan(countAfter, countBefore, null);
+/**
+ * Helper function to evaluate if first parameter is greater then second.
+ * @param x Value one.
+ * @param x  Value two.
+ */
+public static void assertGreaterThan(long x, long y) {
+    assertGreaterThan(x, y, null);
 }
 
-public static void assertGreaterThan(long greater, long lesser, String message) {
+private static void assertGreaterThan(long greater, long lesser, String message) {
     if (greater <= lesser) {
         fail((StringUtils.isNotBlank(message) ? message + " ==> " : "") +
                 "Expected: a value greater than <" + lesser + ">\n" +
                 "But <" + greater + "> was " + (greater == lesser ? "equal to" : "less than") + " <" + lesser + ">");
     }
+    
 }
 private void deleteUser(String username) {
 	personRepo.deleteById(personRepo.findByUsername(username).getId());
 }
-private void register(String firstname, String lastname, String email, String ssn, String username, String password) {
+private void register(String firstname, String lastname, String email, String ssn, String username, String password) throws IllegalTransactionException{
 	PersonDTO workingPerson = new PersonDTO(firstname, lastname,email, ssn, username, password);
 	recruitmentService.registerUser(workingPerson);
 }
 }
-*/

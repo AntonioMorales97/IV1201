@@ -9,7 +9,6 @@ const backendCalls = {
    */
   async getAllApplications(jwt) {
     axios.get("https://iv1201-backend.herokuapp.com/applications", {
-      //axios.get("http://192.168.0.3:8080/applications", {
       headers: {
         Authorization: 'Bearer ' + jwt
       }
@@ -32,7 +31,6 @@ const backendCalls = {
 
   async selectApplication(id) {
     axios.get("https://iv1201-backend.herokuapp.com/application/" + id, {
-      //axios.get("http://192.168.0.3:8080/application/"+id, {
       headers: {
         Authorization: 'Bearer ' + this.props.jwt
       }
@@ -82,7 +80,6 @@ const backendCalls = {
     }
 
     axios.post("https://iv1201-backend.herokuapp.com/authenticate", sendData)
-      //axios.post("http://192.168.0.3:8080/authenticate",sendData)
       .then((response) => {
         deviceStorage.saveItem('username', username);
         deviceStorage.saveItem('role', response.data.role);
@@ -104,7 +101,6 @@ const backendCalls = {
 
 
     axios.post("https://iv1201-backend.herokuapp.com/register", {
-      //axios.post("http://192.168.0.3:8080/register",{
       firstName: surName,
       lastName: lastName,
       email: email,

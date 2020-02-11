@@ -73,7 +73,7 @@ public class ApplicationService {
 		}
 		Optional<Status> status = statusRepo.findByName(statusDTO.getName());
 		if (status.isEmpty()) {
-			throw new ApplicationNotFoundException("Application could not be found by id " + id, 4);
+			throw new ApplicationNotFoundException("Application could not be found by id " + id, 4); // change to status not found?
 		}
 		application.get().setStatus(status.get());
 		return application.get();
