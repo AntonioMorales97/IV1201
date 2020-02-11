@@ -29,10 +29,12 @@ public class RecruitmentServiceTest {
 RecruitmentService recruitmentService;
 @Autowired
 PersonRepository personRepo;
+private static PersonDTO dummyPerson;
 
 @Before
 public void setupUser() {
-	register("taget", "taget","tagen@gmail.com", "9501039482", "tagen", "Detkanske");
+	 dummyPerson = new PersonDTO("taget", "taget","tagen@gmail.com", "9501039482", "tagen", "Detkanske");
+
 }
 
 @Test
@@ -46,34 +48,25 @@ public void registrationTest() throws Exception{
 	System.out.println("\n"+countAfter+"\n");
 	assertGreaterThan(countAfter,countBefore);	
 }
-@Test
+@Test(expected= IllegalTransactionException.class)
 public void registrationUsernameExistTest() throws Exception{
-	try {
+	register(dummyPerson.getFirstName(), dummyPerson.getLastName(),dummyPerson.getEmail(),dummyPerson.getSsn(),dummyPerson.getUsername(),dummyPerson.getPassword());
 	register("funkar", "Det","då@gmail.com", "9403521583", "tagen", "Detkanske");
-	}
-	catch(IllegalTransactionException e) {
-		String message= "A person with that given username already exists";
-		assertEquals(message, e.getMessage());
-		throw e;
-	}
-	fail("IllegalTransactionException did not get thrown");
+	
 }
 @Test(expected= IllegalTransactionException.class)
 public void registrationEmailExistTest() throws Exception{
+	register(dummyPerson.getFirstName(), dummyPerson.getLastName(),dummyPerson.getEmail(),dummyPerson.getSsn(),dummyPerson.getUsername(),dummyPerson.getPassword());
 	register("funkar", "Det","tagen@gmail.com", "9403521583", "dålba", "Detkanske");
 	
 }
 @Test(expected= IllegalTransactionException.class)
 public void registrationSsnExistTest() throws Exception{
+	register(dummyPerson.getFirstName(), dummyPerson.getLastName(),dummyPerson.getEmail(),dummyPerson.getSsn(),dummyPerson.getUsername(),dummyPerson.getPassword());
 	register("funkar", "Det","dåbla@gmail.com", "9501039482", "dåäka", "Detkanske");
 	
 }
-@After
-public void destructUser() {
-	deleteUser("tagen");
-	deleteUser("Kanske");
-	
-}
+
 /**
  * Helper function to evaluate if first parameter is greater then second.
  * @param x Value one.
@@ -91,11 +84,18 @@ private static void assertGreaterThan(long greater, long lesser, String message)
     }
     
 }
-private void deleteUser(String username) {
-	personRepo.deleteById(personRepo.findByUsername(username).getId());
-}
 private void register(String firstname, String lastname, String email, String ssn, String username, String password) throws IllegalTransactionException{
 	PersonDTO workingPerson = new PersonDTO(firstname, lastname,email, ssn, username, password);
 	recruitmentService.registerUser(workingPerson);
 }
+
+/*@After
+public void destructUser() {
+	deleteUser("tagen");
+	deleteUser("Kanske");
+	
+}
+private void deleteUser(String username) {
+	personRepo.deleteById(personRepo.findByUsername(username).getId());
+}*/
 }
