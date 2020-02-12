@@ -67,14 +67,12 @@ public class ApplicationServiceTest {
 	 */
 	@Before
 	public void setupUser() {
-		
 		r1 = new Role("recruit");
 		r2= new Role("applicant");
-		
 		c1 = new Competence("Karuselldrift");
 		c2 = new Competence("Korvgrillning");
 		p1 = new Person("fa", "fa", "fa@gmail.com", "1948281092","fa", encoder.encode("123"), r1);
-		a1 = new Application(statusRepo.findByName("unhandled").get(),personRepo.findByUsername("fa"));
+		a1 = new Application(statusRepo.findByName("unhandled").get(),p1);
 		cp2= new CompetenceProfile(a1,c2, 2.0);
 		av1 = new Availability(a1, new Date(2014/02/23),new Date(2014/05/25)); 
 		  
