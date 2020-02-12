@@ -69,7 +69,7 @@ public class ApplicationServiceTest {
 	 */
 	@Before
 	public void setupUser() {
-		/*
+		
 		r1 = new Role("recruit");
 		r2= new Role("applicant");
 		s1 = new Status("accepted");
@@ -82,17 +82,17 @@ public class ApplicationServiceTest {
 		cp2= new CompetenceProfile(a1,c2, 2.0);
 		av1 = new Availability(a1, new Date(2014/02/23),new Date(2014/05/25)); 
 		  
-		r1 = new Role("recruit");
+		/*r1 = new Role("recruit");
 		r2= new Role("applicant");
 		s1 = new Status("accepted");
 		s2 = new Status("unhandled");
 		s3 = new Status("rejected");
 		c1 = new Competence("Karuselldrift");
-		c2 = new Competence("Korvgrillning");*/
+		c2 = new Competence("Korvgrillning");
 		p1 = new Person("fa", "fa", "fa@gmail.com", "1948281092","fa", encoder.encode("123"), roleRepo.getOne((long) 2));
 		a1 = new Application(statusRepo.findByName("unhandled").get(),p1);
 		cp2= new CompetenceProfile(a1,competenceRepo.findById((long) 2).get(), 2.0);
-		av1 = new Availability(a1, new Date(2014/02/23),new Date(2014/05/25));
+		av1 = new Availability(a1, new Date(2014/02/23),new Date(2014/05/25));*/
 		
 		
 	}
@@ -123,19 +123,19 @@ public class ApplicationServiceTest {
 		
 		
 		 
-		roleRepo.save(r1);
+		/*roleRepo.save(r1);
 		roleRepo.save(r2);
 		personRepo.save(p1);
 		competenceRepo.save(c1);
 		competenceRepo.save(c2);
 		statusRepo.save(s1);
 		statusRepo.save(s2);
-		statusRepo.save(s3);*/
+		statusRepo.save(s3);
 		applicationRepo.save(a1);
 		a1.getCompetenceProfile().add(cp2);
 		compPRepo.save(cp2);
 		availabilityRepo.save(av1);
-		a1.getAvailability().add(av1);
+		a1.getAvailability().add(av1);*/
 	}
 	
 }
