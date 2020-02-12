@@ -110,12 +110,12 @@ public class ApplicationServiceTest {
 		competenceRepo.save(c2);
 		compPRepo.save(cp2);
 		availabilityRepo.save(av1);
-		applicationRepo.save(a1);
+		System.out.println("ADDING: "+"\n"+applicationRepo.save(a1)+"\n");
 		
 		
 		//a1.getCompetenceProfile().add(cp2);
 		//a1.getAvailability().add(av1);
-		System.out.println(applicationRepo.getOne((long) 0));
+		System.out.println(applicationRepo.findAll());
 		
 		 
 		/*roleRepo.save(r1);
