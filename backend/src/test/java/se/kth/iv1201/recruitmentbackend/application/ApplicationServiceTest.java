@@ -57,9 +57,9 @@ public class ApplicationServiceTest {
 	private Role r2;
 	private Competence c1;
 	private Competence c2;
-	private Status s1;
-	private Status s2;
-	private Status s3;
+	//private Status s1;
+	//private Status s2;
+	//private Status s3;
 	private Application a1;
 	private Availability av1; 
 		
@@ -72,9 +72,9 @@ public class ApplicationServiceTest {
 		
 		r1 = new Role("recruit");
 		r2= new Role("applicant");
-		s1 = new Status("accepted");
-		s2 = new Status("unhandled");
-		s3 = new Status("rejected");
+		//s1 = new Status("accepted");
+		//s2 = new Status("unhandled");
+		//s3 = new Status("rejected");
 		c1 = new Competence("Karuselldrift");
 		c2 = new Competence("Korvgrillning");
 		p1 = new Person("fa", "fa", "fa@gmail.com", "1948281092","fa", encoder.encode("123"), r1);
@@ -106,15 +106,15 @@ public class ApplicationServiceTest {
 	}
 	
 	private void setupTestData() {
-		/*
+		
 		roleRepo.save(r1);
 		roleRepo.save(r2);
 		personRepo.save(p1);
 		competenceRepo.save(c1);
 		competenceRepo.save(c2);
-		statusRepo.save(s1);
-		statusRepo.save(s2);
-		statusRepo.save(s3);
+		//statusRepo.save(s1);
+		//statusRepo.save(s2);
+		//statusRepo.save(s3);
 		applicationRepo.save(a1);
 		a1.getCompetenceProfile().add(cp2);
 		compPRepo.save(cp2);
