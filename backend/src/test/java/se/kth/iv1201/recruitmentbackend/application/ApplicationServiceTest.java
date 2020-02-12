@@ -57,9 +57,9 @@ public class ApplicationServiceTest {
 	private Role r2;
 	private Competence c1;
 	private Competence c2;
-	//private Status s1;
-	//private Status s2;
-	//private Status s3;
+	private Status s1;
+	private Status s2;
+	private Status s3;
 	private Application a1;
 	private Availability av1; 
 		
@@ -72,9 +72,9 @@ public class ApplicationServiceTest {
 		
 		r1 = new Role("recruit");
 		r2= new Role("applicant");
-		//s1 = new Status("accepted");
-		//s2 = new Status("unhandled");
-		//s3 = new Status("rejected");
+		s1 = new Status("accepted");
+		s2 = new Status("unhandled");
+		s3 = new Status("rejected");
 		c1 = new Competence("Karuselldrift");
 		c2 = new Competence("Korvgrillning");
 		p1 = new Person("fa", "fa", "fa@gmail.com", "1948281092","fa", encoder.encode("123"), r1);
@@ -98,9 +98,10 @@ public class ApplicationServiceTest {
 	}
 	@Test
 	public void searchAllApplicationsTest() {
+		System.out.println("Application pre add: "+"\n"+a1+"\n");
 		setupTestData();
 		List<Application> applications =applicationService.findAllApplications();
-
+		System.out.println("Applications: "+"\n"+applications+"\n");
 		assertEquals(applications.get(0).toString(), "Application(id=1, createDate=2020-02-08 20:32:51.161, version=2, status=Status(id=1, name=accepted), person=Person(id=1, firstName=fa, lastName=fa, email=fa@gmail.com, ssn=1948281092, username=fa, password=123, role=Role(id=1, name=recruit)), availability=[Availability(id=1, fromDate=1970-01-01, toDate=1970-01-01)], competenceProfile=[CompetenceProfile(id=1, competence=Competence(id=2, name=Korvgrillning), yearsOfExperience=2.0)])");
 		
 	}
@@ -112,9 +113,9 @@ public class ApplicationServiceTest {
 		personRepo.save(p1);
 		competenceRepo.save(c1);
 		competenceRepo.save(c2);
-		//statusRepo.save(s1);
-		//statusRepo.save(s2);
-		//statusRepo.save(s3);
+		statusRepo.save(s1);
+		statusRepo.save(s2);
+		statusRepo.save(s3);
 		applicationRepo.save(a1);
 		a1.getCompetenceProfile().add(cp2);
 		compPRepo.save(cp2);
