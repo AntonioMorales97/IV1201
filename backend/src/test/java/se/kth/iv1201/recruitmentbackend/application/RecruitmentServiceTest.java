@@ -21,6 +21,10 @@ import se.kth.iv1201.recruitmentbackend.application.exception.IllegalTransaction
 import se.kth.iv1201.recruitmentbackend.presentation.dto.PersonDTO;
 import se.kth.iv1201.recruitmentbackend.repository.PersonRepository;
 
+/**
+ * Tests the recruitmentService class. 
+ *
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
@@ -30,36 +34,54 @@ RecruitmentService recruitmentService;
 @Autowired
 PersonRepository personRepo;
 private static PersonDTO dummyPerson;
-
+/**
+ * Sets up a dummyPerson, to fill the database for failing tests.
+ */
 @Before
 public void setupUser() {
 	 dummyPerson = new PersonDTO("taget", "taget","tagen@gmail.com", "9501039482", "tagen", "Detkanske");
 
 }
-
+/**
+ * Tests that a newly created person acctuly gets inserted in the database,
+ * by counting rows before and after a registration and evaluating if the numbers is greated after.
+ * @throws Exception
+ */
 @Test
 public void registrationTest() throws Exception{
 	
 	final long  countBefore = personRepo.count();
-	System.out.println("\n"+countBefore+"\n");
 	register("funkar", "Det","Här@gmail.com", "9403021583", "Kanske", "Detkanske");
 	final long countAfter = personRepo.count();
-	
-	System.out.println("\n"+countAfter+"\n");
 	assertGreaterThan(countAfter,countBefore);	
 }
+/**
+ * Evaluates if a duplicate username gets rejected as a registration, evaluates that IllegalTransactionException gets thrown
+ * preventing someone from registering with a username that already exists.
+ * @throws IllegalTransactionException 
+ */
 @Test(expected= IllegalTransactionException.class)
 public void registrationUsernameExistTest() throws Exception{
 	register(dummyPerson.getFirstName(), dummyPerson.getLastName(),dummyPerson.getEmail(),dummyPerson.getSsn(),dummyPerson.getUsername(),dummyPerson.getPassword());
 	register("funkar", "Det","då@gmail.com", "9403521583", "tagen", "Detkanske");
 	
 }
+/**
+ * Evaluates if a duplicate Email gets rejected as a registration, evaluates that IllegalTransactionException gets thrown
+ * preventing someone from registering with a Email that already exists.
+ * @throws IllegalTransactionException 
+ */
 @Test(expected= IllegalTransactionException.class)
 public void registrationEmailExistTest() throws Exception{
 	register(dummyPerson.getFirstName(), dummyPerson.getLastName(),dummyPerson.getEmail(),dummyPerson.getSsn(),dummyPerson.getUsername(),dummyPerson.getPassword());
 	register("funkar", "Det","tagen@gmail.com", "9403521583", "dålba", "Detkanske");
 	
 }
+/**
+ * Evaluates if a duplicate Ssn gets rejected as a registration, evaluates that IllegalTransactionException gets thrown
+ * preventing someone from registering with a Ssn that already exists.
+ * @throws IllegalTransactionException 
+ */
 @Test(expected= IllegalTransactionException.class)
 public void registrationSsnExistTest() throws Exception{
 	register(dummyPerson.getFirstName(), dummyPerson.getLastName(),dummyPerson.getEmail(),dummyPerson.getSsn(),dummyPerson.getUsername(),dummyPerson.getPassword());
@@ -88,14 +110,4 @@ private void register(String firstname, String lastname, String email, String ss
 	PersonDTO workingPerson = new PersonDTO(firstname, lastname,email, ssn, username, password);
 	recruitmentService.registerUser(workingPerson);
 }
-
-/*@After
-public void destructUser() {
-	deleteUser("tagen");
-	deleteUser("Kanske");
-	
-}
-private void deleteUser(String username) {
-	personRepo.deleteById(personRepo.findByUsername(username).getId());
-}*/
 }
