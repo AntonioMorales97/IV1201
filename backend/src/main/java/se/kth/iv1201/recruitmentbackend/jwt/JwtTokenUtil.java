@@ -14,7 +14,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 /**
  * Component that helps to handle JSON web tokens.
- * @author Gurk1
  *
  */
 

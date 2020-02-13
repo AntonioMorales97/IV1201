@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import se.kth.iv1201.recruitmentbackend.application.exception.ApplicationNotFoundException;
+import se.kth.iv1201.recruitmentbackend.application.exception.StatusNotFoundException;
 import se.kth.iv1201.recruitmentbackend.domain.Application;
 import se.kth.iv1201.recruitmentbackend.domain.Status;
 import se.kth.iv1201.recruitmentbackend.presentation.dto.StatusDTO;
@@ -73,7 +74,7 @@ public class ApplicationService {
 		}
 		Optional<Status> status = statusRepo.findByName(statusDTO.getName());
 		if (status.isEmpty()) {
-			throw new ApplicationNotFoundException("Application could not be found by id " + id, 4); // change to status not found?
+			throw new StatusNotFoundException("Status could not be found by id " + id, 5); 
 		}
 		application.get().setStatus(status.get());
 		return application.get();

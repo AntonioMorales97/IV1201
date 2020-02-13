@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import se.kth.iv1201.recruitmentbackend.application.exception.ApplicationNotFoundException;
 import se.kth.iv1201.recruitmentbackend.application.exception.IllegalTransactionException;
+import se.kth.iv1201.recruitmentbackend.application.exception.StatusNotFoundException;
 
 /**
  * Global Exception handler, that handles all the exceptions in this application.
@@ -52,6 +53,18 @@ public class ExceptionHandlers {
 	@ExceptionHandler(ApplicationNotFoundException.class)
 	@ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
 	ErrorResponse ApplicationNotFoundExceptionHandler(ApplicationNotFoundException exc) {
+		logger.error(exc.getMessage());
+		return new ErrorResponse(HttpStatus.METHOD_NOT_ALLOWED.getReasonPhrase(), exc.getMessage(),exc.getCode());
+	}
+	/**
+	 * Handles <code>StatusNotFoundException</code>s.
+	 * 
+	 * @param exc The exception with the message.
+	 * @return the exception message.
+	 */
+	@ExceptionHandler(StatusNotFoundException.class)
+	@ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+	ErrorResponse StatusNotFoundExceptionHandler(StatusNotFoundException exc) {
 		logger.error(exc.getMessage());
 		return new ErrorResponse(HttpStatus.METHOD_NOT_ALLOWED.getReasonPhrase(), exc.getMessage(),exc.getCode());
 	}
