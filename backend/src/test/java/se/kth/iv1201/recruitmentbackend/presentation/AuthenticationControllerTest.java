@@ -80,6 +80,7 @@ public class AuthenticationControllerTest {
 	}
 	@Before
 	public void testSetup() throws Exception{
+		roleRepo.deleteAll();
 		Role r1 = new Role("recruit");
 		Role r2 = new Role("applicant");
 		Role added = roleRepo.save(r1);
