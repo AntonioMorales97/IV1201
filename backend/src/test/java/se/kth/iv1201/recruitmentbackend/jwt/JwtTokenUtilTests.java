@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -87,6 +88,11 @@ public class JwtTokenUtilTests {
 		String jwt = jwtUtil.createToken(user);
 		Boolean test= jwtUtil.validateToken(jwt,userFail);
 		assertFalse(test);
+	}
+	@After
+	public void deConstruct() {
+		personRepo.deleteAll();
+		roleRepo.deleteAll();
 	}
 	
 	private UserDetails registerFail(PersonDTO failPerson) {

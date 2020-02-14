@@ -78,37 +78,4 @@ public class ApplicationServiceTest {
 	}
 	
 
-	/*
-	 * @Autowired
-RoleRepository roleRepo;
-@Autowired
-PersonRepository personRepo;
-@Autowired
-StatusRepository statusRepo;
-@Autowired 
-CompetenceRepository competenceRepo;
-@Autowired
-AvailabilityRepository availabilityRepo;
-@Autowired
-CompetenceProfileRepository compPRepo;
-@Autowired
-PasswordEncoder encoder;password =encoder.encode("123");
-	r1 = new Role("recruit");
-	r2= new Role("applicant");
-	c1 = new Competence("Karuselldrift");
-	c2 = new Competence("Korvgrillning");
-	roleRepo.save(r1);
-	roleRepo.save(r2);
-	competenceRepo.save(c1);
-	competenceRepo.save(c2);
-	p1 = new Person("fa", "fa", "fa@gmail.com", "1948281092","fa", password, r1);
-	personRepo.save(p1);
-	a1 = new Application(statusRepo.findByName("unhandled").get(),p1);
-	applicationRepo.save(a1);
-	cp2= new CompetenceProfile(a1,c2, 2.0);
-	compPRepo.save(cp2);
-	av1 = new Availability(a1, new Date(2014/02/23),new Date(2014/05/25)); 
-	availabilityRepo.save(av1);
-	a1.getAvailability().add(av1);
-	a1.getCompetenceProfile().add(cp2);*/
 }
