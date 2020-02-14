@@ -6,8 +6,10 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+/**
+ * Domain class representing an area of competence associated with a competence profile.
+ */
 @Data
-
 @Entity
 public class Competence {
     @Id

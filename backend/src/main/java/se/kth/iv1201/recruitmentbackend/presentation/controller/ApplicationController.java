@@ -24,6 +24,10 @@ import se.kth.iv1201.recruitmentbackend.presentation.util.ResourceAssembler;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+/**
+ * Controller class handling requests related to applications.
+ * This includes listing applications and changing application status.
+ */
 @RestController
 @Validated
 @CrossOrigin
@@ -66,6 +70,13 @@ public class ApplicationController {
 		return application;
 	}
 
+	/**
+	 * Changes the status of a given application.
+	 *
+	 * @param statusDTO DTO containing information about the new status
+	 * @param id of the application to change.
+	 * @return The altered application.
+	 */
 	@PutMapping("/alter-status/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public Application alterStatus(@RequestBody @Valid StatusDTO statusDTO, @PathVariable Long id) {

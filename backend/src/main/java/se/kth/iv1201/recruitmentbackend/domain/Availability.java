@@ -9,6 +9,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Date;
 
+/**
+ * Domain class representing the availability of a person.
+ */
 @Data
 @Entity
 public class Availability {

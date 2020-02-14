@@ -28,6 +28,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * Domain class representing an application of a person.
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity

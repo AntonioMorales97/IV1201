@@ -6,6 +6,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+/**
+ * Domain class representing the role of a person.
+ */
 @Data
 @Entity
 public class Role {
