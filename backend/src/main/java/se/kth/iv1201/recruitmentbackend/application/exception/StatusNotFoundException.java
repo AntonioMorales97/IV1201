@@ -4,7 +4,7 @@ public class StatusNotFoundException extends RuntimeException{
 	private static final long serialVersionUID = 1L;
 	private final int code; 
 	/**
-	 * Creates an instance of this exception whenever a <code>Customer</code> was not found.
+	 * Creates an instance of this exception whenever a Status was not found.
 	 * 
 	 * @param msg The message holding information why the exception was thrown.
 	 */

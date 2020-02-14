@@ -29,6 +29,9 @@ import se.kth.iv1201.recruitmentbackend.repository.PersonRepository;
 import se.kth.iv1201.recruitmentbackend.repository.RoleRepository;
 import se.kth.iv1201.recruitmentbackend.repository.StatusRepository;
 
+/**
+ * A service used to migrate from the old database to the new one.
+ */
 @Service
 @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
 public class MigrationService {
@@ -53,7 +56,10 @@ public class MigrationService {
 	
 	@Autowired
 	private ApplicationRepository applicationRepo;
-	
+
+	/**
+	 * Preform a migration from the old database.
+	 */
 	public void migrate() {
 		this.oldRecruitmentDAO = new OldRecruitmentDAO();
 		insertCompetences();
@@ -61,7 +67,11 @@ public class MigrationService {
 		insertPersons();
 		oldRecruitmentDAO.closeConnection();
 	}
-	
+
+	/**
+	 * Fetches the person entries from the old database and inserts them into the new one.
+	 * This method also deals with missing data in the old tables to the extent it is possible.
+	 */
 	private void insertPersons() {
 		List<PersonDTO> personDTOs = this.oldRecruitmentDAO.getPersons();
 		
@@ -79,6 +89,7 @@ public class MigrationService {
 				}
 				
 				if(personDTO.getPassword() == null) {
+					//TODO Generate a new password and send it to the user by email.
 					password = encoder.encode(personDTO.getSurname());
 				} else {
 					password = personDTO.getPassword();
@@ -115,7 +126,10 @@ public class MigrationService {
 			}
 		});
 	}
-	
+
+	/**
+	 * Fetches Competence entries from the old database and inserts them into the new one.
+	 */
 	private void insertCompetences() {
 		List<CompetenceDTO> competenceDTOs = this.oldRecruitmentDAO.getCompetences();
 		
@@ -125,7 +139,10 @@ public class MigrationService {
 			}
 		});
 	}
-	
+
+	/**
+	 * Fetches roles from the old database and inserts them into the new one.
+	 */
 	private void insertRoles() {
 		List<RoleDTO> roleDTOs = this.oldRecruitmentDAO.getRoles();
 		

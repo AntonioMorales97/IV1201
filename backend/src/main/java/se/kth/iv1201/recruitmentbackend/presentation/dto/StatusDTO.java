@@ -4,6 +4,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import lombok.Data;
+
+/**
+ * DTO class representing the status of an application.
+ */
 @Data
 public class StatusDTO {
 		

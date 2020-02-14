@@ -2,6 +2,9 @@ package se.kth.iv1201.recruitmentbackend.migration.dto;
 
 import lombok.Data;
 
+/**
+ * DTO representing a person in the old database
+ */
 @Data
 public class PersonDTO {
 	private final Long id;

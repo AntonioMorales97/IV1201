@@ -18,11 +18,17 @@ import se.kth.iv1201.recruitmentbackend.migration.dto.CompetenceProfileDTO;
 import se.kth.iv1201.recruitmentbackend.migration.dto.PersonDTO;
 import se.kth.iv1201.recruitmentbackend.migration.dto.RoleDTO;
 
+/**
+ * Data access object class used to retrieve data from the old database.
+ */
 public class OldRecruitmentDAO {
 	private OldDbConnection oldDbConn;
 	private Connection conn;
 	private static final Logger logger = LoggerFactory.getLogger(OldDbConnection.class);
-	
+
+	/**
+	 * Creates a connection to the old database and returns a DAO.
+	 */
 	public OldRecruitmentDAO() {
 		try {
 			this.oldDbConn = new OldDbConnection();
@@ -32,7 +38,10 @@ public class OldRecruitmentDAO {
 			logger.error(e.getMessage());
 		}
 	}
-	
+
+	/**
+	 * Closes the DAO and the connection to the old database.
+	 */
 	public void closeConnection() {
 		try {
 			this.oldDbConn.disconnect();
@@ -41,7 +50,11 @@ public class OldRecruitmentDAO {
 			logger.error(e.getMessage());
 		}
 	}
-	
+
+	/**
+	 * Retrieves a list of person entries from the old database in the form od a personDTO list.
+	 * @return a list of personDTO, Note: these are personDTO objects used for the old database.
+	 */
 	public List<PersonDTO> getPersons(){
 		String query = "SELECT person.person_id, person.name, person.surname, person.ssn, person.email, person.password, person.username, (SELECT name FROM role WHERE person.role_id = role.role_id) AS role FROM person";
 		Statement stmt;
@@ -66,7 +79,12 @@ public class OldRecruitmentDAO {
 		}
 		return personDTOs;
 	}
-	
+
+	/**
+	 * Retrieves a list of availabilities for a given person.
+	 * @param personID is the ID of a person in the old database
+	 * @return a list of AvailabilityDTO representing the availabilities of a person in the old database.
+	 */
 	public List<AvailabilityDTO> getAvailabilities(Long personID){
 		String query = "SELECT availability.from_date, availability.to_date FROM availability WHERE availability.person_id = ?";
 		PreparedStatement prepStmt;
@@ -86,7 +104,12 @@ public class OldRecruitmentDAO {
 		}
 		return availabilitiesDTOs;
 	}
-	
+
+	/**
+	 * Retrieves a list of competence profiles associated with a given person
+	 * @param personID is the ID of the person in the old database
+	 * @return a list of CompetenceProfileDTO.
+	 */
 	public List<CompetenceProfileDTO> getCompetenceProfiles(Long personID){
 		String query = "SELECT competence_profile.years_of_experience, (SELECT name FROM competence WHERE competence_profile.competence_id = competence.competence_id) AS competence FROM competence_profile WHERE competence_profile.person_id = ?";
 		PreparedStatement prepStmt;
@@ -104,7 +127,11 @@ public class OldRecruitmentDAO {
 		}
 		return competenceProfileDTOs;
 	}
-	
+
+	/**
+	 * Retrieves a list of all competences in the old database
+	 * @return competences in the form of a CompetenceDTO list.
+	 */
 	public List<CompetenceDTO> getCompetences(){
 		String query = "SELECT name FROM competence";
 		Statement stmt;
@@ -122,7 +149,11 @@ public class OldRecruitmentDAO {
 		}
 		return competenceDTOs;
 	}
-	
+
+	/**
+	 * Retrieves a list of all the roles in the old database.
+	 * @return roles in the form of a RoleDTO list.
+	 */
 	public List<RoleDTO> getRoles(){
 		String query = "SELECT name FROM role";
 		Statement stmt;
