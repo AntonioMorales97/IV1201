@@ -9,12 +9,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import se.kth.iv1201.recruitmentbackend.migration.MigrationService;
 
+/**
+ * Controller class for migration from the old database to the new one.
+ */
 @RestController
 @CrossOrigin
 public class MigrationController {
 	@Autowired
 	private MigrationService migrationService;
-	
+
+	/**
+	 * Handles a request to migrate the database.
+	 */
 	@PostMapping("/migrate")
 	@ResponseStatus(HttpStatus.OK)
 	public void migrate() {

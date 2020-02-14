@@ -3,8 +3,11 @@ package se.kth.iv1201.recruitmentbackend.migration;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -29,6 +32,9 @@ import se.kth.iv1201.recruitmentbackend.repository.PersonRepository;
 import se.kth.iv1201.recruitmentbackend.repository.RoleRepository;
 import se.kth.iv1201.recruitmentbackend.repository.StatusRepository;
 
+/**
+ * A service used to migrate from the old database to the new one.
+ */
 @Service
 @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
 public class MigrationService {
@@ -53,7 +59,14 @@ public class MigrationService {
 	
 	@Autowired
 	private ApplicationRepository applicationRepo;
-	
+
+	@Autowired
+	private JavaMailSender mailSender;
+
+
+	/**
+	 * Preform a migration from the old database.
+	 */
 	public void migrate() {
 		this.oldRecruitmentDAO = new OldRecruitmentDAO();
 		insertCompetences();
@@ -61,7 +74,11 @@ public class MigrationService {
 		insertPersons();
 		oldRecruitmentDAO.closeConnection();
 	}
-	
+
+	/**
+	 * Fetches the person entries from the old database and inserts them into the new one.
+	 * This method also deals with missing data in the old tables to the extent it is possible.
+	 */
 	private void insertPersons() {
 		List<PersonDTO> personDTOs = this.oldRecruitmentDAO.getPersons();
 		
@@ -79,7 +96,14 @@ public class MigrationService {
 				}
 				
 				if(personDTO.getPassword() == null) {
-					password = encoder.encode(personDTO.getSurname());
+					String newPass = UUID.randomUUID().toString();
+					password = encoder.encode(newPass);
+					SimpleMailMessage message = new SimpleMailMessage();
+					message.setTo(personDTO.getEmail());
+					message.setSubject("Your new password");
+					message.setText("Username: " + username + "\nPassword: " + newPass);
+					mailSender.send(message);
+
 				} else {
 					password = personDTO.getPassword();
 				}
@@ -115,7 +139,10 @@ public class MigrationService {
 			}
 		});
 	}
-	
+
+	/**
+	 * Fetches Competence entries from the old database and inserts them into the new one.
+	 */
 	private void insertCompetences() {
 		List<CompetenceDTO> competenceDTOs = this.oldRecruitmentDAO.getCompetences();
 		
@@ -125,7 +152,10 @@ public class MigrationService {
 			}
 		});
 	}
-	
+
+	/**
+	 * Fetches roles from the old database and inserts them into the new one.
+	 */
 	private void insertRoles() {
 		List<RoleDTO> roleDTOs = this.oldRecruitmentDAO.getRoles();
 		

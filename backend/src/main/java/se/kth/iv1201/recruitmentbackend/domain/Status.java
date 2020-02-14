@@ -10,6 +10,9 @@ import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
+/**
+ * Domain class representing the status of an application.
+ */
 @Data
 @Entity
 public class Status {

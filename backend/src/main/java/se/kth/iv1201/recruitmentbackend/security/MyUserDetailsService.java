@@ -19,6 +19,12 @@ public class MyUserDetailsService implements UserDetailsService {
 	@Autowired
 	private PersonRepository personRepo;
 
+	/**
+	 * Provides user details for a provided username
+	 * @param username The username of the person
+	 * @return UserDetails object representing the user.
+	 * @throws UsernameNotFoundException if the requested user can not be found.
+	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Person person = this.personRepo.findByUsername(username);

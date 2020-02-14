@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -67,6 +68,7 @@ public class ApplicationService {
 	 * @param statusDTO the new status.
 	 * @return the updated Application
 	 */
+	@Transactional(isolation=Isolation.SERIALIZABLE)
 	public Application changeStatus(Long id, @Valid StatusDTO statusDTO) {
 		Optional<Application> application = applicationRepo.findById(id);
 		if (application.isEmpty()) {
@@ -76,6 +78,19 @@ public class ApplicationService {
 		if (status.isEmpty()) {
 			throw new StatusNotFoundException("Status could not be found by id " + id, 5); 
 		}
+		
+		if(application.get().getVersion() != statusDTO.getVersion()) {
+			System.out.println("ERROR " + "new vers: " + application.get().getVersion() + " old vers: " + statusDTO.getVersion());
+			throw new ApplicationNotFoundException("ERROR" + "new vers: " + application.get().getVersion() + " old vers: " + statusDTO.getVersion(), 4);
+		}
+		System.out.println("SLeeping");
+		try {
+			Thread.sleep(15000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("wakeup");
 		application.get().setStatus(status.get());
 		return application.get();
 	}

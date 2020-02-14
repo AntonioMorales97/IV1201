@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.CannotAcquireLockException;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -24,6 +25,10 @@ import se.kth.iv1201.recruitmentbackend.presentation.util.ResourceAssembler;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+/**
+ * Controller class handling requests related to applications.
+ * This includes listing applications and changing application status.
+ */
 @RestController
 @Validated
 @CrossOrigin
@@ -66,12 +71,24 @@ public class ApplicationController {
 		return application;
 	}
 
+	/**
+	 * Changes the status of a given application.
+	 *
+	 * @param statusDTO DTO containing information about the new status
+	 * @param id of the application to change.
+	 * @return The altered application.
+	 */
 	@PutMapping("/alter-status/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public Application alterStatus(@RequestBody @Valid StatusDTO statusDTO, @PathVariable Long id) {
-		Application application = applicationService.changeStatus(id, statusDTO);
-		resourceAssembler.addLinksToApplicationResponse(application);
-		return application;
+		try {
+			Application application = applicationService.changeStatus(id, statusDTO);
+			resourceAssembler.addLinksToApplicationResponse(application);
+			return application;
+		} catch (CannotAcquireLockException exc) {
+			System.out.println("FATAL");
+			return null; //throw/handle
+		}
 	}
 	
 	private ApplicationListResponse createApplicationResponse(Application application) {

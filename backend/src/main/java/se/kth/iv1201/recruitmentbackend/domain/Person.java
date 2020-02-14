@@ -8,6 +8,9 @@ import javax.validation.constraints.Pattern;
 
 import lombok.Data;
 
+/**
+ * Domain class representing a person (user) of the application system.
+ */
 @Data
 @Entity
 public class Person {

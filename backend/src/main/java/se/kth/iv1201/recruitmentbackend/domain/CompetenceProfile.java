@@ -8,6 +8,9 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+/**
+ * Domain class representing a competence profile for a person in the application database.
+ */
 @Data
 @Entity
 public class CompetenceProfile {

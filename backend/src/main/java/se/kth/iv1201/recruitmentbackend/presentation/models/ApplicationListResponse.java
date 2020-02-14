@@ -8,6 +8,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import se.kth.iv1201.recruitmentbackend.domain.Status;
 
+/**
+ * Represents a response in the form of a list of applications
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class ApplicationListResponse extends RepresentationModel<ApplicationListResponse>{
