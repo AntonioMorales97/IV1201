@@ -31,37 +31,65 @@ public class MyUserDetails implements UserDetails{
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return authorities;
 	}
-	
+
+	/**
+	 * Password get method
+	 * @return the password of the user.
+	 */
 	@Override
 	public String getPassword() {
 	
 		return this.password;
 	}
 
+	/**
+	 * Username get method.
+	 * @return the username of the user.
+	 */
 	@Override
 	public String getUsername() {
 		
 		return this.username;
 	}
 
+	/**
+	 * Required by UserDetails
+	 * Not used by the application
+	 * @return true
+	 */
 	@Override
 	public boolean isAccountNonExpired() {
 		
 		return true;
 	}
 
+	/**
+	 * Required by UserDetails
+	 * Not used by the application
+	 * @return true
+	 */
 	@Override
 	public boolean isAccountNonLocked() {
 
 		return true;
 	}
 
+	/**
+	 * Required by UserDetails
+	 * Not used by the application
+	 * @return true
+	 */
 	@Override
 	public boolean isCredentialsNonExpired() {
 
 		return true;
 	}
 
+	/**
+	 * Required by UserDetails
+	 * Not used by the application
+	 * @return true
+	 */
 	@Override
 	public boolean isEnabled() {
 

@@ -4,8 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import se.kth.iv1201.recruitmentbackend.domain.Person;
 /**
- * Database access for the Person entity.
- *
+ * JPA interface used to store and access person data in the database
  */
 public interface PersonRepository extends JpaRepository<Person, Long> {
 
