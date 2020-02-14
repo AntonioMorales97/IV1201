@@ -39,3 +39,13 @@ The redux store is provided at the App level, making it available for every comp
 
 #### i18n (internationalization)
 The internationalization uses ```i18n.js```, configured at root level and imported in ```index.js```, making at available for every component that imports from ```react-i18next```. The different languages are stored in the locales-folder in JSON files.
+
+### Versions
+The different versions can be seen in the ```package.json``` files. Some versions will be listed here:
+* ```npm``` 6.13.6
+* ```node``` 12.14.1
+* ```express``` 4.17.1
+* ```react``` 16.12.0
+
+### License 
+MIT
