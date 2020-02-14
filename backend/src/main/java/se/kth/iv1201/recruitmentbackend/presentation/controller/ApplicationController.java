@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.CannotAcquireLockException;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -80,9 +81,14 @@ public class ApplicationController {
 	@PutMapping("/alter-status/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public Application alterStatus(@RequestBody @Valid StatusDTO statusDTO, @PathVariable Long id) {
-		Application application = applicationService.changeStatus(id, statusDTO);
-		resourceAssembler.addLinksToApplicationResponse(application);
-		return application;
+		try {
+			Application application = applicationService.changeStatus(id, statusDTO);
+			resourceAssembler.addLinksToApplicationResponse(application);
+			return application;
+		} catch (CannotAcquireLockException exc) {
+			System.out.println("FATAL");
+			return null; //throw/handle
+		}
 	}
 	
 	private ApplicationListResponse createApplicationResponse(Application application) {
