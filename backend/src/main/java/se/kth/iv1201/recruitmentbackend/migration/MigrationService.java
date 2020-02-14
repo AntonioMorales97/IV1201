@@ -3,8 +3,11 @@ package se.kth.iv1201.recruitmentbackend.migration;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -57,6 +60,10 @@ public class MigrationService {
 	@Autowired
 	private ApplicationRepository applicationRepo;
 
+	@Autowired
+	private JavaMailSender mailSender;
+
+
 	/**
 	 * Preform a migration from the old database.
 	 */
@@ -89,8 +96,14 @@ public class MigrationService {
 				}
 				
 				if(personDTO.getPassword() == null) {
-					//TODO Generate a new password and send it to the user by email.
-					password = encoder.encode(personDTO.getSurname());
+					String newPass = UUID.randomUUID().toString();
+					password = encoder.encode(newPass);
+					SimpleMailMessage message = new SimpleMailMessage();
+					message.setTo(personDTO.getEmail());
+					message.setSubject("Your new password");
+					message.setText("Username: " + username + "\nPassword: " + newPass);
+					mailSender.send(message);
+
 				} else {
 					password = personDTO.getPassword();
 				}
