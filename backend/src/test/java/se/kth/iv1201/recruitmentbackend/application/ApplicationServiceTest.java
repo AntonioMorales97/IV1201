@@ -61,15 +61,16 @@ public class ApplicationServiceTest {
 	}
 	@Test
 	public void changeStatus() {
-		StatusDTO status = new StatusDTO("accepted");
+		
 		List<Application> applications =applicationService.findAllApplications();
+		StatusDTO status = new StatusDTO("accepted", applications.get(0).getVersion());
 		Application application = applicationService.changeStatus(applications.get(0).getId(), status);
 		assertEquals(application.getStatus().getName().toString(), status.getName().toString());
 	}
 	@Test(expected=StatusNotFoundException.class)
 	public void changeStatusFail() {
 		List<Application> applications =applicationService.findAllApplications();
-		StatusDTO status = new StatusDTO("bruno");
+		StatusDTO status = new StatusDTO("bruno", applications.get(0).getVersion());
 		applicationService.changeStatus(applications.get(0).getId(), status);
 	}
 	@After
