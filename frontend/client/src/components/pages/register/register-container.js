@@ -73,13 +73,11 @@ class RegisterContainer extends Component {
     }
     if (this.props.isAuthenticated) {
       if (this.props.user.role === 'admin') {
-        console.log('admin, redirect to admin');
         const { from } = this.props.location.state || {
           from: { pathname: '/admin' }
         };
         return <Redirect to={from} />;
       }
-      console.log('applicant, redirect to apply');
       const { from } = this.props.location.state || {
         from: { pathname: '/apply' }
       };

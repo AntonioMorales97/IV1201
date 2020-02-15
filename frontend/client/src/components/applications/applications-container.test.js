@@ -1,25 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mount, shallow } from 'enzyme';
-import Login from './login-container';
+import Applications from './applications-container';
 
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
-
-const defaultStore = {
-  auth: {
-    isAuthenticated: false
-  },
-  error: {
-    msg: ''
-  },
-  success: {
-    msg: ''
-  }
-};
-
-const mockStore = configureStore([thunk])(defaultStore);
 
 jest.mock('react-i18next', () => ({
   useTranslation: () => {
@@ -30,11 +16,19 @@ jest.mock('react-i18next', () => ({
   }
 }));
 
-describe('running login-container test', () => {
+const defaultStore = {
+  application: {
+    applications: []
+  }
+};
+
+const mockStore = configureStore([thunk])(defaultStore);
+
+describe('running applications-container test', () => {
   it('unit renders correctly', () => {
     const wrapper = shallow(
       <Provider store={mockStore}>
-        <Login />
+        <Applications />
       </Provider>
     );
     expect(wrapper.exists()).toBe(true);
@@ -45,7 +39,7 @@ describe('running login-container test', () => {
     const wrapper = mount(
       <Provider store={mockStore}>
         <Router>
-          <Login />
+          <Applications />
         </Router>
       </Provider>
     );

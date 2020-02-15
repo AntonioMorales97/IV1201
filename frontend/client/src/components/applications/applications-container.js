@@ -14,10 +14,9 @@ class ApplicationsContainer extends Component {
   }
 }
 const mapStateToProps = state => ({
-  application: state.application,
-  error: state.error,
-  success: state.success
+  application: state.application
 });
+
 export default connect(mapStateToProps, { getApplications })(
   ApplicationsContainer
 );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mount, shallow } from 'enzyme';
-import Login from './login-container';
+import Register from './register-container';
 
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -30,11 +30,11 @@ jest.mock('react-i18next', () => ({
   }
 }));
 
-describe('running login-container test', () => {
+describe('running register-container test', () => {
   it('unit renders correctly', () => {
     const wrapper = shallow(
       <Provider store={mockStore}>
-        <Login />
+        <Register />
       </Provider>
     );
     expect(wrapper.exists()).toBe(true);
@@ -45,7 +45,7 @@ describe('running login-container test', () => {
     const wrapper = mount(
       <Provider store={mockStore}>
         <Router>
-          <Login />
+          <Register />
         </Router>
       </Provider>
     );
