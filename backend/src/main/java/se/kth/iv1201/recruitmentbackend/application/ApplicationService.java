@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import se.kth.iv1201.recruitmentbackend.application.exception.ApplicationNotFoundException;
+import se.kth.iv1201.recruitmentbackend.application.exception.OutdatedApplicationException;
 import se.kth.iv1201.recruitmentbackend.application.exception.StatusNotFoundException;
 import se.kth.iv1201.recruitmentbackend.domain.Application;
 import se.kth.iv1201.recruitmentbackend.domain.Status;
@@ -81,7 +82,8 @@ public class ApplicationService {
 		
 		if(application.get().getVersion() != statusDTO.getVersion()) {
 			System.out.println("ERROR " + "new vers: " + application.get().getVersion() + " old vers: " + statusDTO.getVersion());
-			throw new ApplicationNotFoundException("ERROR" + "new vers: " + application.get().getVersion() + " old vers: " + statusDTO.getVersion());
+			throw new OutdatedApplicationException("Could not save update, because current application verson is outdated.", application.get());
+			
 		}
 		System.out.println("SLeeping");
 		try {

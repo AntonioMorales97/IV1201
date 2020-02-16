@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import se.kth.iv1201.recruitmentbackend.application.ApplicationService;
+import se.kth.iv1201.recruitmentbackend.application.exception.OutdatedApplicationException;
 import se.kth.iv1201.recruitmentbackend.domain.Application;
 import se.kth.iv1201.recruitmentbackend.presentation.dto.StatusDTO;
 import se.kth.iv1201.recruitmentbackend.presentation.models.ApplicationListResponse;
@@ -86,8 +87,8 @@ public class ApplicationController {
 			resourceAssembler.addLinksToApplication(application);
 			return application;
 		} catch (CannotAcquireLockException exc) {
-			System.out.println("FATAL");
-			return null; //throw/handle
+			throw new OutdatedApplicationException("Could not save update, because current application verson is outdated.", applicationService.findApplication(id));
+
 		}
 	}
 	

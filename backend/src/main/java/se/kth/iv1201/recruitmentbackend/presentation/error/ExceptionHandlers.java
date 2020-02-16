@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import se.kth.iv1201.recruitmentbackend.application.exception.ApplicationNotFoundException;
 import se.kth.iv1201.recruitmentbackend.application.exception.IllegalTransactionException;
+import se.kth.iv1201.recruitmentbackend.application.exception.OutdatedApplicationException;
 import se.kth.iv1201.recruitmentbackend.application.exception.StatusNotFoundException;
 
 /**
@@ -34,12 +35,12 @@ public class ExceptionHandlers {
 	private static final Logger logger = LoggerFactory.getLogger(ExceptionHandlers.class);
 	
 	
-	/*@ExceptionHandler(CannotAcquireLockException.class)
-	@ResponseStatus(HttpStatus.ACCEPTED)
-	ErrorResponse cannotAcquireLockException(CannotAcquireLockException exc) {
+	@ExceptionHandler(OutdatedApplicationException.class)
+	@ResponseStatus(HttpStatus.CONFLICT)
+	ErrorResponse outdatedApplicationException(OutdatedApplicationException exc) {
 		logger.error(exc.getMessage());
-		return new ErrorResponse(HttpStatus.CONFLICT.getReasonPhrase(), "Someone else is already trying to update the same object");
-	}*/
+		return new ErrorResponse(HttpStatus.CONFLICT.getReasonPhrase(), exc.getMessage(), exc.getCode());
+	}
 	/**
 	 * Handles <code>IllegalTransactionException</code>s.
 	 * 
