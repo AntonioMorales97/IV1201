@@ -38,6 +38,7 @@ public class AvailabilityTest {
 	private Application application1;
 	private Application application2;
 	private Availability availability;
+	private Date fromDate = new Date();
 	@Before
 	public void setup() {
 		applicationRepo.deleteAll();
@@ -57,17 +58,20 @@ public class AvailabilityTest {
 		application2 = new Application(statusRepo.findByName("unhandled").get(), personRepo.findByUsername("applicationTest2"));
 		applicationRepo.save(application1);
 		applicationRepo.save(application2);
-		availability = new Availability(applicationRepo.findAll().get(0),new Date(2014/02/23),new Date(2014/05/25));
+		availability = new Availability(applicationRepo.findAll().get(0),fromDate,new Date());
 		application1.getAvailability().add(availability);
 		availabilityRepo.save(availability);
 	}
 	
 	@Test
-	public void applicationCreationTest() {
+	public void availabilityCreateTest() {
 		List<Availability> avList = availabilityRepo.findAll();
 		Availability av1 = avList.get(0);
-		System.out.println(av1.getApplication());
+		System.out.println(av1.toString());
+		assertNotNull(av1.getFromDate().toString());
+		assertNotNull(av1.getToDate().toString());
 	}
+	
 	@After
 	public void destruct() {
 		applicationRepo.deleteAll();
