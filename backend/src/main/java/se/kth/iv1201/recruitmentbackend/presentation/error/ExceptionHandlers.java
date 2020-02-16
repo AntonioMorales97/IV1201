@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.CannotAcquireLockException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -32,6 +33,13 @@ public class ExceptionHandlers {
 	private final String METHOD_ARGUMENT_TYPE_MISMATCH = "The type of the given arguments are wrong";
 	private static final Logger logger = LoggerFactory.getLogger(ExceptionHandlers.class);
 	
+	
+	/*@ExceptionHandler(CannotAcquireLockException.class)
+	@ResponseStatus(HttpStatus.ACCEPTED)
+	ErrorResponse cannotAcquireLockException(CannotAcquireLockException exc) {
+		logger.error(exc.getMessage());
+		return new ErrorResponse(HttpStatus.CONFLICT.getReasonPhrase(), "Someone else is already trying to update the same object");
+	}*/
 	/**
 	 * Handles <code>IllegalTransactionException</code>s.
 	 * 
@@ -64,7 +72,7 @@ public class ExceptionHandlers {
 	 */
 	@ExceptionHandler(StatusNotFoundException.class)
 	@ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-	ErrorResponse StatusNotFoundExceptionHandler(StatusNotFoundException exc) {
+	ErrorResponse statusNotFoundExceptionHandler(StatusNotFoundException exc) {
 		logger.error(exc.getMessage());
 		return new ErrorResponse(HttpStatus.METHOD_NOT_ALLOWED.getReasonPhrase(), exc.getMessage(),exc.getCode());
 	}

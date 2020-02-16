@@ -50,7 +50,7 @@ public class ApplicationController {
 		List<ApplicationListResponse> applicationList = new ArrayList<ApplicationListResponse>();
 		applications.forEach(application -> {
 			applicationList.add(createApplicationResponse(application));
-			resourceAssembler.addLinksToApplicationResponse(application);
+			resourceAssembler.addLinksToApplication(application);
 			
 		});
 		return new CollectionModel<ApplicationListResponse>(applicationList,
@@ -67,7 +67,7 @@ public class ApplicationController {
 	@GetMapping("/application/{id}")
 	public Application getApplication(@PathVariable Long id) {
 		Application application = applicationService.findApplication(id);
-		resourceAssembler.addLinksToApplicationResponse(application);
+		resourceAssembler.addLinksToApplication(application);
 		return application;
 	}
 
@@ -83,7 +83,7 @@ public class ApplicationController {
 	public Application alterStatus(@RequestBody @Valid StatusDTO statusDTO, @PathVariable Long id) {
 		try {
 			Application application = applicationService.changeStatus(id, statusDTO);
-			resourceAssembler.addLinksToApplicationResponse(application);
+			resourceAssembler.addLinksToApplication(application);
 			return application;
 		} catch (CannotAcquireLockException exc) {
 			System.out.println("FATAL");

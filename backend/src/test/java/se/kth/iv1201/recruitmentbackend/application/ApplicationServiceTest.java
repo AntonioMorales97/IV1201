@@ -61,7 +61,6 @@ public class ApplicationServiceTest {
 	}
 	@Test
 	public void changeStatus() {
-		
 		List<Application> applications =applicationService.findAllApplications();
 		StatusDTO status = new StatusDTO("accepted", applications.get(0).getVersion());
 		Application application = applicationService.changeStatus(applications.get(0).getId(), status);
@@ -72,6 +71,15 @@ public class ApplicationServiceTest {
 		List<Application> applications =applicationService.findAllApplications();
 		StatusDTO status = new StatusDTO("bruno", applications.get(0).getVersion());
 		applicationService.changeStatus(applications.get(0).getId(), status);
+	}
+	@Test(expected= ApplicationNotFoundException.class)
+	public void simultaniousUpdateTest() {
+		List<Application> user1 =applicationService.findAllApplications();
+		List<Application> user2 =applicationService.findAllApplications();
+		StatusDTO status1 = new StatusDTO("accepted", user1.get(0).getVersion());
+		StatusDTO status2 = new StatusDTO("rejected", user2.get(0).getVersion());
+		Application application1 = applicationService.changeStatus(user1.get(0).getId(), status1);
+		Application application2 = applicationService.changeStatus(user2.get(0).getId(), status2);
 	}
 	@After
 	public void destruct() {

@@ -3,6 +3,7 @@ package se.kth.iv1201.recruitmentbackend.presentation;
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -31,6 +32,7 @@ import se.kth.iv1201.recruitmentbackend.domain.Person;
 import se.kth.iv1201.recruitmentbackend.domain.Role;
 import se.kth.iv1201.recruitmentbackend.jwt.JwtTokenUtil;
 import se.kth.iv1201.recruitmentbackend.presentation.dto.PersonDTO;
+import se.kth.iv1201.recruitmentbackend.presentation.dto.StatusDTO;
 import se.kth.iv1201.recruitmentbackend.presentation.models.ApplicationListResponse;
 import se.kth.iv1201.recruitmentbackend.presentation.models.LoginResponse;
 import se.kth.iv1201.recruitmentbackend.repository.ApplicationRepository;
@@ -101,6 +103,47 @@ public class ApplicationControllerTest {
 		
 		assertEquals("applicationListResponses", response); 
 	}
+	@Test
+	public void getApplicationTest() throws Exception{
+		String jwt = setupJWT();
+		List<Application> applicationlist = applicationRepo.findAll();
+		String id = Long.toString(applicationlist.get(0).getId());
+	
+		 this.mvc.perform(get("/application/"+id).contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Bearer "+jwt)).andDo(print())
+                .andExpect(status().isOk());
+	}
+	@Test
+	public void getApplicationTestFail() throws Exception{
+		String jwt = setupJWT();
+	
+	
+		 this.mvc.perform(get("/application/420").contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Bearer "+jwt)).andDo(print())
+                .andExpect(status().is4xxClientError());
+	}
+	@Test
+	public void changeStatusTest() throws Exception{
+		String jwt = setupJWT();
+		List<Application> applicationlist = applicationRepo.findAll();
+		String id = Long.toString(applicationlist.get(0).getId());
+		System.out.println("\n ID: "+id+"\n");
+		JSONObject statusDTO= new JSONObject();
+		statusDTO.put("name", "rejected");
+		statusDTO.put("version", applicationlist.get(0).getVersion());
+		 this.mvc.perform(put("/alter-status/"+id).contentType(MediaType.APPLICATION_JSON)
+				 .content(statusDTO.toString())
+                .header("Authorization", "Bearer "+jwt)).andDo(print())
+                .andExpect(status().isOk());
+	}
+	@Test
+	public void changeStatusTestFail() throws Exception{
+		String jwt = setupJWT();
+		this.mvc.perform(put("/alter-status/420").contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Bearer "+jwt)).andDo(print())
+                .andExpect(status().is4xxClientError());
+	}
+	
 	private String setupJWT() throws Exception {
 		UserDetails userDetails = userDetailsService.loadUserByUsername(dummyPerson.getUsername());
 		System.out.println(userDetails.getUsername());

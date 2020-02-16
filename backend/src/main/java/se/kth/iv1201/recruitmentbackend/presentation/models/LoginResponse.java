@@ -15,11 +15,11 @@ public class LoginResponse {
 		this.jwtToken= jwtToken;
 		this.role= role;
 	}
-	public LoginResponse(String jwtToken) {
+	/*public LoginResponse(String jwtToken) {
 		this.jwtToken= jwtToken;
 		this.role="applicant";
 	}
 	public String getJwtToken() {
 		return this.jwtToken;
-	}
+	}*/
 }

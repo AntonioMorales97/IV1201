@@ -15,12 +15,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class ResourceAssembler {
 
-	public void addLinksToApplicationResponse(Application applicationResponse){
-		applicationResponse.add(linkTo(methodOn(ApplicationController.class).getApplication(applicationResponse.getId())).withSelfRel());
+	public void addLinksToApplication(Application application){
+		application.add(linkTo(methodOn(ApplicationController.class).getApplication(application.getId())).withSelfRel());
 	}
 
-	public Object addLinksToApplicationResponse(ApplicationListResponse applicationResponse) {
-		applicationResponse.add(linkTo(methodOn(ApplicationController.class).getApplication(applicationResponse.getId())).withSelfRel());
-		return null;
-	}
+
 }

@@ -42,7 +42,7 @@ public class ApplicationService {
 		Optional<Application> application = applicationRepo.findById(id);
 
 		if (application.isEmpty()) {
-			throw new ApplicationNotFoundException("Application could not be found by id " + id, 4);
+			throw new ApplicationNotFoundException("Application could not be found by id: "+id);
 		}
 
 		return application.get();
@@ -72,16 +72,16 @@ public class ApplicationService {
 	public Application changeStatus(Long id, @Valid StatusDTO statusDTO) {
 		Optional<Application> application = applicationRepo.findById(id);
 		if (application.isEmpty()) {
-			throw new ApplicationNotFoundException("Application could not be found by id " + id, 4);
+			throw new ApplicationNotFoundException("Application could not be found by id: "+id);
 		}
 		Optional<Status> status = statusRepo.findByName(statusDTO.getName());
 		if (status.isEmpty()) {
-			throw new StatusNotFoundException("Status could not be found by id " + id, 5); 
+			throw new StatusNotFoundException("Status could not be found by name: "+statusDTO.getName()); 
 		}
 		
 		if(application.get().getVersion() != statusDTO.getVersion()) {
 			System.out.println("ERROR " + "new vers: " + application.get().getVersion() + " old vers: " + statusDTO.getVersion());
-			throw new ApplicationNotFoundException("ERROR" + "new vers: " + application.get().getVersion() + " old vers: " + statusDTO.getVersion(), 4);
+			throw new ApplicationNotFoundException("ERROR" + "new vers: " + application.get().getVersion() + " old vers: " + statusDTO.getVersion());
 		}
 		System.out.println("SLeeping");
 		try {

@@ -26,8 +26,7 @@ import se.kth.iv1201.recruitmentbackend.presentation.dto.PersonDTO;
 public class RecruitmentController {
 	@Autowired
 	RecruitmentService recruitmentSerivce;
-	@Autowired
-	ApplicationService applicantService;
+	
 	/**
 	 * Handles a new request for a registration.
 	 * @param personDTO The information of the newly registrerd person.
