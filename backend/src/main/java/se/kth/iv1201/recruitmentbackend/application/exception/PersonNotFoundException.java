@@ -2,7 +2,7 @@ package se.kth.iv1201.recruitmentbackend.application.exception;
 
 public class PersonNotFoundException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
-	private final int code =6; 
+	private final int code =8; 
 	/**
 	 * Creates an instance of this exception whenever a Person was not found.
 	 * 

@@ -2,7 +2,7 @@ package se.kth.iv1201.recruitmentbackend.application.exception;
 
 public class StatusNotFoundException extends RuntimeException{
 	private static final long serialVersionUID = 1L;
-	private final int code = 5; 
+	private final int code = 6; 
 	/**
 	 * Creates an instance of this exception whenever a Status was not found.
 	 * 

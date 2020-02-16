@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.dao.CannotAcquireLockException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -20,7 +19,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import se.kth.iv1201.recruitmentbackend.application.exception.ApplicationNotFoundException;
 import se.kth.iv1201.recruitmentbackend.application.exception.IllegalTransactionException;
+import se.kth.iv1201.recruitmentbackend.application.exception.OutdatedApplicationException;
 import se.kth.iv1201.recruitmentbackend.application.exception.StatusNotFoundException;
+import se.kth.iv1201.recruitmentbackend.presentation.exception.InvalidCredentials;
 
 /**
  * Global Exception handler, that handles all the exceptions in this application.
@@ -33,13 +34,20 @@ public class ExceptionHandlers {
 	private final String METHOD_ARGUMENT_TYPE_MISMATCH = "The type of the given arguments are wrong";
 	private static final Logger logger = LoggerFactory.getLogger(ExceptionHandlers.class);
 	
-	
-	/*@ExceptionHandler(CannotAcquireLockException.class)
-	@ResponseStatus(HttpStatus.ACCEPTED)
-	ErrorResponse cannotAcquireLockException(CannotAcquireLockException exc) {
+	@ExceptionHandler(InvalidCredentials.class)
+	@ResponseStatus(HttpStatus.UNAUTHORIZED)
+	ErrorResponse invalidCredentials(InvalidCredentials exc) {
 		logger.error(exc.getMessage());
-		return new ErrorResponse(HttpStatus.CONFLICT.getReasonPhrase(), "Someone else is already trying to update the same object");
-	}*/
+		return new ErrorResponse(HttpStatus.UNAUTHORIZED.getReasonPhrase(), exc.getMessage(), exc.getCode());
+	}
+	
+	
+	@ExceptionHandler(OutdatedApplicationException.class)
+	@ResponseStatus(HttpStatus.CONFLICT)
+	ErrorResponse outdatedApplicationException(OutdatedApplicationException exc) {
+		logger.error(exc.getMessage());
+		return new ErrorResponse(HttpStatus.CONFLICT.getReasonPhrase(), exc.getMessage(), exc.getCode());
+	}
 	/**
 	 * Handles <code>IllegalTransactionException</code>s.
 	 * 
@@ -78,7 +86,7 @@ public class ExceptionHandlers {
 	}
 	/**
 	 * Handler for invalid method arguments. For example, missing fields in
-	 * <code>Customer</code>s.
+	 * <code>Application</code>s.
 	 * 
 	 * @param exc The <code>MethodArgumentNotValidException</code>.
 	 * @return a list over all the violations.
