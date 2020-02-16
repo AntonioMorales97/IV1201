@@ -24,8 +24,15 @@
   },
 
   "error": {
-    "1": "Please enter all fields!",
-    "2": "SSN must be atleast 10 digits!"
+    "1": "A person with the given username already exists!",
+    "2": "A person with the given email already exists!",
+    "3": "A person with the given ssn already exists!",
+    "4": "Invalid credentials, please try again!",
+    "5": "The requested application was not found!",
+    "6": "The application status was not found!",
+    "7": "Outdated application! Please take a look at the new application!",
+    "10": "Please enter all fields!",
+    "11": "SSN must be atleast 10 digits!"
   },
 
   "success": {

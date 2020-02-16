@@ -24,8 +24,15 @@
   },
 
   "error": {
-    "1": "Vänligen fyll i alla rader!",
-    "2": "Personnummer måste vara 10 siffror!"
+    "1": "En person med det givna användarnamnet finns redan!",
+    "2": "En person med det givna eposten finns redan!",
+    "3": "En person med det givna personnummret finns redan!",
+    "4": "Felaktiga uppgifter, vänligen försök igen!",
+    "5": "Den sökta ansökan kunde inte hittas!",
+    "6": "Statuset för ansökan kunde inte hittas!",
+    "7": "Gammal version av ansökan! Vänligen se den uppdaterade versionen av ansökan!",
+    "10": "Vänligen fyll i alla rader!",
+    "11": "Personnummer måste vara 10 siffror!"
   },
 
   "success": {
