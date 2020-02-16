@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import se.kth.iv1201.recruitmentbackend.application.exception.ApplicationNotFoundException;
+import se.kth.iv1201.recruitmentbackend.application.exception.OutdatedApplicationException;
 import se.kth.iv1201.recruitmentbackend.application.exception.StatusNotFoundException;
 import se.kth.iv1201.recruitmentbackend.domain.Application;
 import se.kth.iv1201.recruitmentbackend.presentation.dto.StatusDTO;
@@ -72,7 +73,7 @@ public class ApplicationServiceTest {
 		StatusDTO status = new StatusDTO("bruno", applications.get(0).getVersion());
 		applicationService.changeStatus(applications.get(0).getId(), status);
 	}
-	@Test(expected= ApplicationNotFoundException.class)
+	@Test(expected= OutdatedApplicationException.class)
 	public void simultaniousUpdateTest() {
 		List<Application> user1 =applicationService.findAllApplications();
 		List<Application> user2 =applicationService.findAllApplications();
