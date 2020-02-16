@@ -21,6 +21,7 @@ import se.kth.iv1201.recruitmentbackend.application.exception.ApplicationNotFoun
 import se.kth.iv1201.recruitmentbackend.application.exception.IllegalTransactionException;
 import se.kth.iv1201.recruitmentbackend.application.exception.OutdatedApplicationException;
 import se.kth.iv1201.recruitmentbackend.application.exception.StatusNotFoundException;
+import se.kth.iv1201.recruitmentbackend.presentation.exception.InvalidCredentials;
 
 /**
  * Global Exception handler, that handles all the exceptions in this application.
@@ -32,6 +33,13 @@ public class ExceptionHandlers {
 	private final String INVALID_METHOD_ARGUMENTS = "Invalid method arguments";
 	private final String METHOD_ARGUMENT_TYPE_MISMATCH = "The type of the given arguments are wrong";
 	private static final Logger logger = LoggerFactory.getLogger(ExceptionHandlers.class);
+	
+	@ExceptionHandler(InvalidCredentials.class)
+	@ResponseStatus(HttpStatus.UNAUTHORIZED)
+	ErrorResponse invalidCredentials(InvalidCredentials exc) {
+		logger.error(exc.getMessage());
+		return new ErrorResponse(HttpStatus.UNAUTHORIZED.getReasonPhrase(), exc.getMessage(), exc.getCode());
+	}
 	
 	
 	@ExceptionHandler(OutdatedApplicationException.class)
@@ -78,7 +86,7 @@ public class ExceptionHandlers {
 	}
 	/**
 	 * Handler for invalid method arguments. For example, missing fields in
-	 * <code>Customer</code>s.
+	 * <code>Application</code>s.
 	 * 
 	 * @param exc The <code>MethodArgumentNotValidException</code>.
 	 * @return a list over all the violations.

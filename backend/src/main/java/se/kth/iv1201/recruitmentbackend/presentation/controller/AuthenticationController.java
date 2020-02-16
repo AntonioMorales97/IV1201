@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import se.kth.iv1201.recruitmentbackend.application.exception.IllegalTransactionException;
 import se.kth.iv1201.recruitmentbackend.jwt.JwtTokenUtil;
+import se.kth.iv1201.recruitmentbackend.presentation.exception.InvalidCredentials;
 import se.kth.iv1201.recruitmentbackend.presentation.models.LoginForm;
 import se.kth.iv1201.recruitmentbackend.presentation.models.LoginResponse;
 import se.kth.iv1201.recruitmentbackend.security.MyUserDetailsService;
@@ -49,10 +50,8 @@ public class AuthenticationController {
 	public ResponseEntity<?> authenticate (@Valid @RequestBody LoginForm loginForm) throws Exception{
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginForm.getUsername(), loginForm.getPassword()));
-		}catch(DisabledException ex) {
-			throw new IllegalTransactionException("Account is disabled!",4);
 		}catch(BadCredentialsException ex) {
-			throw new IllegalTransactionException("Invalid credentials, please try again!",5);
+			throw new InvalidCredentials("Invalid credentials, please try again!");
 		}
 		UserDetails userDetails = userDetailsService.loadUserByUsername(loginForm.getUsername());
 		String token = jwtUtil.createToken(userDetails);
