@@ -31,10 +31,10 @@ const LoginView = props => {
         <Container className='form-container'>
           <div className='h3 text-center'>{t('login')}</div>
           {errorMessageKey ? (
-            <Alert color='danger'>{t(errorMessageKey)}</Alert>
+            <Alert color='danger'>{t('error.' + errorMessageKey)}</Alert>
           ) : null}
           {successMessageKey ? (
-            <Alert color='success'>{t(successMessageKey)}</Alert>
+            <Alert color='success'>{t('success.' + successMessageKey)}</Alert>
           ) : null}
           <Form onSubmit={onSubmit}>
             <FormGroup className='mb-0'>
@@ -78,8 +78,8 @@ LoginView.propTypes = {
   onChange: PropTypes.func.isRequired,
   renderRedirect: PropTypes.func.isRequired,
   tryLogin: PropTypes.bool,
-  errorMessageKey: PropTypes.string,
-  successMessageKey: PropTypes.string
+  errorMessageKey: PropTypes.number,
+  successMessageKey: PropTypes.number
 };
 
 export default LoginView;

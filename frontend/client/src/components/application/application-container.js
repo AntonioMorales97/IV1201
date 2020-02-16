@@ -7,15 +7,46 @@ import {
   getApplication,
   updateApplication
 } from '../../actions/application/application-actions';
+import {
+  APPLICATION_ERROR,
+  UPDATE_APPLICATION_SUCCESS
+} from '../../actions/application/application-types';
 
 class ApplicationContainer extends Component {
+  state = {
+    errorMessageKey: null,
+    successMessageKey: null
+  };
+
   componentDidMount() {
     this.props.getApplication(this.props.match.params.id);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { error, success } = this.props;
+    if (error !== prevProps.error) {
+      if (error.id === APPLICATION_ERROR) {
+        this.setState({ errorMessageKey: error.errorId });
+      } else {
+        this.setState({ errorMessageKey: null });
+      }
+    }
+
+    if (success !== prevProps.success) {
+      if (success.id === UPDATE_APPLICATION_SUCCESS) {
+        this.setState({
+          successMessageKey: success.successId
+        });
+      } else {
+        this.setState({ successMessageKey: null });
+      }
+    }
   }
 
   acceptApplication = () => {
     this.props.updateApplication(
       this.props.application.application.id,
+      this.props.application.application.version,
       'accepted'
     );
   };
@@ -23,6 +54,7 @@ class ApplicationContainer extends Component {
   rejectApplication = () => {
     this.props.updateApplication(
       this.props.application.application.id,
+      this.props.application.application.version,
       'rejected'
     );
   };
@@ -30,6 +62,7 @@ class ApplicationContainer extends Component {
   unhandleApplication = () => {
     this.props.updateApplication(
       this.props.application.application.id,
+      this.props.application.application.version,
       'unhandled'
     );
   };
@@ -46,6 +79,8 @@ class ApplicationContainer extends Component {
             acceptApplication={this.acceptApplication}
             rejectApplication={this.rejectApplication}
             unhandleApplication={this.unhandleApplication}
+            errorMessageKey={this.state.errorMessageKey}
+            successMessageKey={this.state.successMessageKey}
           />
         )}
       </Fragment>

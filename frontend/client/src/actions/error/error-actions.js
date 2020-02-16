@@ -1,9 +1,9 @@
 import { GET_ERROR, CLEAR_ERROR } from './error-types';
 
-export const returnError = (msg, status, id = null) => {
+export const returnError = (msg, errorId, status, id = null) => {
   return {
     type: GET_ERROR,
-    payload: { msg, status, id }
+    payload: { msg, errorId, status, id }
   };
 };
 

@@ -42,7 +42,7 @@ class RegisterContainer extends Component {
     const { error, success } = this.props;
     if (error !== prevProps.error) {
       if (error.id === REGISTER_FAIL) {
-        this.setState({ errorMessageKey: error.msg.msg, tryRegister: false });
+        this.setState({ errorMessageKey: error.errorId, tryRegister: false });
       } else {
         this.setState({ errorMessageKey: null });
       }
@@ -51,7 +51,7 @@ class RegisterContainer extends Component {
     if (success !== prevProps.success) {
       if (success.id === REGISTER_SUCCESS) {
         this.setState({
-          successMessageKey: success.msg.msg,
+          successMessageKey: success.successId,
           tryRegister: false,
           registerSuccess: true
         });

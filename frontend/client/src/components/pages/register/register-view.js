@@ -31,10 +31,10 @@ const RegisterView = props => {
         <Container className='form-container'>
           <div className='h3 text-center'>{t('register')}</div>
           {errorMessageKey ? (
-            <Alert color='danger'>{t(errorMessageKey)}</Alert>
+            <Alert color='danger'>{t('error.' + errorMessageKey)}</Alert>
           ) : null}
           {successMessageKey ? (
-            <Alert color='success'>{t(successMessageKey)}</Alert>
+            <Alert color='success'>{t('sucess.' + successMessageKey)}</Alert>
           ) : null}
           <Form onSubmit={onSubmit}>
             <FormGroup className='mb-0'>

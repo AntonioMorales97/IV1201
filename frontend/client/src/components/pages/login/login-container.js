@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import LoginView from './login-view';
 import { Redirect } from 'react-router-dom';
-
 import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
@@ -38,7 +37,7 @@ class LoginContainer extends Component {
   componentDidMount() {
     const { success } = this.props;
     if (success.id === REGISTER_SUCCESS) {
-      this.setState({ successMessageKey: success.msg.msg });
+      this.setState({ successMessageKey: success.successId });
     }
   }
 
@@ -46,7 +45,7 @@ class LoginContainer extends Component {
     const { error, success } = this.props;
     if (error !== prevProps.error) {
       if (error.id === LOGIN_FAIL) {
-        this.setState({ errorMessageKey: error.msg.msg, tryLogin: false });
+        this.setState({ errorMessageKey: error.errorId, tryLogin: false });
       } else {
         this.setState({ errorMessageKey: null });
       }
@@ -55,7 +54,7 @@ class LoginContainer extends Component {
     if (success !== prevProps.success) {
       if (success.id === LOGIN_SUCCESS) {
         this.setState({
-          successMessageKey: success.msg.msg,
+          successMessageKey: success.successId,
           tryLogin: false
         });
       } else {

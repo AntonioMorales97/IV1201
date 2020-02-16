@@ -17,7 +17,13 @@ const ApplicationView = props => {
 
   const { firstName, lastName, email, ssn } = person;
 
-  const { acceptApplication, rejectApplication, unhandleApplication } = props;
+  const {
+    acceptApplication,
+    rejectApplication,
+    unhandleApplication,
+    errorMessageKey,
+    successMessageKey
+  } = props;
 
   const badgeStatus = () => {
     if (status.name === 'accepted') {
@@ -29,9 +35,19 @@ const ApplicationView = props => {
     }
   };
 
+  const alertError = () => {
+    alert(t('error.' + errorMessageKey));
+  };
+
+  const alertSuccess = () => {
+    alert(t('success.' + successMessageKey));
+  };
+
   return (
     <Container>
       <div className='application'>
+        {errorMessageKey ? alertError() : null}
+        {successMessageKey ? alertSuccess() : null}
         <div className='back'>
           <Link to='/applications'>
             <i className='fas fa-angle-double-left'></i>{' '}

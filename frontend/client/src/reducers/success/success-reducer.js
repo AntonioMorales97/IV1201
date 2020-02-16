@@ -5,6 +5,7 @@ import {
 
 const initialState = {
   msg: {},
+  successId: null,
   status: null,
   id: null
 };
@@ -15,12 +16,14 @@ export default function(state = initialState, action) {
     case GET_SUCCESS:
       return {
         msg: payload.msg,
+        successId: payload.successId,
         status: payload.status,
         id: payload.id
       };
     case CLEAR_SUCCESS:
       return {
         msg: {},
+        successId: null,
         status: null,
         id: null
       };

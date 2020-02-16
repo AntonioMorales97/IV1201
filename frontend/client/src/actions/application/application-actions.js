@@ -2,11 +2,12 @@ import axios from 'axios';
 import {
   GET_APPLICATION,
   GET_APPLICATIONS,
-  UPDATE_APPLICATION
+  UPDATE_APPLICATION,
+  APPLICATION_ERROR
 } from './application-types';
 
-//import { returnError } from '../error/error-actions';
-//import { returnSuccess } from '../success/success-actions';
+import { returnError } from '../error/error-actions';
+//import { returnSuccess } from '../success/success-actions'; !!!!!!!!
 
 export const getApplications = () => dispatch => {
   axios
@@ -32,12 +33,25 @@ export const getApplication = id => dispatch => {
       });
     })
     .catch(err => {
+      dispatch({
+        type: APPLICATION_ERROR
+      });
+      if (err.response.data) {
+        dispatch(
+          returnError(
+            { msg: err.response.data.message },
+            err.response.data.code,
+            err.response.status,
+            APPLICATION_ERROR
+          )
+        );
+      }
       console.log(err);
     });
 };
 
-export const updateApplication = (id, status) => dispatch => {
-  const body = JSON.stringify({ name: status });
+export const updateApplication = (id, version, status) => dispatch => {
+  const body = JSON.stringify({ name: status, version });
 
   axios
     .put(`/alter-status/${id}`, body)
@@ -48,6 +62,16 @@ export const updateApplication = (id, status) => dispatch => {
       });
     })
     .catch(err => {
+      if (err.response.data) {
+        dispatch(
+          returnError(
+            { msg: err.response.data.message },
+            err.response.data.code,
+            err.response.status,
+            APPLICATION_ERROR
+          )
+        );
+      }
       console.log(err);
     });
 };
