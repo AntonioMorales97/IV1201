@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { Text, View } from 'react-native';
 import { Input, TextLink, Loading, Button } from './common';
-import axios from 'axios';
-import deviceStorage from '../services/deviceStorage';
+
+
 import backendCalls from '../services/backendCalls';
 /**
  * A class that handles the login of the application, holds the view and the acctual login logic.

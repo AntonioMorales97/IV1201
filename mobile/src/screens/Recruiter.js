@@ -3,7 +3,7 @@ import { ScrollView, View, Text } from 'react-native';
 
 import { Button, Input } from '../components/common';
 
-import { ApplicationList, Application } from '../components';
+import { ApplicationList, Application } from '../components/common';
 import backendCalls from '../services/backendCalls';
 /**
  * Class tha handles the recruiters view.

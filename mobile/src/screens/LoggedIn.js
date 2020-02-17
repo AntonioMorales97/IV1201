@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {View, Text } from 'react-native';
 import { Button } from '../components/common/';
-
 import Recruiter from './Recruiter';
 /**
  * Handles loggedin Users, supports further development with the choice of implementing a applicant view.

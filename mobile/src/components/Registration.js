@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { View, Text } from 'react-native';
 import { Input, TextLink, Button, Loading } from './common';
-import axios from 'axios';
+
 import backendCalls from '../services/backendCalls';
 /**
  * A registration class, that handles rendering of the registration view, aswell as registering a person..
