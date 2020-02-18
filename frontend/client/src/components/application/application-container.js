@@ -7,6 +7,8 @@ import {
   getApplication,
   updateApplication
 } from '../../actions/application/application-actions';
+import { clearSuccess } from '../../actions/success/success-actions';
+import { clearError } from '../../actions/error/error-actions';
 import {
   APPLICATION_ERROR,
   UPDATE_APPLICATION_SUCCESS
@@ -15,7 +17,8 @@ import {
 class ApplicationContainer extends Component {
   state = {
     errorMessageKey: null,
-    successMessageKey: null
+    successMessageKey: null,
+    loading: false
   };
 
   componentDidMount() {
@@ -26,7 +29,8 @@ class ApplicationContainer extends Component {
     const { error, success } = this.props;
     if (error !== prevProps.error) {
       if (error.id === APPLICATION_ERROR) {
-        this.setState({ errorMessageKey: error.errorId });
+        this.setState({ errorMessageKey: error.errorId, loading: false });
+        this.props.clearError();
       } else {
         this.setState({ errorMessageKey: null });
       }
@@ -35,15 +39,24 @@ class ApplicationContainer extends Component {
     if (success !== prevProps.success) {
       if (success.id === UPDATE_APPLICATION_SUCCESS) {
         this.setState({
-          successMessageKey: success.successId
+          successMessageKey: success.successId,
+          loading: false
         });
+        this.props.clearSuccess();
       } else {
         this.setState({ successMessageKey: null });
       }
     }
   }
 
+  componentWillUnmount = () => {
+    this.props.clearSuccess();
+    this.props.clearError();
+  };
+
   acceptApplication = () => {
+    if (this.state.loading) return;
+    this.setState({ loading: true });
     this.props.updateApplication(
       this.props.application.application.id,
       this.props.application.application.version,
@@ -52,6 +65,8 @@ class ApplicationContainer extends Component {
   };
 
   rejectApplication = () => {
+    if (this.state.loading) return;
+    this.setState({ loading: true });
     this.props.updateApplication(
       this.props.application.application.id,
       this.props.application.application.version,
@@ -60,6 +75,8 @@ class ApplicationContainer extends Component {
   };
 
   unhandleApplication = () => {
+    if (this.state.loading) return;
+    this.setState({ loading: true });
     this.props.updateApplication(
       this.props.application.application.id,
       this.props.application.application.version,
@@ -81,6 +98,7 @@ class ApplicationContainer extends Component {
             unhandleApplication={this.unhandleApplication}
             errorMessageKey={this.state.errorMessageKey}
             successMessageKey={this.state.successMessageKey}
+            loading={this.state.loading}
           />
         )}
       </Fragment>
@@ -93,6 +111,9 @@ const mapStateToProps = state => ({
   error: state.error,
   success: state.success
 });
-export default connect(mapStateToProps, { getApplication, updateApplication })(
-  ApplicationContainer
-);
+export default connect(mapStateToProps, {
+  getApplication,
+  updateApplication,
+  clearError,
+  clearSuccess
+})(ApplicationContainer);

@@ -1,6 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Button, ListGroup, ListGroupItem } from 'reactstrap';
+import {
+  Container,
+  Button,
+  ListGroup,
+  ListGroupItem,
+  Spinner
+} from 'reactstrap';
 import { useTranslation } from 'react-i18next';
 
 import './application.css';
@@ -22,7 +28,8 @@ const ApplicationView = props => {
     rejectApplication,
     unhandleApplication,
     errorMessageKey,
-    successMessageKey
+    successMessageKey,
+    loading
   } = props;
 
   const badgeStatus = () => {
@@ -123,13 +130,13 @@ const ApplicationView = props => {
         </div>
         <div className='actions mt-3'>
           <Button className='btn-success mr-1' onClick={acceptApplication}>
-            {t('application.accept')}
+            {loading ? <Spinner size='sm' /> : t('application.accept')}
           </Button>
           <Button className='btn-danger mr-1' onClick={rejectApplication}>
-            {t('application.reject')}
+            {loading ? <Spinner size='sm' /> : t('application.reject')}
           </Button>
           <Button className='secondary' onClick={unhandleApplication}>
-            {t('application.unhandle')}
+            {loading ? <Spinner size='sm' /> : t('application.unhandle')}
           </Button>
         </div>
       </div>

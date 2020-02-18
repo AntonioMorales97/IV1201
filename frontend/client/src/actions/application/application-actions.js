@@ -3,11 +3,11 @@ import {
   GET_APPLICATION,
   GET_APPLICATIONS,
   UPDATE_APPLICATION,
-  APPLICATION_ERROR
+  APPLICATION_ERROR,
+  UPDATE_APPLICATION_SUCCESS
 } from './application-types';
-
 import { returnError } from '../error/error-actions';
-//import { returnSuccess } from '../success/success-actions'; !!!!!!!!
+import { returnSuccess } from '../success/success-actions';
 
 export const getApplications = () => dispatch => {
   axios
@@ -56,22 +56,41 @@ export const updateApplication = (id, version, status) => dispatch => {
   axios
     .put(`/alter-status/${id}`, body)
     .then(res => {
+      dispatch(
+        returnSuccess(
+          { msg: 'Successfully updated application!' },
+          2,
+          res.status,
+          UPDATE_APPLICATION_SUCCESS
+        )
+      );
       dispatch({
         type: UPDATE_APPLICATION,
         payload: res.data
       });
     })
     .catch(err => {
-      if (err.response.data) {
-        dispatch(
-          returnError(
-            { msg: err.response.data.message },
-            err.response.data.code,
-            err.response.status,
-            APPLICATION_ERROR
-          )
-        );
+      if (err.response) {
+        if (err.response.status === 409) {
+          if (err.response.data.application) {
+            dispatch({
+              type: UPDATE_APPLICATION,
+              payload: err.response.data.application
+            });
+          }
+          dispatch(
+            returnError(
+              { msg: err.response.data.message },
+              err.response.data.code,
+              err.response.status,
+              APPLICATION_ERROR
+            )
+          );
+        } else {
+          console.log(err.response);
+        }
+      } else {
+        console.log(err);
       }
-      console.log(err);
     });
 };
