@@ -61,7 +61,7 @@ public class MigrationService {
 	private ApplicationRepository applicationRepo;
 
 	@Autowired
-	private JavaMailSender mailSender;
+	private MailSender emailSender;
 
 
 	/**
@@ -69,6 +69,7 @@ public class MigrationService {
 	 */
 	public void migrate() {
 		this.oldRecruitmentDAO = new OldRecruitmentDAO();
+
 		insertCompetences();
 		insertRoles();
 		insertPersons();
@@ -98,12 +99,7 @@ public class MigrationService {
 				if(personDTO.getPassword() == null) {
 					String newPass = UUID.randomUUID().toString();
 					password = encoder.encode(newPass);
-					SimpleMailMessage message = new SimpleMailMessage();
-					message.setTo(personDTO.getEmail());
-					message.setSubject("Your new password");
-					message.setText("Username: " + username + "\nPassword: " + newPass);
-					mailSender.send(message);
-
+					emailSender.sendCredentials(username, newPass, personDTO.getEmail()); //Sends an email with the new password if it is missing
 				} else {
 					password = personDTO.getPassword();
 				}

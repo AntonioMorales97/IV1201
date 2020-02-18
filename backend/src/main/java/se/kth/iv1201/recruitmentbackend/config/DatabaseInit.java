@@ -1,12 +1,19 @@
 package se.kth.iv1201.recruitmentbackend.config;
 
+import java.util.List;
 import java.util.Optional;
 
+import org.hibernate.exception.JDBCConnectionException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import se.kth.iv1201.recruitmentbackend.domain.Competence;
+import se.kth.iv1201.recruitmentbackend.domain.Person;
+import se.kth.iv1201.recruitmentbackend.domain.Role;
 import se.kth.iv1201.recruitmentbackend.domain.Status;
+import se.kth.iv1201.recruitmentbackend.migration.MigrationService;
 import se.kth.iv1201.recruitmentbackend.repository.ApplicationRepository;
 import se.kth.iv1201.recruitmentbackend.repository.AvailabilityRepository;
 import se.kth.iv1201.recruitmentbackend.repository.CompetenceProfileRepository;
@@ -24,6 +31,9 @@ public class DatabaseInit {
 	private static final String UNHANDLED_STATUS = "unhandled";
 	private static final String ACCEPTED_STATUS = "accepted";
 	private static final String REJECTED_STATUS = "rejected";
+
+	@Autowired
+	private MigrationService migration;
 
 
 	@Bean
@@ -47,6 +57,17 @@ public class DatabaseInit {
 			if(optUnhandled.isEmpty()) {
 				Status unhandled = new Status(UNHANDLED_STATUS);
 				statusRepo.save(unhandled);
+			}
+
+			List<Person> persons = personRepo.findAll();
+			List<Competence> competences = competenceRepo.findAll();
+			List<Role> roles = roleRepo.findAll();
+			if(persons.isEmpty() && competences.isEmpty() && roles.isEmpty()){
+				try{
+					migration.migrate();
+				} catch (JDBCConnectionException e){
+					System.err.println("Could not connect to old database for migration");
+				}
 			}
 		};
 	
