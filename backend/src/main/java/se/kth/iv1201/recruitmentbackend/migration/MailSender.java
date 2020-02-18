@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * Class used to send e-mails to users with important information
  */
 @Component
-public class MailSender {
+public class MigrationMailSender {
 
     @Autowired
     private JavaMailSender sender;

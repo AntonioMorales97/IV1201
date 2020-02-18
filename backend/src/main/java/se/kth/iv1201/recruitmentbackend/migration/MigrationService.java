@@ -61,7 +61,7 @@ public class MigrationService {
 	private ApplicationRepository applicationRepo;
 
 	@Autowired
-	private MailSender emailSender;
+	private MigrationMailSender emailSender;
 
 
 	/**
