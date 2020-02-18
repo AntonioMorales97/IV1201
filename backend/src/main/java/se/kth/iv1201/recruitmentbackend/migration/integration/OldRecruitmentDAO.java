@@ -29,14 +29,14 @@ public class OldRecruitmentDAO {
 	/**
 	 * Creates a connection to the old database and returns a DAO.
 	 */
-	public OldRecruitmentDAO() {
-		try {
+	public OldRecruitmentDAO() throws NullPointerException, SQLException {
+//		try {
 			this.oldDbConn = new OldDbConnection();
 			this.conn = this.oldDbConn.getConnection();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			logger.error(e.getMessage());
-		}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			logger.error(e.getMessage());
+//		}
 	}
 
 	/**

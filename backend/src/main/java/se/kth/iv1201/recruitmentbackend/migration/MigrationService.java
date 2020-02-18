@@ -1,5 +1,6 @@
 package se.kth.iv1201.recruitmentbackend.migration;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -67,7 +68,7 @@ public class MigrationService {
 	/**
 	 * Preform a migration from the old database.
 	 */
-	public void migrate() {
+	public void migrate() throws NullPointerException, SQLException {
 		this.oldRecruitmentDAO = new OldRecruitmentDAO();
 
 		insertCompetences();

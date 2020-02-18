@@ -1,5 +1,6 @@
 package se.kth.iv1201.recruitmentbackend.config;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,7 +66,7 @@ public class DatabaseInit {
 			if(persons.isEmpty() && competences.isEmpty() && roles.isEmpty()){
 				try{
 					migration.migrate();
-				} catch (JDBCConnectionException e){
+				} catch (SQLException | NullPointerException e){
 					System.err.println("Could not connect to old database for migration");
 				}
 			}

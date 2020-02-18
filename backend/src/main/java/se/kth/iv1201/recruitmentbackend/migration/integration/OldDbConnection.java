@@ -19,13 +19,14 @@ public class OldDbConnection {
 	 * Creates a new connection to the old database
 	 * @throws SQLException if connection to the old database can not be established
 	 */
-	public OldDbConnection() throws SQLException {
+	public OldDbConnection() throws SQLException, NullPointerException {
 		try {
 			Class.forName(SQL_DRIVER);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			logger.error(e.getMessage());
 		}
+
 		String oldDbKey = System.getenv("OLD_DB");
 		String dbUrl = System.getenv(oldDbKey); //"jdbc:postgresql://localhost/old_recruitment?user=recruitment_acc&password=123123";
 		this.conn = DriverManager.getConnection(dbUrl);
