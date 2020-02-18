@@ -46,7 +46,7 @@ public class ExceptionHandlers {
 	@ResponseStatus(HttpStatus.CONFLICT)
 	ErrorResponse outdatedApplicationException(OutdatedApplicationException exc) {
 		logger.error(exc.getMessage());
-		return new ErrorResponse(HttpStatus.CONFLICT.getReasonPhrase(), exc.getMessage(), exc.getCode());
+		return new ErrorResponse(HttpStatus.CONFLICT.getReasonPhrase(), exc.getMessage(), exc.getCode(), exc.getApplication());
 	}
 	/**
 	 * Handles <code>IllegalTransactionException</code>s.
