@@ -10,7 +10,7 @@ public class ErrorResponse {
 	private String logRef;
 	private String message;
 	private int code;
-	private Object body;
+	private Application application;
 
 	/**
 	 * Creates an instance of <code>ErrorResponse</code>.
@@ -31,7 +31,7 @@ public class ErrorResponse {
 		this.logRef = logRef;
 		this.message = message;
 		this.code = code;
-		this.body = application;
+		this.application = application;
 	}
 	/**
 	 * @return the error.
@@ -48,5 +48,8 @@ public class ErrorResponse {
 	}
 	public int getCode() {
 		return this.code;
+	}
+	public Application getApplication() {
+		return this.application;
 	}
 }
