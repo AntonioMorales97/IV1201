@@ -36,7 +36,8 @@
   },
 
   "success": {
-    "1": "Registrering lyckades, vänligen logga in!"
+    "1": "Registrering lyckades, vänligen logga in!",
+    "2": "Uppdateringen av ansökan lyckades!"
   },
 
   "application": {

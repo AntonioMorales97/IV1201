@@ -36,7 +36,8 @@
   },
 
   "success": {
-    "1": "Successful registration, please login!"
+    "1": "Successful registration, please login!",
+    "2": "Successfully updated application!"
   },
 
   "application": {
