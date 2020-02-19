@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-import org.hibernate.exception.JDBCConnectionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;

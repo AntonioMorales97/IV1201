@@ -32,54 +32,56 @@ import se.kth.iv1201.recruitmentbackend.repository.RoleRepository;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-
 public class AuthenticationControllerTest {
+
 	@Autowired
 	private MockMvc mvc;
+
 	@Autowired
 	RoleRepository roleRepo;
+
 	@Autowired
 	PersonRepository personRepo;
+
 	@Autowired
 	ObjectMapper objectMapper;
+
 	@Value("${jwt.secret}")
 	private String secret;
 
 	/**
 	 * Test that should fail.
+	 * 
 	 * @throws Exception
 	 */
 	@Test
-	public void registerTestBadRequest()throws Exception{
+	public void registerTestBadRequest() throws Exception {
 		this.mvc.perform(post("/authenticate")).andDo(print()).andExpect(status().isBadRequest());
 	}
-	
 
-	
 	@Test
-	public void registerTestSuccess()throws Exception{ 
+	public void registerTestSuccess() throws Exception {
 		String user = setupUser("heja", "då");
-		MvcResult res = this.mvc.perform(post("/authenticate").contentType(MediaType.APPLICATION_JSON)
-                .content(user)).andDo(print())
-                .andExpect(status().isOk()).andReturn();
+		MvcResult res = this.mvc.perform(post("/authenticate").contentType(MediaType.APPLICATION_JSON).content(user))
+				.andDo(print()).andExpect(status().isOk()).andReturn();
 		String result = res.getResponse().getContentAsString();
 		LoginResponse response = objectMapper.readValue(result, LoginResponse.class);
 		String token = response.getJwtToken();
 		Jws<Claims> jws = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
 		System.out.println(jws.getBody().getSubject());
-		assertEquals("heja", jws.getBody().getSubject()); 
+		assertEquals("heja", jws.getBody().getSubject());
 	}
-	
-	
+
 	private String setupUser(String username, String password) throws JSONException {
-		 JSONObject user = new JSONObject();
-		 user.put("username", username);
-		 user.put("password", password);
-		 return user.toString();
-		
+		JSONObject user = new JSONObject();
+		user.put("username", username);
+		user.put("password", password);
+		return user.toString();
+
 	}
+
 	@Before
-	public void testSetup() throws Exception{
+	public void testSetup() throws Exception {
 		personRepo.deleteAll();
 		roleRepo.deleteAll();
 		Role r1 = new Role("recruit");
@@ -87,24 +89,26 @@ public class AuthenticationControllerTest {
 		Role added = roleRepo.save(r1);
 		roleRepo.save(r2);
 		System.out.println(added);
-		String body = setupBody("testyy","testaryy","testay@gmail.com","9443528491","heja","då");
-		this.mvc.perform(post("/register")
-				.contentType(MediaType.APPLICATION_JSON).content(body.toString()));
+		String body = setupBody("testyy", "testaryy", "testay@gmail.com", "9443528491", "heja", "då");
+		this.mvc.perform(post("/register").contentType(MediaType.APPLICATION_JSON).content(body.toString()));
 	}
+
 	@After
 	public void testDestructor() {
 		personRepo.deleteById(personRepo.findByUsername("heja").getId());
 		roleRepo.deleteAll();
-		
+
 	}
-	private String setupBody(String firstName, String lastName, String email, String ssn, String username, String password) throws JSONException {
-		 JSONObject body = new JSONObject();
-			body.put("firstName", firstName);
-			body.put("lastName", lastName);
-			body.put("email", email);
-			body.put("ssn", ssn);
-			body.put("username", username);
-			body.put("password", password);
-			return body.toString();
+
+	private String setupBody(String firstName, String lastName, String email, String ssn, String username,
+			String password) throws JSONException {
+		JSONObject body = new JSONObject();
+		body.put("firstName", firstName);
+		body.put("lastName", lastName);
+		body.put("email", email);
+		body.put("ssn", ssn);
+		body.put("username", username);
+		body.put("password", password);
+		return body.toString();
 	}
 }

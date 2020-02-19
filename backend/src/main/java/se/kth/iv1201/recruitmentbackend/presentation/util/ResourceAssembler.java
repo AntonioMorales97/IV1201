@@ -2,7 +2,6 @@ package se.kth.iv1201.recruitmentbackend.presentation.util;
 
 import se.kth.iv1201.recruitmentbackend.domain.Application;
 import se.kth.iv1201.recruitmentbackend.presentation.controller.ApplicationController;
-import se.kth.iv1201.recruitmentbackend.presentation.models.ApplicationListResponse;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;

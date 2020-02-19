@@ -1,7 +1,5 @@
 package se.kth.iv1201.recruitmentbackend.presentation.error;
 
-import se.kth.iv1201.recruitmentbackend.domain.Application;
-
 /**
  * Returns an error response to the client. 
  *

@@ -1,6 +1,5 @@
 package se.kth.iv1201.recruitmentbackend.presentation;
 
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -33,73 +32,75 @@ public class RecruitmentControllerTest {
 
 	@Autowired
 	private MockMvc mvc;
+
 	@Autowired
-	
 	PersonRepository personRepo;
-	
+
 	@Test
-	public void registerTestBadRequest()throws Exception{
+	public void registerTestBadRequest() throws Exception {
 		this.mvc.perform(post("/register")).andDo(print()).andExpect(status().isBadRequest());
 	}
-		
+
 	@Rollback(true)
 	@Test
-	public void registerTestWorking()throws Exception{
-	
-		String body = setupBody("test","testar","testis@gmail.com","9403128991","Testis","då");
-			 this.mvc.perform(post("/register").contentType(MediaType.APPLICATION_JSON)
-	                .content(body)).andDo(print())
-			 		.andExpect(status().isCreated());
-			 
-		
+	public void registerTestWorking() throws Exception {
+
+		String body = setupBody("test", "testar", "testis@gmail.com", "9403128991", "Testis", "då");
+		this.mvc.perform(post("/register").contentType(MediaType.APPLICATION_JSON).content(body)).andDo(print())
+				.andExpect(status().isCreated());
+
 	}
-	
-	@Test 
-	public void registerAlredyUsedUsername() throws Exception{
-		String body = setupBody("testa","testars","testayssss@gmail.com","9494256712","heja","då");
-		 registerRequest("A person with the given username already exists!", body);
-		 removeUsers();
+
+	@Test
+	public void registerAlredyUsedUsername() throws Exception {
+		String body = setupBody("testa", "testars", "testayssss@gmail.com", "9494256712", "heja", "då");
+		registerRequest("A person with the given username already exists!", body);
+		removeUsers();
 	}
-	@Test 
-	public void registerAlredyUsedEmail() throws Exception{
-	
-		String body = setupBody("testar","testars","testay@gmail.com","9563258789","hejaaa","då");
-		 registerRequest("A person with the given email already exists!", body);
-		 removeUsers();
+
+	@Test
+	public void registerAlredyUsedEmail() throws Exception {
+
+		String body = setupBody("testar", "testars", "testay@gmail.com", "9563258789", "hejaaa", "då");
+		registerRequest("A person with the given email already exists!", body);
+		removeUsers();
 	}
-	@Test 
-	public void registerAlredyUsedSsn() throws Exception{
-		
-		String body = setupBody("testa","test","finnsej@gmail.com","9443528491","hejaaar","då");
-		 registerRequest("A person with the given ssn already exists!", body);
-		 removeUsers();
+
+	@Test
+	public void registerAlredyUsedSsn() throws Exception {
+
+		String body = setupBody("testa", "test", "finnsej@gmail.com", "9443528491", "hejaaar", "då");
+		registerRequest("A person with the given ssn already exists!", body);
+		removeUsers();
 	}
+
 	@Before
-	public void testSetup() throws Exception{
-		
-		String body = setupBody("testyy","testaryy","testay@gmail.com","9443528491","heja","då");
-		this.mvc.perform(post("/register")
-				.contentType(MediaType.APPLICATION_JSON).content(body.toString()));
+	public void testSetup() throws Exception {
+
+		String body = setupBody("testyy", "testaryy", "testay@gmail.com", "9443528491", "heja", "då");
+		this.mvc.perform(post("/register").contentType(MediaType.APPLICATION_JSON).content(body.toString()));
 	}
+
 	@After
 	public void removeUsers() {
 		personRepo.deleteAll();
 	}
-	private void registerRequest(String msg, String body) throws Exception{
-		this.mvc.perform(post("/register").contentType(MediaType.APPLICATION_JSON)
-                .content(body.toString())).andDo(print())
-                .andExpect(status().isMethodNotAllowed())
-                .andExpect(jsonPath("$.message").value(msg));
+
+	private void registerRequest(String msg, String body) throws Exception {
+		this.mvc.perform(post("/register").contentType(MediaType.APPLICATION_JSON).content(body.toString()))
+				.andDo(print()).andExpect(status().isMethodNotAllowed()).andExpect(jsonPath("$.message").value(msg));
 	}
-	private String setupBody(String firstName, String lastName, String email, String ssn, String username, String password) throws JSONException {
-		 JSONObject body = new JSONObject();
-			body.put("firstName", firstName);
-			body.put("lastName", lastName);
-			body.put("email", email);
-			body.put("ssn", ssn);
-			body.put("username", username);
-			body.put("password", password);
-			return body.toString();
+
+	private String setupBody(String firstName, String lastName, String email, String ssn, String username,
+			String password) throws JSONException {
+		JSONObject body = new JSONObject();
+		body.put("firstName", firstName);
+		body.put("lastName", lastName);
+		body.put("email", email);
+		body.put("ssn", ssn);
+		body.put("username", username);
+		body.put("password", password);
+		return body.toString();
 	}
-	
+
 }

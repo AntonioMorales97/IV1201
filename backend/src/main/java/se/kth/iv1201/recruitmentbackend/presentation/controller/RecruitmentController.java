@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import se.kth.iv1201.recruitmentbackend.application.ApplicationService;
 import se.kth.iv1201.recruitmentbackend.application.RecruitmentService;
 import se.kth.iv1201.recruitmentbackend.presentation.dto.PersonDTO;
 /**
