@@ -3,6 +3,8 @@
     - language: java
       jdk: oraclejdk11
       sudo: required
+      env:
+       - JWT_SECRET=secret
       services:
        - postgresql
       before_install:
