@@ -7,22 +7,23 @@ described here.
 
 ### Environment variables
 * ```EMAIL_PASSWORD``` used for the Java mail sender
+* ```JWT_SECRET``` used to set the secret for generating JSON Web Tokens
 * ```PROJECT_PATH``` should be set to ```backend``` to deploy from this path
-* ```DATABASE_URL``` should be set automatically by Heroku when a postgres database is created. Otherwise it should be the URI to the database in Heroku.
+* ```DATABASE_URL``` should be set automatically by Heroku when a Postgres database is created. Otherwise it should be the URI to the database in Heroku.
 * ```HEROKU_POSTGRESQL_<COLOR>_URL``` should be set automatically by Heroku when a new database is created. Otherwised it should be the URI to the database (old) with the 
 right "color", e.g. ```HEROKU_POSTGRESQL_GREEN_URL```. This variable is needed only if migration of data is going to be used from the old database, thus should be the URI to the old database. 
 * ```OLD_DB``` should be set to point to the environment variable that has the URI to the old database. This is because it makes it more flexible when using different names of databases.
-E.g. if the postgres database is of color green, then this variable should be set to ```HEROKU_POSTGRESQL_GREEN_URL```, i.e. point to the variable above.
+E.g. if the Postgres database is of color green, then this variable should be set to ```HEROKU_POSTGRESQL_GREEN_URL```, i.e. point to the variable above.
 
 ### Migration
 Since this whole application is an upgrade of an older recruitment system, the data in the old database needs to be migrated to the new system's database.
-The migration expects an old postgres database to exist and the connection to be given by an URI in an environment variable (See the section about environment variables). If no such old database exists,
+The migration expects an old Postgres database to exist and the connection to be given by an URI in an environment variable (See the section about environment variables). If no such old database exists,
 a minimal copy of the old database can be created by the following script: [old_database](./src/main/resources/old_database.sql). 
 The migration is automatic and will take care of the rest.
 
 ### Local setup
 Most of the environment variables needs to be set for it to work locally, but not all. For example, the DATABASE_URL does not need to be set since the ```application.properties``` holds configurations for a database not created by Heroku. See also the section about versions.
-* Create a postgres database with the required configurations in the ```application.properties``` file (or change the configurations).
+* Create a Postgres database with the required configurations in the ```application.properties``` file (or change the configurations).
 * If migration will be needed, read the section about migration.
 * Install and build the project with maven
 * Start the main function and the application will be started on localhost:8080.
@@ -30,9 +31,9 @@ Most of the environment variables needs to be set for it to work locally, but no
 **OBS!** This is a REST server, hence no view will be served to the clients here. If using without a frontend, use an HTTP client like Postman to the different endpoints in the controllers in the Presentation layer (see section about code structure).
 
 ### Production setup
-This backend has been deployed to Heroku. Heroku will automatically notice the Spring application and that a postgres database is used and take care of everything. Heroku will:
+This backend has been deployed to Heroku. Heroku will automatically notice the Spring application and that a Postgres database is used and take care of everything. Heroku will:
 * Create the ```DATABASE_URL``` environment variable
-* Create a postgres database
+* Create a Postgres database
 * Configure so JPA uses the new database instead of the one configured in ```application.properties```.
 
 **OBS!** To use migration read the section about migration. One example is to create an additional database that represents the old database and set up the needed environment variables.
