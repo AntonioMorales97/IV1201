@@ -13,7 +13,7 @@ import se.kth.iv1201.recruitmentbackend.repository.PersonRepository;
 import se.kth.iv1201.recruitmentbackend.repository.RoleRepository;
 
 /**
- * Handles all the logic for registration of new Persons.
+ * Handles all the logic of services regarding recruitment.
  *
  */
 @Service
@@ -30,10 +30,11 @@ public class RecruitmentService {
 	private RoleRepository roleRepo;
 
 	/**
-	 * Adds a specific Person to the database.
+	 * Adds a <code>Person</code> to the database.
 	 * 
-	 * @param personDTO The data that represents the user to add to the database.
-	 * @return the registered person. // COULD BE VOID ASWELL.
+	 * @param personDTO The DTO that represents the person to add to the database.
+	 * @throws IllegalTransactionException if a conflict occurs when trying to add
+	 *                                     the new person.
 	 */
 	public void registerUser(PersonDTO personDTO) {
 

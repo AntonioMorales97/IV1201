@@ -21,7 +21,7 @@ import se.kth.iv1201.recruitmentbackend.repository.ApplicationRepository;
 import se.kth.iv1201.recruitmentbackend.repository.StatusRepository;
 
 /**
- * Class that handles all the service Logic regarding applications.
+ * Class that handles all the service logic regarding applications.
  *
  */
 @Service
@@ -29,16 +29,18 @@ import se.kth.iv1201.recruitmentbackend.repository.StatusRepository;
 public class ApplicationService {
 
 	@Autowired
-	ApplicationRepository applicationRepo;
+	private ApplicationRepository applicationRepo;
 
 	@Autowired
-	StatusRepository statusRepo;
+	private StatusRepository statusRepo;
 
 	/**
-	 * Gets a specific Persons from database.
+	 * Gets a specific <code>Application</code> from database.
 	 * 
-	 * @param id of person.
-	 * @return ApplicationResponse of the person
+	 * @param id The ID of the <code>Application</code>.
+	 * @return the <code>Application</code> if found.
+	 * @throws ApplicationNotFoundException if no <code>Application</code> with the
+	 *                                      given ID was found.
 	 */
 	public Application findApplication(Long id) {
 		Optional<Application> application = applicationRepo.findById(id);
@@ -51,24 +53,33 @@ public class ApplicationService {
 	}
 
 	/**
-	 * Lists all Applications in the database.
+	 * Lists all <code>Application</code>s in the database.
 	 * 
-	 * @return List containing all the applications.
+	 * @return all the <code>Application</code>s.
 	 */
 	public List<Application> findAllApplications() {
-
 		List<Application> applications = applicationRepo.findAll();
-
 		return applications;
-
 	}
 
 	/**
-	 * Updates a Application in the Database with new status.
+	 * Updates an <code>Application</code> in the database with new status.
 	 * 
-	 * @param id        of application
-	 * @param statusDTO the new status.
-	 * @return the updated Application
+	 * @param id        The ID of the <code>Application</code>.
+	 * @param statusDTO A <code>StatusDTO</code> containing the new status.
+	 * @return the updated <code>Application</code>.
+	 * @throws ApplicationNotFoundException if no <code>Application</code> was found
+	 *                                      with the given ID.
+	 * @throws StatusNotFoundException      if no <code>Status</code> was found in
+	 *                                      the database that matches the given
+	 *                                      status.
+	 * @throws OutdatedApplicationException if the <code>Application</code> is
+	 *                                      outdated, i.e. has an old version
+	 *                                      compared to the <code>Application</code>
+	 *                                      in the database.
+	 * @throws CannotAcquireLockException   if trying to update an
+	 *                                      <code>Application</code> at the same
+	 *                                      time.
 	 */
 	@Transactional(isolation = Isolation.SERIALIZABLE)
 	public Application changeStatus(Long id, @Valid StatusDTO statusDTO) {

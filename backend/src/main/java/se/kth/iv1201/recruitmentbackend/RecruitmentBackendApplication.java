@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 public class RecruitmentBackendApplication {
+
 	/**
 	 * Main method to start the backend application
 	 * 
