@@ -42,7 +42,7 @@
 
   "application": {
     "application": "Ansökan",
-    "applications": "Ansökan",
+    "applications": "Ansökningar",
     "status": "Status",
     "personal_info": "Personlig information",
     "experience": "Erfarenhet",
@@ -50,8 +50,8 @@
     "fromDate": "Från",
     "toDate": "Till",
     "view_application": "Se ansökan",
-    "back_to_applications": "Tillbaka till ansökan",
-    "no_applications": "Finns inga ansökan",
+    "back_to_applications": "Tillbaka till ansökningar",
+    "no_applications": "Finns inga ansökningar",
     "no_experiences": "Inga tidiga erfarenheter",
     "no_availability": "Ingen tillgänglighet",
     "accepted": "Accepterad",
