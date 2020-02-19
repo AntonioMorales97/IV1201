@@ -10,10 +10,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class RecruitmentBackendApplication {
 	/**
 	 * Main method to start the backend application
+	 * 
 	 * @param args list of option arguments used when starting the application.
 	 */
 	public static void main(String[] args) {
-
 		SpringApplication.run(RecruitmentBackendApplication.class, args);
 	}
 }

@@ -11,7 +11,7 @@ import lombok.Data;
 public class AvailabilityDTO {
 	private final Date from;
 	private final Date to;
-	
+
 	public AvailabilityDTO(Date from, Date to) {
 		this.from = from;
 		this.to = to;

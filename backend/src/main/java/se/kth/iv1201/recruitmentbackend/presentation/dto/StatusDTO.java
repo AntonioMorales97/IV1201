@@ -10,18 +10,19 @@ import lombok.Data;
  */
 @Data
 public class StatusDTO {
-		
+
 	@NotNull(message = "{status.name.missing}")
-    @NotBlank(message = "{status.name.blank}")
-    private String name;
-	
+	@NotBlank(message = "{status.name.blank}")
+	private String name;
+
 	@NotNull(message = "{status.version.missing}")
-    private long version;
-	
-	public StatusDTO() {}
-	
-    public StatusDTO(String name, long version) {
-		this.name= name;
+	private long version;
+
+	public StatusDTO() {
+	}
+
+	public StatusDTO(String name, long version) {
+		this.name = name;
 		this.version = version;
 	}
 }

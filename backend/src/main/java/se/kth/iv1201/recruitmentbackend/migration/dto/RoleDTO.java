@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class RoleDTO {
 	private final String name;
-	
+
 	public RoleDTO(String name) {
 		this.name = name;
 	}

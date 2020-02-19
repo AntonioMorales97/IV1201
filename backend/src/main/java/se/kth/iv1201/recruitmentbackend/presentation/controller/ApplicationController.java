@@ -27,8 +27,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 /**
- * Controller class handling requests related to applications.
- * This includes listing applications and changing application status.
+ * Controller class handling requests related to applications. This includes
+ * listing applications and changing application status.
  */
 @RestController
 @Validated
@@ -37,6 +37,7 @@ public class ApplicationController {
 
 	@Autowired
 	ApplicationService applicationService;
+
 	@Autowired
 	ResourceAssembler resourceAssembler;
 
@@ -52,7 +53,7 @@ public class ApplicationController {
 		applications.forEach(application -> {
 			applicationList.add(createApplicationResponse(application));
 			resourceAssembler.addLinksToApplication(application);
-			
+
 		});
 		return new CollectionModel<ApplicationListResponse>(applicationList,
 				linkTo(methodOn(ApplicationController.class).getAllApplications()).withSelfRel());
@@ -76,7 +77,7 @@ public class ApplicationController {
 	 * Changes the status of a given application.
 	 *
 	 * @param statusDTO DTO containing information about the new status
-	 * @param id of the application to change.
+	 * @param id        of the application to change.
 	 * @return The altered application.
 	 */
 	@PutMapping("/alter-status/{id}")
@@ -87,11 +88,13 @@ public class ApplicationController {
 			resourceAssembler.addLinksToApplication(application);
 			return application;
 		} catch (CannotAcquireLockException exc) {
-			throw new OutdatedApplicationException("Could not save update, because current application verson is outdated.", applicationService.findApplication(id));
+			throw new OutdatedApplicationException(
+					"Could not save update, because current application verson is outdated.",
+					applicationService.findApplication(id));
 
 		}
 	}
-	
+
 	private ApplicationListResponse createApplicationResponse(Application application) {
 		ApplicationListResponse applicationResponse = new ApplicationListResponse(application.getId(),
 				application.getPerson().getFirstName(), application.getPerson().getLastName(),

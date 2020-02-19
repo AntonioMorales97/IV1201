@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
 /**
- * Connection class for the old database used during migration to the new database.
+ * Connection class for the old database used during migration to the new
+ * database.
  */
 public class OldDbConnection {
 	private static final String SQL_DRIVER = "org.postgresql.Driver";
@@ -17,7 +18,11 @@ public class OldDbConnection {
 
 	/**
 	 * Creates a new connection to the old database
-	 * @throws SQLException if connection to the old database can not be established
+	 * 
+	 * @throws SQLException         if connection to the old database can not be
+	 *                              established
+	 * @throws NullPointerException if the required environment variables are not
+	 *                              set
 	 */
 	public OldDbConnection() throws SQLException, NullPointerException {
 		try {
@@ -28,13 +33,14 @@ public class OldDbConnection {
 		}
 
 		String oldDbKey = System.getenv("OLD_DB");
-		String dbUrl = System.getenv(oldDbKey); //"jdbc:postgresql://localhost/old_recruitment?user=recruitment_acc&password=123123";
+		String dbUrl = System.getenv(oldDbKey); // "jdbc:postgresql://localhost/old_recruitment?user=recruitment_acc&password=123123";
 		this.conn = DriverManager.getConnection(dbUrl);
 		this.conn.setAutoCommit(false);
 	}
 
 	/**
 	 * Get the connection object to the old database
+	 * 
 	 * @return jdbc Connection object to the old database
 	 */
 	public Connection getConnection() {
@@ -43,6 +49,7 @@ public class OldDbConnection {
 
 	/**
 	 * Close the connection to the old database
+	 * 
 	 * @throws SQLException if the connection can not be closed.
 	 */
 	public void disconnect() throws SQLException {

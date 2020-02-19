@@ -1,8 +1,8 @@
 package se.kth.iv1201.recruitmentbackend.presentation.error;
 
 /**
- * Represents a constraint violation with the field that got violated
- * and the message. Used to return to the client.
+ * Represents a constraint violation with the field that got violated and the
+ * message. Used to return to the client.
  */
 public class Violation {
 	private final String fieldName;
@@ -12,7 +12,7 @@ public class Violation {
 	 * Creates an instance of <code>Violation</code>.
 	 * 
 	 * @param fieldName The field that got violated.
-	 * @param message The message for that violation.
+	 * @param message   The message for that violation.
 	 */
 	Violation(String fieldName, String message) {
 		this.fieldName = fieldName;

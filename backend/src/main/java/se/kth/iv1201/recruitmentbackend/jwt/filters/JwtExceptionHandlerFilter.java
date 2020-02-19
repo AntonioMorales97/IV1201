@@ -21,12 +21,15 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
 import se.kth.iv1201.recruitmentbackend.presentation.error.ExceptionHandlers;
+
 /**
- * A filter to handle exceptions thrown in the <code>JwtExceptionHandlerFilter</code>.
+ * A filter to handle exceptions thrown in the
+ * <code>JwtExceptionHandlerFilter</code>.
  */
 @Component
-public class JwtExceptionHandlerFilter extends OncePerRequestFilter{
+public class JwtExceptionHandlerFilter extends OncePerRequestFilter {
 	private static final Logger logger = LoggerFactory.getLogger(ExceptionHandlers.class);
+
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
@@ -39,9 +42,11 @@ public class JwtExceptionHandlerFilter extends OncePerRequestFilter{
 			logger.error(exc.getMessage());
 			sendErrorResponse(HttpStatus.NOT_FOUND, exc.getMessage(), response);
 		}
-		
+
 	}
-	private void sendErrorResponse(HttpStatus httpStatus, String msg, HttpServletResponse response) throws JsonProcessingException, IOException {
+
+	private void sendErrorResponse(HttpStatus httpStatus, String msg, HttpServletResponse response)
+			throws JsonProcessingException, IOException {
 		response.setStatus(httpStatus.value());
 		ErrorResponse errorResponse = new ErrorResponse(httpStatus.getReasonPhrase(), msg);
 		response.setContentType("application/json");
@@ -49,7 +54,7 @@ public class JwtExceptionHandlerFilter extends OncePerRequestFilter{
 	}
 
 	private String convertToJson(Object object) throws JsonProcessingException {
-		if(object == null)
+		if (object == null)
 			return null;
 		ObjectMapper mapper = new ObjectMapper();
 		return mapper.writeValueAsString(object);

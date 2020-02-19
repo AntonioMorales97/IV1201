@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class CompetenceDTO {
 	private final String name;
-	
+
 	public CompetenceDTO(String name) {
 		this.name = name;
 	}

@@ -40,28 +40,27 @@ public class MigrationService {
 	private static final String RECRUIT_ROLE = "recruit";
 	private static final String UNHANDLED_STATUS = "unhandled";
 	private OldRecruitmentDAO oldRecruitmentDAO;
-	
+
 	@Autowired
 	PasswordEncoder encoder;
-	
+
 	@Autowired
 	private RoleRepository roleRepo;
-	
+
 	@Autowired
 	private CompetenceRepository competenceRepo;
-	
+
 	@Autowired
 	private PersonRepository personRepo;
-	
+
 	@Autowired
 	private StatusRepository statusRepo;
-	
+
 	@Autowired
 	private ApplicationRepository applicationRepo;
 
 	@Autowired
 	private MigrationMailSender emailSender;
-
 
 	/**
 	 * Preform a migration from the old database.
@@ -76,56 +75,66 @@ public class MigrationService {
 	}
 
 	/**
-	 * Fetches the person entries from the old database and inserts them into the new one.
-	 * This method also deals with missing data in the old tables to the extent it is possible.
+	 * Fetches the person entries from the old database and inserts them into the
+	 * new one. This method also deals with missing data in the old tables to the
+	 * extent it is possible.
 	 */
 	private void insertPersons() {
 		List<PersonDTO> personDTOs = this.oldRecruitmentDAO.getPersons();
-		
+
 		personDTOs.forEach((personDTO) -> {
-			if(personDTO.getRole().equals(RECRUIT_ROLE)) {
-				Person recruit = new Person(personDTO.getName(), personDTO.getSurname(), personDTO.getEmail(), personDTO.getSsn(), personDTO.getUsername(), encoder.encode(personDTO.getPassword()), roleRepo.findByName(personDTO.getRole()));
+			if (personDTO.getRole().equals(RECRUIT_ROLE)) {
+				Person recruit = new Person(personDTO.getName(), personDTO.getSurname(), personDTO.getEmail(),
+						personDTO.getSsn(), personDTO.getUsername(), encoder.encode(personDTO.getPassword()),
+						roleRepo.findByName(personDTO.getRole()));
 				personRepo.save(recruit);
 			} else {
 				String username;
 				String password;
-				if(personDTO.getUsername() == null) {
+				if (personDTO.getUsername() == null) {
 					username = personDTO.getEmail();
 				} else {
 					username = personDTO.getUsername();
 				}
-				
-				if(personDTO.getPassword() == null) {
+
+				if (personDTO.getPassword() == null) {
 					String newPass = UUID.randomUUID().toString();
 					password = encoder.encode(newPass);
-					emailSender.sendCredentials(username, newPass, personDTO.getEmail()); //Sends an email with the new password if it is missing
+					emailSender.sendCredentials(username, newPass, personDTO.getEmail()); // Sends an email with the new
+																							// password if it is missing
 				} else {
 					password = personDTO.getPassword();
 				}
-				
-				Person applicant = new Person(personDTO.getName(), personDTO.getSurname(), personDTO.getEmail(), personDTO.getSsn(), username, password, roleRepo.findByName(personDTO.getRole()));
-				//Set<Availability> applicantAvailabilities = applicant.getAvailability();
-				//Set<CompetenceProfile> applicantCompetenceProfiles = applicant.getCompetenceProfile();
-				
+
+				Person applicant = new Person(personDTO.getName(), personDTO.getSurname(), personDTO.getEmail(),
+						personDTO.getSsn(), username, password, roleRepo.findByName(personDTO.getRole()));
+				// Set<Availability> applicantAvailabilities = applicant.getAvailability();
+				// Set<CompetenceProfile> applicantCompetenceProfiles =
+				// applicant.getCompetenceProfile();
+
 				List<AvailabilityDTO> availabilityDTOs = oldRecruitmentDAO.getAvailabilities(personDTO.getId());
-				List<CompetenceProfileDTO> competenceProfileDTOs = oldRecruitmentDAO.getCompetenceProfiles(personDTO.getId());
-				
-				if(!availabilityDTOs.isEmpty() || !competenceProfileDTOs.isEmpty()) {
+				List<CompetenceProfileDTO> competenceProfileDTOs = oldRecruitmentDAO
+						.getCompetenceProfiles(personDTO.getId());
+
+				if (!availabilityDTOs.isEmpty() || !competenceProfileDTOs.isEmpty()) {
 					Optional<Status> unhandled = statusRepo.findByName(UNHANDLED_STATUS);
 					Application application = new Application(unhandled.get(), applicant);
 					Set<Availability> applicantAvailabilities = application.getAvailability();
 					Set<CompetenceProfile> applicantCompetenceProfiles = application.getCompetenceProfile();
-					
+
 					availabilityDTOs.forEach((availabilityDTO) -> {
-						Availability availability = new Availability(application, availabilityDTO.getFrom(), availabilityDTO.getTo());
+						Availability availability = new Availability(application, availabilityDTO.getFrom(),
+								availabilityDTO.getTo());
 						applicantAvailabilities.add(availability);
 					});
-					
+
 					competenceProfileDTOs.forEach((competenceProfileDTO) -> {
-						CompetenceProfile competenceProfile = new CompetenceProfile(application, competenceRepo.findByName(competenceProfileDTO.getName()), competenceProfileDTO.getYearsOfExperience());
+						CompetenceProfile competenceProfile = new CompetenceProfile(application,
+								competenceRepo.findByName(competenceProfileDTO.getName()),
+								competenceProfileDTO.getYearsOfExperience());
 						applicantCompetenceProfiles.add(competenceProfile);
 					});
-					
+
 					personRepo.save(applicant);
 					applicationRepo.save(application);
 				} else {
@@ -136,13 +145,14 @@ public class MigrationService {
 	}
 
 	/**
-	 * Fetches Competence entries from the old database and inserts them into the new one.
+	 * Fetches Competence entries from the old database and inserts them into the
+	 * new one.
 	 */
 	private void insertCompetences() {
 		List<CompetenceDTO> competenceDTOs = this.oldRecruitmentDAO.getCompetences();
-		
+
 		competenceDTOs.forEach((competenceDTO) -> {
-			if(competenceRepo.findByName(competenceDTO.getName()) == null) {
+			if (competenceRepo.findByName(competenceDTO.getName()) == null) {
 				competenceRepo.save(new Competence(competenceDTO.getName()));
 			}
 		});
@@ -153,9 +163,9 @@ public class MigrationService {
 	 */
 	private void insertRoles() {
 		List<RoleDTO> roleDTOs = this.oldRecruitmentDAO.getRoles();
-		
+
 		roleDTOs.forEach((roleDTO) -> {
-			if(roleRepo.findByName(roleDTO.getName()) == null) {
+			if (roleRepo.findByName(roleDTO.getName()) == null) {
 				roleRepo.save(new Role(roleDTO.getName()));
 			}
 		});

@@ -17,18 +17,21 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import se.kth.iv1201.recruitmentbackend.jwt.JwtTokenUtil;
 import se.kth.iv1201.recruitmentbackend.security.MyUserDetailsService;
+
 /**
  * Gets Executed for every request to the API, checks if request has valid JWT.
  **/
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 	private final String AUTH_HEADER = "Authorization";
-	private final String BEARER_START  = "Bearer ";
-	
+	private final String BEARER_START = "Bearer ";
+
 	@Autowired
 	private MyUserDetailsService userDetailsService;
+
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
+
 	/**
 	 * internal filter to apply to requests.
 	 */
@@ -38,14 +41,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		final String requestHeader = request.getHeader(AUTH_HEADER);
 		String username = null;
 		String jwtToken = null;
-		if(requestHeader != null && requestHeader.startsWith(BEARER_START)) {
-				jwtToken = requestHeader.substring(BEARER_START.length());
-				
-				username = jwtTokenUtil.getTokenUsername(jwtToken);
-				
+		if (requestHeader != null && requestHeader.startsWith(BEARER_START)) {
+			jwtToken = requestHeader.substring(BEARER_START.length());
 
-				
-		}else {
+			username = jwtTokenUtil.getTokenUsername(jwtToken);
+
+		} else {
 			logger.warn("Jwt Token does not begin with Bearer String");
 		}
 
@@ -53,16 +54,16 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
 			UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-			if(jwtTokenUtil.validateToken(jwtToken, userDetails)) {
-				UsernamePasswordAuthenticationToken userPassAuthToken = new UsernamePasswordAuthenticationToken(userDetails
-						, null, userDetails.getAuthorities());
+			if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
+				UsernamePasswordAuthenticationToken userPassAuthToken = new UsernamePasswordAuthenticationToken(
+						userDetails, null, userDetails.getAuthorities());
 				userPassAuthToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 				SecurityContextHolder.getContext().setAuthentication(userPassAuthToken);
 			}
-			
+
 		}
 		filterChain.doFilter(request, response);
-		
+
 	}
 
 }

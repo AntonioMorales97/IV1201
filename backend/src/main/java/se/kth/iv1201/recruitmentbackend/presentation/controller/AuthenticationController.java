@@ -28,6 +28,7 @@ import se.kth.iv1201.recruitmentbackend.security.MyUserDetailsService;
 @Validated
 @CrossOrigin
 public class AuthenticationController {
+
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
@@ -36,19 +37,20 @@ public class AuthenticationController {
 
 	@Autowired
 	private JwtTokenUtil jwtUtil;
-	
-	
+
 	/**
 	 * Handles login requests to the rest api.
+	 * 
 	 * @param loginForm The user information.
 	 * @return LoginResponse.
 	 * @throws Exception
 	 */
 	@PostMapping("/authenticate")
-	public ResponseEntity<?> authenticate (@Valid @RequestBody LoginForm loginForm) throws Exception{
+	public ResponseEntity<?> authenticate(@Valid @RequestBody LoginForm loginForm) throws Exception {
 		try {
-			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginForm.getUsername(), loginForm.getPassword()));
-		}catch(BadCredentialsException ex) {
+			authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(loginForm.getUsername(), loginForm.getPassword()));
+		} catch (BadCredentialsException ex) {
 			throw new InvalidCredentials("Invalid credentials, please try again!");
 		}
 		UserDetails userDetails = userDetailsService.loadUserByUsername(loginForm.getUsername());

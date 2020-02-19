@@ -3,7 +3,6 @@ package se.kth.iv1201.recruitmentbackend.presentation.error;
 import se.kth.iv1201.recruitmentbackend.domain.Application;
 
 public class ErrorResponseBody {
-
 	private String logRef;
 	private String message;
 	private int code;
@@ -12,8 +11,8 @@ public class ErrorResponseBody {
 	/**
 	 * Creates an instance of <code>ErrorResponse</code>.
 	 * 
-	 * @param logRef The error.
-	 * @param message The error message.
+	 * @param logRef      The error.
+	 * @param message     The error message.
 	 * @param application the body.
 	 */
 	ErrorResponseBody(String logRef, String message, int code, Application application) {
@@ -22,6 +21,7 @@ public class ErrorResponseBody {
 		this.code = code;
 		this.body = application;
 	}
+
 	/**
 	 * @return the error.
 	 */
@@ -35,9 +35,17 @@ public class ErrorResponseBody {
 	public String getMessage() {
 		return this.message;
 	}
+
+	/**
+	 * @return the error code.
+	 */
 	public int getCode() {
 		return this.code;
 	}
+
+	/**
+	 * @return the body, which should be an {@link Application}.
+	 */
 	public Object getApplication() {
 		return this.body;
 	}

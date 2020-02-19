@@ -2,6 +2,8 @@ package se.kth.iv1201.recruitmentbackend.presentation.error;
 
 import java.util.ArrayList;
 import java.util.List;
+
+
 /**
  * Holds all the Violations to be returned to the client.
  *
@@ -14,7 +16,7 @@ public class ViolationResponse {
 	/**
 	 * Creates an instance of <code>ViolationResponse</code>.
 	 * 
-	 * @param logRef The error.
+	 * @param logRef  The error.
 	 * @param message The error message.
 	 */
 	ViolationResponse(String logRef, String message) {
@@ -25,7 +27,7 @@ public class ViolationResponse {
 	/**
 	 * @return the list of <code>Violation</code>s.
 	 */
-	public List<Violation> getViolations(){
+	public List<Violation> getViolations() {
 		return this.violations;
 	}
 

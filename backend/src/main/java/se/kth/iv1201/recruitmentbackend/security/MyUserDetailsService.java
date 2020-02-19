@@ -16,11 +16,13 @@ import se.kth.iv1201.recruitmentbackend.repository.PersonRepository;
 @Service
 @Transactional
 public class MyUserDetailsService implements UserDetailsService {
+
 	@Autowired
 	private PersonRepository personRepo;
 
 	/**
 	 * Provides user details for a provided username
+	 * 
 	 * @param username The username of the person
 	 * @return UserDetails object representing the user.
 	 * @throws UsernameNotFoundException if the requested user can not be found.
@@ -28,10 +30,10 @@ public class MyUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Person person = this.personRepo.findByUsername(username);
-		
-		if(person == null)
+
+		if (person == null)
 			throw new UsernameNotFoundException("person with username: " + username + ", was not found!");
-			
+
 		return new MyUserDetails(person);
 	}
 }

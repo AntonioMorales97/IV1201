@@ -15,8 +15,9 @@ public class PersonDTO {
 	private final String password;
 	private final String username;
 	private final String role;
-	
-	public PersonDTO(Long id, String name, String surname, String ssn, String email, String password, String username, String role) {
+
+	public PersonDTO(Long id, String name, String surname, String ssn, String email, String password, String username,
+			String role) {
 		this.id = id;
 		this.name = name;
 		this.surname = surname;

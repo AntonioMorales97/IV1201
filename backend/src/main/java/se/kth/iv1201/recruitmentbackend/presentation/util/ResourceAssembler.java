@@ -7,16 +7,16 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import org.springframework.stereotype.Component;
+
 /**
- * Uses Hateos to add hypermedia links to different response entities of the rest api.
+ * Uses HateOAS to add hypermedia links to different response entities of the
+ * rest api.
  *
  */
 @Component
 public class ResourceAssembler {
-
-	public void addLinksToApplication(Application application){
-		application.add(linkTo(methodOn(ApplicationController.class).getApplication(application.getId())).withSelfRel());
+	public void addLinksToApplication(Application application) {
+		application
+				.add(linkTo(methodOn(ApplicationController.class).getApplication(application.getId())).withSelfRel());
 	}
-
-
 }

@@ -17,19 +17,19 @@ import lombok.Data;
 @Entity
 public class Status {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "status_id")
-    private long id;
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "status_id")
+	private long id;
+
 	@NotNull(message = "{Status.name.missing}")
-    @NotBlank(message = "{Status.name.blank}")
-    @Column(unique=true)
-    private String name;
-	
+	@NotBlank(message = "{Status.name.blank}")
+	@Column(unique = true)
+	private String name;
+
 	public Status() {
-    	
-    }
-    public Status(String name) {
-		this.name= name;
+	}
+
+	public Status(String name) {
+		this.name = name;
 	}
 }

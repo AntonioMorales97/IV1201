@@ -23,7 +23,7 @@ import se.kth.iv1201.recruitmentbackend.repository.RoleRepository;
 import se.kth.iv1201.recruitmentbackend.repository.StatusRepository;
 
 /**
- * Class used to initialize  the database with some data if need be.
+ * Class used to initialize the database with some data if need be.
  *
  */
 @Configuration
@@ -35,26 +35,25 @@ public class DatabaseInit {
 	@Autowired
 	private MigrationService migration;
 
-
 	@Bean
-	CommandLineRunner initializeDatabase(PersonRepository personRepo, CompetenceRepository competenceRepo, RoleRepository roleRepo,
-			AvailabilityRepository availabilityRepo, CompetenceProfileRepository compPRepo, StatusRepository statusRepo, ApplicationRepository applicationRepo) {
-		
-		return args->{
+	CommandLineRunner initializeDatabase(PersonRepository personRepo, CompetenceRepository competenceRepo,
+			RoleRepository roleRepo, AvailabilityRepository availabilityRepo, CompetenceProfileRepository compPRepo,
+			StatusRepository statusRepo, ApplicationRepository applicationRepo) {
+		return args -> {
 			Optional<Status> optAccepted = statusRepo.findByName(ACCEPTED_STATUS);
-			if(optAccepted.isEmpty()) {
+			if (optAccepted.isEmpty()) {
 				Status accepted = new Status(ACCEPTED_STATUS);
 				statusRepo.save(accepted);
 			}
-			
+
 			Optional<Status> optRejected = statusRepo.findByName(REJECTED_STATUS);
-			if(optRejected.isEmpty()) {
+			if (optRejected.isEmpty()) {
 				Status rejected = new Status(REJECTED_STATUS);
 				statusRepo.save(rejected);
 			}
-			
+
 			Optional<Status> optUnhandled = statusRepo.findByName(UNHANDLED_STATUS);
-			if(optUnhandled.isEmpty()) {
+			if (optUnhandled.isEmpty()) {
 				Status unhandled = new Status(UNHANDLED_STATUS);
 				statusRepo.save(unhandled);
 			}
@@ -62,46 +61,37 @@ public class DatabaseInit {
 			List<Person> persons = personRepo.findAll();
 			List<Competence> competences = competenceRepo.findAll();
 			List<Role> roles = roleRepo.findAll();
-			if(persons.isEmpty() && competences.isEmpty() && roles.isEmpty()){
-				try{
+			if (persons.isEmpty() && competences.isEmpty() && roles.isEmpty()) {
+				try {
 					migration.migrate();
-				} catch (SQLException | NullPointerException e){
+				} catch (SQLException | NullPointerException e) {
 					System.err.println("Could not connect to old database for migration");
 				}
 			}
 		};
-	
-		//FOP TESTING PURPOUSES LOCALLY
-		/*return args->{				
-		Role r1 = new Role("recruit");
-		Role r2 = new Role("applicant");
-		roleRepo.save(r1);
-		roleRepo.save(r2);
-		Person p2 = new Person("fa", "fa", "fa@gmail.com", "1948281092","fa", "123", roleRepo.findById((long) 1).get());
-		personRepo.save(p2);
-		Competence c1 = new Competence("Karuselldrift");
-		Competence c2 = new Competence("Korvgrillning");
-		competenceRepo.save(c1);
-		competenceRepo.save(c2);
-		Status s1 = new Status("accepted");
-		Status s2 = new Status("unhandled");
-		Status s3 = new Status("rejected");
-		statusRepo.save(s1);
-		statusRepo.save(s2);
-		statusRepo.save(s3);
-		Optional<Competence> c3 = competenceRepo.findById((long) 2);
-		Application a1 = new Application(statusRepo.findByName("unhandled").get(),personRepo.findByUsername("fa"));
-		
-		applicationRepo.save(a1);
-				
-		CompetenceProfile cp2= new CompetenceProfile(a1, c3.get(), 2.0);
-		compPRepo.save(cp2);
-		a1.getCompetenceProfile().add(cp2);
-		Availability av1 = new Availability(a1, new Date(2014/02/23),new Date(2014/05/25));
-		availabilityRepo.save(av1);
-		a1.getAvailability().add(av1);
-		};*/
-		
+
+		// FOP TESTING PURPOUSES LOCALLY
+		/*
+		 * return args->{ Role r1 = new Role("recruit"); Role r2 = new
+		 * Role("applicant"); roleRepo.save(r1); roleRepo.save(r2); Person p2 = new
+		 * Person("fa", "fa", "fa@gmail.com", "1948281092","fa", "123",
+		 * roleRepo.findById((long) 1).get()); personRepo.save(p2); Competence c1 = new
+		 * Competence("Karuselldrift"); Competence c2 = new Competence("Korvgrillning");
+		 * competenceRepo.save(c1); competenceRepo.save(c2); Status s1 = new
+		 * Status("accepted"); Status s2 = new Status("unhandled"); Status s3 = new
+		 * Status("rejected"); statusRepo.save(s1); statusRepo.save(s2);
+		 * statusRepo.save(s3); Optional<Competence> c3 = competenceRepo.findById((long)
+		 * 2); Application a1 = new
+		 * Application(statusRepo.findByName("unhandled").get(),personRepo.
+		 * findByUsername("fa"));
+		 * 
+		 * applicationRepo.save(a1);
+		 * 
+		 * CompetenceProfile cp2= new CompetenceProfile(a1, c3.get(), 2.0);
+		 * compPRepo.save(cp2); a1.getCompetenceProfile().add(cp2); Availability av1 =
+		 * new Availability(a1, new Date(2014/02/23),new Date(2014/05/25));
+		 * availabilityRepo.save(av1); a1.getAvailability().add(av1); };
+		 */
+
 	}
 }
-

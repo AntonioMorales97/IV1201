@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import se.kth.iv1201.recruitmentbackend.application.RecruitmentService;
 import se.kth.iv1201.recruitmentbackend.presentation.dto.PersonDTO;
+
 /**
  * Controller to handle the registration for new applicants.
+ * 
  * @author Gurk1
  *
  */
@@ -23,19 +25,21 @@ import se.kth.iv1201.recruitmentbackend.presentation.dto.PersonDTO;
 @Validated
 @CrossOrigin
 public class RecruitmentController {
+
 	@Autowired
 	RecruitmentService recruitmentSerivce;
-	
+
 	/**
 	 * Handles a new request for a registration.
+	 * 
 	 * @param personDTO The information of the newly registrerd person.
-	 * @param request request information of the httpservlet request.
+	 * @param request   request information of the httpservlet request.
 	 * @return 200 OK if successful.
 	 */
 	@PostMapping("/register")
 	@ResponseStatus(HttpStatus.CREATED)
-	public  void registerPerson(@RequestBody @Valid PersonDTO personDTO, HttpServletRequest request) {
-		this.recruitmentSerivce.registerUser(personDTO); 
+	public void registerPerson(@RequestBody @Valid PersonDTO personDTO, HttpServletRequest request) {
+		this.recruitmentSerivce.registerUser(personDTO);
 	}
-	
+
 }

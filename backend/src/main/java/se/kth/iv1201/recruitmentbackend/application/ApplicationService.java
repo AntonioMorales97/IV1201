@@ -30,6 +30,7 @@ public class ApplicationService {
 
 	@Autowired
 	ApplicationRepository applicationRepo;
+
 	@Autowired
 	StatusRepository statusRepo;
 
@@ -43,7 +44,7 @@ public class ApplicationService {
 		Optional<Application> application = applicationRepo.findById(id);
 
 		if (application.isEmpty()) {
-			throw new ApplicationNotFoundException("Application could not be found by id: "+id);
+			throw new ApplicationNotFoundException("Application could not be found by id: " + id);
 		}
 
 		return application.get();
@@ -55,9 +56,9 @@ public class ApplicationService {
 	 * @return List containing all the applications.
 	 */
 	public List<Application> findAllApplications() {
-		
+
 		List<Application> applications = applicationRepo.findAll();
-		
+
 		return applications;
 
 	}
@@ -69,21 +70,23 @@ public class ApplicationService {
 	 * @param statusDTO the new status.
 	 * @return the updated Application
 	 */
-	@Transactional(isolation=Isolation.SERIALIZABLE)
+	@Transactional(isolation = Isolation.SERIALIZABLE)
 	public Application changeStatus(Long id, @Valid StatusDTO statusDTO) {
 		Optional<Application> application = applicationRepo.findById(id);
 		if (application.isEmpty()) {
-			throw new ApplicationNotFoundException("Application could not be found by id: "+id);
+			throw new ApplicationNotFoundException("Application could not be found by id: " + id);
 		}
 		Optional<Status> status = statusRepo.findByName(statusDTO.getName());
 		if (status.isEmpty()) {
-			throw new StatusNotFoundException("Status could not be found by name: "+statusDTO.getName()); 
+			throw new StatusNotFoundException("Status could not be found by name: " + statusDTO.getName());
 		}
-		
-		if(application.get().getVersion() != statusDTO.getVersion()) {
-			System.out.println("ERROR " + "new vers: " + application.get().getVersion() + " old vers: " + statusDTO.getVersion());
-			throw new OutdatedApplicationException("Could not save update, because current application verson is outdated.", application.get());
-			
+
+		if (application.get().getVersion() != statusDTO.getVersion()) {
+			System.out.println(
+					"ERROR " + "new vers: " + application.get().getVersion() + " old vers: " + statusDTO.getVersion());
+			throw new OutdatedApplicationException(
+					"Could not save update, because current application verson is outdated.", application.get());
+
 		}
 		System.out.println("SLeeping");
 		try {
@@ -96,7 +99,5 @@ public class ApplicationService {
 		application.get().setStatus(status.get());
 		return application.get();
 	}
-
-	
 
 }

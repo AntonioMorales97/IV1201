@@ -48,7 +48,7 @@ public class Application extends RepresentationModel<Application> {
 
 	@Version
 	private long version;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "status_id", referencedColumnName = "status_id")
 	private Status status;
@@ -63,7 +63,7 @@ public class Application extends RepresentationModel<Application> {
 	@EqualsAndHashCode.Exclude
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "application", orphanRemoval = true)
 	private Set<Availability> availability = new HashSet<>();
-	
+
 	@JsonManagedReference
 	@JsonIgnoreProperties(allowSetters = true)
 	@EqualsAndHashCode.Exclude
@@ -71,17 +71,14 @@ public class Application extends RepresentationModel<Application> {
 	private Set<CompetenceProfile> competenceProfile = new HashSet<>();
 
 	public Application() {
-
 	}
 
 	public Application(Status status, Person person) {
 		this.status = status;
 		this.person = person;
-
 	}
 
 	public Application(Status status) {
 		this.status = status;
-
 	}
 }

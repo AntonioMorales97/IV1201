@@ -24,7 +24,8 @@ import se.kth.iv1201.recruitmentbackend.application.exception.StatusNotFoundExce
 import se.kth.iv1201.recruitmentbackend.presentation.exception.InvalidCredentials;
 
 /**
- * Global Exception handler, that handles all the exceptions in this application.
+ * Global Exception handler, that handles all the exceptions in this
+ * application.
  *
  */
 @ControllerAdvice
@@ -33,21 +34,22 @@ public class ExceptionHandlers {
 	private final String INVALID_METHOD_ARGUMENTS = "Invalid method arguments";
 	private final String METHOD_ARGUMENT_TYPE_MISMATCH = "The type of the given arguments are wrong";
 	private static final Logger logger = LoggerFactory.getLogger(ExceptionHandlers.class);
-	
+
 	@ExceptionHandler(InvalidCredentials.class)
 	@ResponseStatus(HttpStatus.UNAUTHORIZED)
 	ErrorResponse invalidCredentials(InvalidCredentials exc) {
 		logger.error(exc.getMessage());
 		return new ErrorResponse(HttpStatus.UNAUTHORIZED.getReasonPhrase(), exc.getMessage(), exc.getCode());
 	}
-	
-	
+
 	@ExceptionHandler(OutdatedApplicationException.class)
 	@ResponseStatus(HttpStatus.CONFLICT)
 	ErrorResponseBody outdatedApplicationException(OutdatedApplicationException exc) {
 		logger.error(exc.getMessage());
-		return new ErrorResponseBody(HttpStatus.CONFLICT.getReasonPhrase(), exc.getMessage(), exc.getCode(), exc.getApplication());
+		return new ErrorResponseBody(HttpStatus.CONFLICT.getReasonPhrase(), exc.getMessage(), exc.getCode(),
+				exc.getApplication());
 	}
+
 	/**
 	 * Handles <code>IllegalTransactionException</code>s.
 	 * 
@@ -58,8 +60,9 @@ public class ExceptionHandlers {
 	@ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
 	ErrorResponse illegalTransactionExceptionHandler(IllegalTransactionException exc) {
 		logger.error(exc.getMessage());
-		return new ErrorResponse(HttpStatus.METHOD_NOT_ALLOWED.getReasonPhrase(), exc.getMessage(),exc.getCode());
+		return new ErrorResponse(HttpStatus.METHOD_NOT_ALLOWED.getReasonPhrase(), exc.getMessage(), exc.getCode());
 	}
+
 	/**
 	 * Handles <code>ApplicationNotFoundException</code>s.
 	 * 
@@ -70,8 +73,9 @@ public class ExceptionHandlers {
 	@ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
 	ErrorResponse ApplicationNotFoundExceptionHandler(ApplicationNotFoundException exc) {
 		logger.error(exc.getMessage());
-		return new ErrorResponse(HttpStatus.METHOD_NOT_ALLOWED.getReasonPhrase(), exc.getMessage(),exc.getCode());
+		return new ErrorResponse(HttpStatus.METHOD_NOT_ALLOWED.getReasonPhrase(), exc.getMessage(), exc.getCode());
 	}
+
 	/**
 	 * Handles <code>StatusNotFoundException</code>s.
 	 * 
@@ -82,8 +86,9 @@ public class ExceptionHandlers {
 	@ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
 	ErrorResponse statusNotFoundExceptionHandler(StatusNotFoundException exc) {
 		logger.error(exc.getMessage());
-		return new ErrorResponse(HttpStatus.METHOD_NOT_ALLOWED.getReasonPhrase(), exc.getMessage(),exc.getCode());
+		return new ErrorResponse(HttpStatus.METHOD_NOT_ALLOWED.getReasonPhrase(), exc.getMessage(), exc.getCode());
 	}
+
 	/**
 	 * Handler for invalid method arguments. For example, missing fields in
 	 * <code>Application</code>s.
@@ -93,8 +98,9 @@ public class ExceptionHandlers {
 	 */
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	ViolationResponse constraintViolationExceptionHandler(MethodArgumentNotValidException exc){
-		ViolationResponse vr = new ViolationResponse(HttpStatus.BAD_REQUEST.getReasonPhrase(), INVALID_METHOD_ARGUMENTS);
+	ViolationResponse constraintViolationExceptionHandler(MethodArgumentNotValidException exc) {
+		ViolationResponse vr = new ViolationResponse(HttpStatus.BAD_REQUEST.getReasonPhrase(),
+				INVALID_METHOD_ARGUMENTS);
 		List<Violation> violations = vr.getViolations();
 		exc.getBindingResult().getFieldErrors().forEach(fieldError -> {
 			logger.error(fieldError.getDefaultMessage());
@@ -102,7 +108,7 @@ public class ExceptionHandlers {
 		});
 		return vr;
 	}
-	
+
 	/**
 	 * Handles <code>NoHandlerException</code>s.
 	 * 
@@ -115,6 +121,7 @@ public class ExceptionHandlers {
 		logger.error(exc.getMessage());
 		return new ErrorResponse(HttpStatus.NOT_FOUND.getReasonPhrase(), exc.getMessage());
 	}
+
 	/**
 	 * Handles <code>MissingServletRequestParameterException</code>s.
 	 * 
@@ -123,11 +130,11 @@ public class ExceptionHandlers {
 	 */
 	@ExceptionHandler(MissingServletRequestParameterException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	ErrorResponse missingServletRequestParameterExceptionHandler( MissingServletRequestParameterException exc){
+	ErrorResponse missingServletRequestParameterExceptionHandler(MissingServletRequestParameterException exc) {
 		logger.error(exc.getMessage());
 		return new ErrorResponse(HttpStatus.BAD_REQUEST.getReasonPhrase(), exc.getMessage());
 	}
-	
+
 	/**
 	 * Handler for not supported methods.
 	 * 
@@ -140,7 +147,7 @@ public class ExceptionHandlers {
 		logger.error(exc.getMessage());
 		return new ErrorResponse(HttpStatus.METHOD_NOT_ALLOWED.getReasonPhrase(), exc.getMessage());
 	}
-	
+
 	/**
 	 * Handler for method argument type mismatches.
 	 * 
@@ -151,11 +158,10 @@ public class ExceptionHandlers {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	ErrorResponse methodArgumentTypeMismatchHandler(MethodArgumentTypeMismatchException exc) {
 		logger.error(exc.getMessage());
-		return new ErrorResponse(HttpStatus.BAD_REQUEST.getReasonPhrase(), METHOD_ARGUMENT_TYPE_MISMATCH
-				+ ", expected: " + exc.getRequiredType().getSimpleName());
+		return new ErrorResponse(HttpStatus.BAD_REQUEST.getReasonPhrase(),
+				METHOD_ARGUMENT_TYPE_MISMATCH + ", expected: " + exc.getRequiredType().getSimpleName());
 	}
-	
-	
+
 	/**
 	 * Handler for bad http messages received.
 	 * 
@@ -180,9 +186,8 @@ public class ExceptionHandlers {
 	ErrorResponse generalExceptionHandler(Exception exc) {
 		System.out.println(exc.getClass());
 		exc.printStackTrace();
-		logger.error("Error: "+exc.getClass() + "With message: "+exc.getMessage());
+		logger.error("Error: " + exc.getClass() + "With message: " + exc.getMessage());
 		return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), exc.getMessage());
 	}
-	
-	
+
 }
