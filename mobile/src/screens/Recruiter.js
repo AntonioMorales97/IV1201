@@ -77,7 +77,7 @@ export default class Recruiter extends Component {
             <Text style={styles.errorTextStyle}>
               {this.state.error}
             </Text>
-            <Button onPress={() => this.changeStatus(this.state.status)}>Alter status</Button>
+            <Button onPress={() => this.changeStatus(this.state.status, this.watchingApplication.version)}>Alter status</Button>
 
           </ScrollView>
           <View style={styles.buttons}>

@@ -47,9 +47,10 @@ const backendCalls = {
   /**
  * Function that changes the status of a specific application.
  */
-  async changeStatus(status) {
+  async changeStatus(status, version) {
     let body = {
-      name: status
+      name: status,
+      version: version
     }
 
     axios.put("https://iv1201-backend.herokuapp.com/alter-status/" + this.state.watchingApplication.id, body, {
@@ -58,8 +59,9 @@ const backendCalls = {
       }
     }
     ).then((response) => {
-
-      this.setState({ watchingApplication: response.data })
+      this.setState({ error: "" });
+      this.setState({ status: ""});
+      this.setState({ watchingApplication: response.data });
 
     }).catch((err) => {
       console.log(err.response.data.message);
