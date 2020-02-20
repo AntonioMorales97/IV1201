@@ -8,9 +8,12 @@ import {
   Spinner
 } from 'reactstrap';
 import { useTranslation } from 'react-i18next';
-
+import PropTypes from 'prop-types';
 import './application.css';
 
+/**
+ * The application view. Receives state and props from its container and renders it.
+ */
 const ApplicationView = props => {
   const { t } = useTranslation();
   const {
@@ -144,6 +147,14 @@ const ApplicationView = props => {
   );
 };
 
-ApplicationView.propTypes = {};
+ApplicationView.propTypes = {
+  acceptApplication: PropTypes.func.isRequired,
+  rejectApplication: PropTypes.func.isRequired,
+  unhandleApplication: PropTypes.func.isRequired,
+  errorMessageKey: PropTypes.number,
+  successMessageKey: PropTypes.number,
+  loading: PropTypes.bool.isRequired,
+  application: PropTypes.object.isRequired
+};
 
 export default ApplicationView;

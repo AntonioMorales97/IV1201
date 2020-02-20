@@ -15,6 +15,9 @@ import {
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
+/**
+ * Holds the view of the header: Brand and navbar.
+ */
 const HeaderView = props => {
   const {
     isOpen,
@@ -132,7 +135,8 @@ HeaderView.propTypes = {
   t: PropTypes.func.isRequired,
   currentLanguage: PropTypes.string.isRequired,
   languageCodeToName: PropTypes.func.isRequired,
-  dropDownItems: PropTypes.array.isRequired
+  dropDownItems: PropTypes.array.isRequired,
+  auth: PropTypes.object.isRequired
 };
 
 export default HeaderView;

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import HeaderView from './header-view';
 import _ from 'lodash';
 import { withTranslation } from 'react-i18next';
@@ -11,9 +12,17 @@ const languageMappings = {
   se: 'Svenska'
 };
 
+/**
+ * Holds the logic and state of the header. Renders the header.
+ */
 class HeaderContainer extends Component {
   state = {
     isOpen: false
+  };
+
+  static propTypes = {
+    logout: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired
   };
 
   toggle = () => {

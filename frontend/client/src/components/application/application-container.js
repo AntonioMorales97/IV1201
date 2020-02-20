@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Spinner } from 'reactstrap';
 import ApplicationView from './application-view';
 import { connect } from 'react-redux';
-//import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import {
   getApplication,
   updateApplication
@@ -14,11 +14,23 @@ import {
   UPDATE_APPLICATION_SUCCESS
 } from '../../actions/application/application-types';
 
+/**
+ * Application component. Holds the logic and state of a specific application. Renders the ApplicationView.
+ */
 class ApplicationContainer extends Component {
   state = {
     errorMessageKey: null,
     successMessageKey: null,
     loading: false
+  };
+
+  static propTypes = {
+    error: PropTypes.object.isRequired,
+    success: PropTypes.object.isRequired,
+    clearError: PropTypes.func.isRequired,
+    clearSuccess: PropTypes.func.isRequired,
+    getApplication: PropTypes.func.isRequired,
+    updateApplication: PropTypes.func.isRequired
   };
 
   componentDidMount() {
@@ -111,6 +123,7 @@ const mapStateToProps = state => ({
   error: state.error,
   success: state.success
 });
+
 export default connect(mapStateToProps, {
   getApplication,
   updateApplication,

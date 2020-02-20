@@ -11,6 +11,9 @@ import { register } from '../../../actions/auth/auth-actions';
 import { clearError } from '../../../actions/error/error-actions';
 import { clearSuccess } from '../../../actions/success/success-actions';
 
+/**
+ * Holds the logic and state of the RegisterView. Renders the RegisterView.
+ */
 class RegisterContainer extends Component {
   state = {
     firstName: '',
@@ -27,6 +30,7 @@ class RegisterContainer extends Component {
 
   static propTypes = {
     isAuthenticated: PropTypes.bool,
+    user: PropTypes.object,
     error: PropTypes.object.isRequired,
     success: PropTypes.object.isRequired,
     register: PropTypes.func.isRequired,

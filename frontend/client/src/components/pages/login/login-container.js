@@ -12,6 +12,9 @@ import { login } from '../../../actions/auth/auth-actions';
 import { clearError } from '../../../actions/error/error-actions';
 import { clearSuccess } from '../../../actions/success/success-actions';
 
+/**
+ * Holds the state and logic of the LoginView. Renders the LoginView.
+ */
 class LoginContainer extends Component {
   state = {
     username: '',
@@ -23,6 +26,7 @@ class LoginContainer extends Component {
 
   static propTypes = {
     isAuthenticated: PropTypes.bool,
+    user: PropTypes.object,
     error: PropTypes.object.isRequired,
     success: PropTypes.object.isRequired,
     login: PropTypes.func.isRequired,

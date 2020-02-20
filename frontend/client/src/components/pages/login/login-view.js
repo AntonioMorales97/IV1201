@@ -10,10 +10,13 @@ import {
   Spinner
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import './login.css';
-import PropTypes from 'prop-types';
 
+/**
+ * The view of the login page.
+ */
 const LoginView = props => {
   const { t } = useTranslation();
   const {
@@ -77,7 +80,7 @@ LoginView.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   renderRedirect: PropTypes.func.isRequired,
-  tryLogin: PropTypes.bool,
+  tryLogin: PropTypes.bool.isRequired,
   errorMessageKey: PropTypes.number,
   successMessageKey: PropTypes.number
 };

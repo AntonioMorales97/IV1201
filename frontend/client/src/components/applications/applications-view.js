@@ -1,10 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Container, ListGroup } from 'reactstrap';
 import ApplicationItem from './application-item';
-
 import './applications.css';
 
+/**
+ * Renders a list of ApplicationItem:s
+ */
 const ApplicationsView = props => {
   const { t } = useTranslation();
   const { applications } = props;
@@ -22,6 +25,10 @@ const ApplicationsView = props => {
       </ListGroup>
     </Container>
   );
+};
+
+ApplicationsView.propTypes = {
+  applications: PropTypes.array.isRequired
 };
 
 export default ApplicationsView;

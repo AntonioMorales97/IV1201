@@ -1,8 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { ListGroupItem } from 'reactstrap';
 
+/**
+ * An ApplicationItem (ListGroupItem) to display an application's metadata.
+ */
 const ApplicationItem = props => {
   const { id, firstName, lastName, ssn, status } = props.application;
   const { t } = useTranslation();
@@ -33,5 +37,7 @@ const ApplicationItem = props => {
     </ListGroupItem>
   );
 };
-
+ApplicationItem.propTypes = {
+  application: PropTypes.object.isRequired
+};
 export default ApplicationItem;

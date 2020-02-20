@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Container,
   Button,
@@ -14,6 +15,9 @@ import { Link } from 'react-router-dom';
 
 import './register.css';
 
+/**
+ * The view of the register page.
+ */
 const RegisterView = props => {
   const { t } = useTranslation();
   const {
@@ -113,6 +117,13 @@ const RegisterView = props => {
   );
 };
 
-RegisterView.propTypes = {};
+RegisterView.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  tryRegister: PropTypes.bool.isRequired,
+  errorMessageKey: PropTypes.number,
+  successMessageKey: PropTypes.number,
+  renderRedirect: PropTypes.func.isRequired
+};
 
 export default RegisterView;

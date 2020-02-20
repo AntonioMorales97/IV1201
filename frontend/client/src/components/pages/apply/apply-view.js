@@ -1,6 +1,9 @@
 import React from 'react';
 import './apply.css';
 
+/**
+ * Dummy. Not implemented.
+ */
 const ApplyView = props => {
   return (
     <div className='apply'>
