@@ -18,7 +18,9 @@ import se.kth.iv1201.recruitmentbackend.repository.AvailabilityRepository;
 import se.kth.iv1201.recruitmentbackend.repository.PersonRepository;
 import se.kth.iv1201.recruitmentbackend.repository.RoleRepository;
 import se.kth.iv1201.recruitmentbackend.repository.StatusRepository;
-
+/**
+ * Test the Availability domain class.
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class AvailabilityTest {
@@ -44,7 +46,9 @@ public class AvailabilityTest {
 	private Application application2;
 	private Availability availability;
 	private Date fromDate = new Date();
-
+	/**
+	 * Dummy data setup.
+	 */
 	@Before
 	public void setup() {
 		applicationRepo.deleteAll();
@@ -72,7 +76,9 @@ public class AvailabilityTest {
 		application1.getAvailability().add(availability);
 		availabilityRepo.save(availability);
 	}
-
+	/**
+	 * Test that the availability dummy data is inside the database, thus that the domain model works.
+	 */
 	@Test
 	public void availabilityCreateTest() {
 		List<Availability> avList = availabilityRepo.findAll();
@@ -81,7 +87,9 @@ public class AvailabilityTest {
 		assertNotNull(av1.getFromDate().toString());
 		assertNotNull(av1.getToDate().toString());
 	}
-
+	/**
+	 * DeStruct function, removes all dummydata.
+	 */
 	@After
 	public void destruct() {
 		applicationRepo.deleteAll();

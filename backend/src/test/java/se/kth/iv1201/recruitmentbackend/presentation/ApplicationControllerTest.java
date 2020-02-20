@@ -33,7 +33,9 @@ import se.kth.iv1201.recruitmentbackend.repository.PersonRepository;
 import se.kth.iv1201.recruitmentbackend.repository.RoleRepository;
 import se.kth.iv1201.recruitmentbackend.repository.StatusRepository;
 import se.kth.iv1201.recruitmentbackend.security.MyUserDetailsService;
-
+/**
+ * Tests for ApplicationController
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -88,12 +90,19 @@ public class ApplicationControllerTest {
 				personRepo.findByUsername("applicationControll"));
 		applicationRepo.save(dummyApplication);
 	}
-
+	/**
+	 * Tests that endpoint is protected by spring security.
+	 * @throws Exception in case an error occurs 
+	 */
 	@Test
 	public void getApplicationsTestBadRequest() throws Exception {
 		this.mvc.perform(get("/applications")).andDo(print()).andExpect(status().isForbidden());
 	}
-
+	/**
+	 * Tests that /applications endpoint works as intended, and verifies that it returns a
+	 * applicationMetadataResponses
+	 * @throws Exception in case an error occurs 
+	 */
 	@Test
 	public void getApplicationsTest() throws Exception {
 		String jwt = setupJWT();
@@ -106,7 +115,11 @@ public class ApplicationControllerTest {
 
 		assertEquals("applicationMetadataResponses", response);
 	}
-
+	/**
+	 * Tests that /applicaion/{id} works as intended
+	 * vertifies that response is Ok 200.
+	 * @throws Exception in case an error occurs 
+	 */
 	@Test
 	public void getApplicationTest() throws Exception {
 		String jwt = setupJWT();
@@ -116,7 +129,11 @@ public class ApplicationControllerTest {
 		this.mvc.perform(get("/application/" + id).contentType(MediaType.APPLICATION_JSON).header("Authorization",
 				"Bearer " + jwt)).andDo(print()).andExpect(status().isOk());
 	}
-
+	/**
+	 * Tests that /application/{id} works as intended, when unvalid applicaion id is provided
+	 * vertifies response with 4xx.
+	 * @throws Exception in case an error occurs 
+	 */
 	@Test
 	public void getApplicationTestFail() throws Exception {
 		String jwt = setupJWT();
@@ -124,7 +141,11 @@ public class ApplicationControllerTest {
 		this.mvc.perform(get("/application/420").contentType(MediaType.APPLICATION_JSON).header("Authorization",
 				"Bearer " + jwt)).andDo(print()).andExpect(status().is4xxClientError());
 	}
-
+	/**
+	 * Test changeStatus function with valid id and status, 
+	 * checks response is 200ok.
+	 * @throws Exception in case an error occurs 
+	 */
 	@Test
 	public void changeStatusTest() throws Exception {
 		String jwt = setupJWT();
@@ -138,7 +159,11 @@ public class ApplicationControllerTest {
 				.content(statusDTO.toString()).header("Authorization", "Bearer " + jwt)).andDo(print())
 				.andExpect(status().isOk());
 	}
-
+	/**
+	 * Tests changeStatus with invalid id and no status.
+	 * Verifies that response is 4xx.
+	 * @throws Exception in case an error occurs 
+	 */
 	@Test
 	public void changeStatusTestFail() throws Exception {
 		String jwt = setupJWT();
@@ -152,7 +177,9 @@ public class ApplicationControllerTest {
 		return jwtUtil.createToken(userDetails);
 
 	}
-
+	/**
+	 * Destruct function that removes all dummydata.
+	 */
 	@After
 	public void deStruct() {
 		applicationRepo.deleteAll();

@@ -28,7 +28,10 @@ import se.kth.iv1201.recruitmentbackend.domain.Role;
 import se.kth.iv1201.recruitmentbackend.presentation.models.LoginResponse;
 import se.kth.iv1201.recruitmentbackend.repository.PersonRepository;
 import se.kth.iv1201.recruitmentbackend.repository.RoleRepository;
-
+/**
+ * Tests for AuthetnicationController
+ *
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -50,15 +53,18 @@ public class AuthenticationControllerTest {
 	private String secret;
 
 	/**
-	 * Test that should fail.
+	 * Test that should fail, because request with no body.
 	 * 
-	 * @throws Exception
+	 * @throws Exception in case an error occurs 
 	 */
 	@Test
 	public void registerTestBadRequest() throws Exception {
 		this.mvc.perform(post("/authenticate")).andDo(print()).andExpect(status().isBadRequest());
 	}
-
+	/**
+	 * Test that register with valid body works, and that jwt response is connected to person.
+	 * @throws Exception in case an error occurs 
+	 */
 	@Test
 	public void registerTestSuccess() throws Exception {
 		String user = setupUser("heja", "då");
@@ -79,7 +85,10 @@ public class AuthenticationControllerTest {
 		return user.toString();
 
 	}
-
+	/**
+	 * Setup dummy data 
+	 *@throws Exception in case an error occurs 
+	 */
 	@Before
 	public void testSetup() throws Exception {
 		personRepo.deleteAll();
@@ -92,7 +101,9 @@ public class AuthenticationControllerTest {
 		String body = setupBody("testyy", "testaryy", "testay@gmail.com", "9443528491", "heja", "då");
 		this.mvc.perform(post("/register").contentType(MediaType.APPLICATION_JSON).content(body.toString()));
 	}
-
+	/**
+	 * Destruct function that deletes all dummy data
+	 */
 	@After
 	public void testDestructor() {
 		personRepo.deleteById(personRepo.findByUsername("heja").getId());

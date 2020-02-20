@@ -17,7 +17,10 @@ import se.kth.iv1201.recruitmentbackend.repository.ApplicationRepository;
 import se.kth.iv1201.recruitmentbackend.repository.PersonRepository;
 import se.kth.iv1201.recruitmentbackend.repository.RoleRepository;
 import se.kth.iv1201.recruitmentbackend.repository.StatusRepository;
-
+/**
+ * Tests for the Application class in domain.
+ *
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ApplicationTest {
@@ -38,7 +41,9 @@ public class ApplicationTest {
 	private Person dummyPerson2;
 	private Application application1;
 	private Application application2;
-
+	/**
+	 * Setup for dummy data.
+	 */
 	@Before
 	public void setup() {
 		applicationRepo.deleteAll();
@@ -62,7 +67,9 @@ public class ApplicationTest {
 		applicationRepo.save(application1);
 		applicationRepo.save(application2);
 	}
-
+	/**
+	 * Test that the dummy data is inside the database and that domain model works.
+	 */
 	@Test
 	public void applicationCreationTest() {
 		List<Application> applications = applicationRepo.findAll();
@@ -73,7 +80,9 @@ public class ApplicationTest {
 		assertNotNull(a1.getCreateDate());
 		assertEquals(a1.getStatus().getName(), "unhandled");
 	}
-
+	/**
+	 * destruct function, removes all dummy data.
+	 */
 	@After
 	public void deStruct() {
 		applicationRepo.deleteAll();

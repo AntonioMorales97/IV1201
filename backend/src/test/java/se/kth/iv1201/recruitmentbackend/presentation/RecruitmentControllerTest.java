@@ -24,6 +24,10 @@ import se.kth.iv1201.recruitmentbackend.repository.PersonRepository;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 
+/**
+ * Tests the RecruitmentController
+ *
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -35,12 +39,20 @@ public class RecruitmentControllerTest {
 
 	@Autowired
 	PersonRepository personRepo;
-
+	/**
+	 * Tests /register with no body. 
+	 * Verifies that response isBadRequest.
+	 * @throws Exception in case an error occurs 
+	 */
 	@Test
 	public void registerTestBadRequest() throws Exception {
 		this.mvc.perform(post("/register")).andDo(print()).andExpect(status().isBadRequest());
 	}
-
+	/**
+	 * Tests /register, with a valid body.
+	 * Verifies that response is 201.
+	 * @throws Exception in case an error occurs 
+	 */
 	@Rollback(true)
 	@Test
 	public void registerTestWorking() throws Exception {
@@ -50,14 +62,23 @@ public class RecruitmentControllerTest {
 				.andExpect(status().isCreated());
 
 	}
-
+	/**
+	 * Tests that /register with a username that already exists is denied.
+	 * Verifies that response is 405
+	 * @throws Exception in case an error occurs 
+	 */
 	@Test
 	public void registerAlredyUsedUsername() throws Exception {
 		String body = setupBody("testa", "testars", "testayssss@gmail.com", "9494256712", "heja", "då");
 		registerRequest("A person with the given username already exists!", body);
 		removeUsers();
 	}
-
+	
+	/**
+	 * Tests that /register with a email that already exists is denied.
+	 * Verifies that response is 405
+	 * @throws Exception in case an error occurs 
+	 */
 	@Test
 	public void registerAlredyUsedEmail() throws Exception {
 
@@ -65,7 +86,12 @@ public class RecruitmentControllerTest {
 		registerRequest("A person with the given email already exists!", body);
 		removeUsers();
 	}
-
+	
+	/**
+	 * Tests that /register with a ssn that already exists is denied.
+	 * Verifies that response is 405
+	 * @throws Exception in case an error occurs 
+	 */
 	@Test
 	public void registerAlredyUsedSsn() throws Exception {
 

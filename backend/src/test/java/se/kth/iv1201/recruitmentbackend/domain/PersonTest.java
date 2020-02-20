@@ -16,7 +16,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import se.kth.iv1201.recruitmentbackend.repository.PersonRepository;
 import se.kth.iv1201.recruitmentbackend.repository.RoleRepository;
-
+/**
+ * Tests for the Person domain model.
+ *
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class PersonTest {
@@ -29,7 +32,9 @@ public class PersonTest {
 
 	private Person dummyPerson1;
 	private Person dummyPerson2;
-
+	/**
+	 * Sets up dummy data for the tests.
+	 */
 	@Before
 	public void setup() {
 		personRepo.deleteAll();
@@ -46,7 +51,9 @@ public class PersonTest {
 		personRepo.save(dummyPerson2);
 
 	}
-
+	/**
+	 * Tests that the dummy data is inserted into the domain and that the domain model works.
+	 */
 	@Test
 	public void personCreatedTest() {
 		List<Person> persons = personRepo.findAll();
@@ -57,20 +64,26 @@ public class PersonTest {
 		assertEquals(p1.getRole().getName(), "applicant");
 		assertEquals(p2.getRole().getName(), "recruit");
 	}
-
+	/**
+	 * Tests that only one person with same email/ssn/username can be inside the database.
+	 */
 	@Test(expected = ConstraintViolationException.class)
 	public void invalidFirstNameTest() {
 		saveInvalidPerson(null, "testaryy", "applicationTest1@gmail.com", "9443898491", "applicationTest1", "då",
 				roleRepo.findByName("applicant"));
 
 	}
-
+	/**
+	 * Test that not null constraint in domain works by saving invalid person info.
+	 */
 	@Test(expected = DataIntegrityViolationException.class)
 	public void invalidLastNameTest() {
 		saveInvalidPerson("testy", "null", "applicationTest1@gmail.com", "9443898491", "applicationTest1", "då",
 				roleRepo.findByName("applicant"));
 	}
-
+	/**
+	 * Tests that empty constraint  works by saving invalid person info.
+	 */
 	@Test(expected = ConstraintViolationException.class)
 	public void invalidLastNameblankTest() {
 		saveInvalidPerson("testy", "", "applicationTest1@gmail.com", "9443898491", "applicationTest1", "då",
