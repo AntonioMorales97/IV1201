@@ -17,6 +17,7 @@ describe('running login-view test', () => {
         renderRedirect={jest.fn()}
         onSubmit={jest.fn()}
         onChange={jest.fn()}
+        tryLogin={false}
       />
     );
     expect(wrapper.exists()).toBe(true);

@@ -9,7 +9,10 @@ import { Provider } from 'react-redux';
 
 const defaultStore = {
   auth: {
-    isAuthenticated: false
+    isAuthenticated: false,
+    user: {
+      name: 'test'
+    }
   },
   error: {
     msg: ''

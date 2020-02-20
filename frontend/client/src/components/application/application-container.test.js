@@ -42,6 +42,12 @@ const match = {
 const defaultStore = {
   application: {
     application
+  },
+  error: {
+    msg: ''
+  },
+  success: {
+    msg: ''
   }
 };
 

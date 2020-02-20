@@ -17,6 +17,7 @@ describe('running register-view test', () => {
         renderRedirect={jest.fn()}
         onSubmit={jest.fn()}
         onChange={jest.fn()}
+        tryRegister={false}
       />
     );
     expect(wrapper.exists()).toBe(true);

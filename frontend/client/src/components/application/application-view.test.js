@@ -36,6 +36,7 @@ describe('running application-view test', () => {
         acceptApplication={jest.fn()}
         rejectApplication={jest.fn()}
         unhandleApplication={jest.fn()}
+        loading={false}
       />
     );
     expect(wrapper.exists()).toBe(true);
