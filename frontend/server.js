@@ -6,7 +6,7 @@ config.config();
 
 const app = express();
 
-// Server static assets if in production
+// Server static assets if in production mode
 if (process.env.NODE_ENV === 'production') {
   // Set static folder
   app.use(express.static('client/build'));
