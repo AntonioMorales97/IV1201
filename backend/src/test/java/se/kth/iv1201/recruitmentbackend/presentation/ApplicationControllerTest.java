@@ -102,9 +102,9 @@ public class ApplicationControllerTest {
 				get("/applications").contentType(MediaType.APPLICATION_JSON).header("Authorization", "Bearer " + jwt))
 				.andDo(print()).andExpect(status().isOk()).andReturn();
 		String result = res.getResponse().getContentAsString();
-		String response = result.substring(15, 15 + 24);
+		String response = result.substring(15, 15 + 28);
 
-		assertEquals("applicationListResponses", response);
+		assertEquals("applicationMetadataResponses", response);
 	}
 
 	@Test
