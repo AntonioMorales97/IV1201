@@ -4,6 +4,9 @@ import { useTranslation } from 'react-i18next';
 
 import './footer.css';
 
+/**
+ * Holds the view of the footer.
+ */
 const FooterView = () => {
   const { t } = useTranslation();
 

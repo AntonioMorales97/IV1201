@@ -3,6 +3,9 @@ import {
   CLEAR_SUCCESS
 } from '../../actions/success/success-types';
 
+/**
+ * Store related to the success in this SPA.
+ */
 const initialState = {
   msg: {},
   successId: null,
@@ -10,6 +13,9 @@ const initialState = {
   id: null
 };
 
+/**
+ * Updates the store accordingly.
+ */
 export default function(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {

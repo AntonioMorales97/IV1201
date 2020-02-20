@@ -1,5 +1,8 @@
 import { GET_ERROR, CLEAR_ERROR } from './error-types';
 
+/**
+ * Contructs an error.
+ */
 export const returnError = (msg, errorId, status, id = null) => {
   return {
     type: GET_ERROR,
@@ -7,6 +10,9 @@ export const returnError = (msg, errorId, status, id = null) => {
   };
 };
 
+/**
+ * Clears the error.
+ */
 export const clearError = () => {
   return {
     type: CLEAR_ERROR

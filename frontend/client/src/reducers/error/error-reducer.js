@@ -1,5 +1,8 @@
 import { GET_ERROR, CLEAR_ERROR } from '../../actions/error/error-types';
 
+/**
+ * Store related to errors in this SPA.
+ */
 const initialState = {
   msg: {},
   errorId: null,
@@ -7,6 +10,9 @@ const initialState = {
   id: null
 };
 
+/**
+ * Updates the store accordingly.
+ */
 export default function(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {

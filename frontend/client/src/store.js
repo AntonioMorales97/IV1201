@@ -6,6 +6,9 @@ const initialState = {};
 
 const middleware = [thunk];
 
+/**
+ * Creates redux store used in this SPA.
+ */
 const store = createStore(
   rootReducer,
   initialState,

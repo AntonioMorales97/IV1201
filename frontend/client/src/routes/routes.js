@@ -7,6 +7,11 @@ import ApplicantRoute from './private/applicant-route';
 import Application from '../components/application';
 import Applications from '../components/applications';
 
+/**
+ * Contains all the routes in this SPA. Notice the three different routes: Route,
+ * ApplicantRoute, and RecruitRoute. Route requires no authentication or authorization.
+ * ApplicantRoute and RecruitRoute requires authentication and authorization.
+ */
 const Routes = () => {
   return (
     <Switch>

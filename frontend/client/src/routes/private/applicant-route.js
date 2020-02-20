@@ -11,6 +11,10 @@ const redirectToApplications = () => (
   <Redirect to={{ pathname: '/applications' }} />
 );
 
+/**
+ * Defines an Applicant route, i.e. only a logged in user with 'applicant'
+ * authorization can go to.
+ */
 const ApplicantRoute = ({
   component: Component,
   auth: { isAuthenticated, isLoading, user },

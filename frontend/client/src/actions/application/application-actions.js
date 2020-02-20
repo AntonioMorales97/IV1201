@@ -9,6 +9,9 @@ import {
 import { returnError } from '../error/error-actions';
 import { returnSuccess } from '../success/success-actions';
 
+/**
+ * Gets all the applications from the backend.
+ */
 export const getApplications = () => dispatch => {
   axios
     .get('/applications')
@@ -23,6 +26,9 @@ export const getApplications = () => dispatch => {
     });
 };
 
+/**
+ * Get a specific application from the backend.
+ */
 export const getApplication = id => dispatch => {
   axios
     .get(`/application/${id}`)
@@ -50,6 +56,9 @@ export const getApplication = id => dispatch => {
     });
 };
 
+/**
+ * Updates a specific application with the given status.
+ */
 export const updateApplication = (id, version, status) => dispatch => {
   const body = JSON.stringify({ name: status, version });
 

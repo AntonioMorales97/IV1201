@@ -1,5 +1,8 @@
 import { GET_SUCCESS, CLEAR_SUCCESS } from './success-types';
 
+/**
+ * Constructs a success.
+ */
 export const returnSuccess = (msg, successId, status, id = null) => {
   return {
     type: GET_SUCCESS,
@@ -7,6 +10,9 @@ export const returnSuccess = (msg, successId, status, id = null) => {
   };
 };
 
+/**
+ * Clears the success.
+ */
 export const clearSuccess = () => {
   return {
     type: CLEAR_SUCCESS

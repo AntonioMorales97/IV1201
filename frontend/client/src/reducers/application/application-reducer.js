@@ -6,6 +6,9 @@ import {
   GET_APPLICATIONS
 } from '../../actions/application/application-types';
 
+/**
+ * Store related to applications.
+ */
 const initialState = {
   application: null,
   applications: [],
@@ -13,6 +16,9 @@ const initialState = {
   error: {}
 };
 
+/**
+ * Updates the store accordingly.
+ */
 export default function(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {

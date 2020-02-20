@@ -8,6 +8,9 @@ import store from './store';
 
 import './App.css';
 
+/**
+ * Holds the whole SPA.
+ */
 function App() {
   return (
     <Provider store={store}>

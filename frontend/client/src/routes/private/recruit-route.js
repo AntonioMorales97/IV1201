@@ -9,6 +9,10 @@ const redirectToLogin = location => (
 
 const redirectToApply = () => <Redirect to={{ pathname: '/apply' }} />;
 
+/**
+ * Defines a Recruit route, i.e. only a logged in user with 'recruit'
+ * authorization can go to.
+ */
 const RecruitRoute = ({
   component: Component,
   auth: { isAuthenticated, isLoading, user },

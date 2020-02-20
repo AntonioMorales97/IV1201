@@ -6,12 +6,18 @@ import {
   REGISTER_FAIL
 } from '../../actions/auth/auth-types';
 
+/**
+ * Store related to authentication and authorization.
+ */
 const initialState = {
   isAuthenticated: null,
   isLoading: false,
   user: null
 };
 
+/**
+ * Updates the store accordingly.
+ */
 export default function(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {

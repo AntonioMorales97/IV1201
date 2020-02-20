@@ -10,6 +10,9 @@ import { returnError } from '../error/error-actions';
 import { returnSuccess } from '../success/success-actions';
 import { setAuthToken, deleteAuthToken } from '../../utils/config-auth-token';
 
+/**
+ * Authenticates a user.
+ */
 export const login = ({ username, password }) => dispatch => {
   if (!username || !password) {
     dispatch(returnError({ msg: 'Enter all fields!' }, 1, 400, LOGIN_FAIL));
@@ -40,11 +43,17 @@ export const login = ({ username, password }) => dispatch => {
     });
 };
 
+/**
+ * Logs out a user.
+ */
 export const logout = () => dispatch => {
   deleteAuthToken();
   dispatch({ type: LOGOUT });
 };
 
+/**
+ * Registers a new user.
+ */
 export const register = ({
   firstName,
   lastName,
