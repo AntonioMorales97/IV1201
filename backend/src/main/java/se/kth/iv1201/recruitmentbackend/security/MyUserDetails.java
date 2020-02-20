@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import se.kth.iv1201.recruitmentbackend.domain.Person;
 
 /**
- * Implements UserDetails, used to authentication of Persons.
+ * Implements <code>UserDetails</code>, used to authentication of <code>Person</code>s.
  *
  */
 public class MyUserDetails implements UserDetails {
@@ -21,6 +21,11 @@ public class MyUserDetails implements UserDetails {
 	private String password;
 	private Collection<? extends GrantedAuthority> authorities;
 
+	/**
+	 * Creates a <code>MyUserDetails</code> with the given <code>Person</code>.
+	 * 
+	 * @param person the <code>Person</code> to be embedded in the created instance.
+	 */
 	public MyUserDetails(Person person) {
 		this.person = person;
 		this.username = person.getUsername();
@@ -34,8 +39,6 @@ public class MyUserDetails implements UserDetails {
 	}
 
 	/**
-	 * Password get method
-	 * 
 	 * @return the password of the user.
 	 */
 	@Override
@@ -43,9 +46,7 @@ public class MyUserDetails implements UserDetails {
 		return this.password;
 	}
 
-	/**
-	 * Username get method.
-	 * 
+	/** 
 	 * @return the username of the user.
 	 */
 	@Override
@@ -54,9 +55,9 @@ public class MyUserDetails implements UserDetails {
 	}
 
 	/**
-	 * Required by UserDetails Not used by the application
+	 * Required by <code>UserDetails</code>. Not used by the application
 	 * 
-	 * @return true
+	 * @return <code>true</code>. Currently not used!
 	 */
 	@Override
 	public boolean isAccountNonExpired() {
@@ -64,9 +65,9 @@ public class MyUserDetails implements UserDetails {
 	}
 
 	/**
-	 * Required by UserDetails Not used by the application
+	 * Required by <code>UserDetails</code>. Not used by the application
 	 * 
-	 * @return true
+	 * @return <code>true</code>. Currently not used!
 	 */
 	@Override
 	public boolean isAccountNonLocked() {
@@ -74,9 +75,9 @@ public class MyUserDetails implements UserDetails {
 	}
 
 	/**
-	 * Required by UserDetails Not used by the application
+	 * Required by <code>UserDetails</code>. Not used by the application
 	 * 
-	 * @return true
+	 * @return <code>true</code>. Currently not used!
 	 */
 	@Override
 	public boolean isCredentialsNonExpired() {
@@ -84,9 +85,9 @@ public class MyUserDetails implements UserDetails {
 	}
 
 	/**
-	 * Required by UserDetails Not used by the application
+	 * Required by <code>UserDetails</code>. Not used by the application
 	 * 
-	 * @return true
+	 * @return <code>true</code>. Currently not used!
 	 */
 	@Override
 	public boolean isEnabled() {
@@ -101,7 +102,7 @@ public class MyUserDetails implements UserDetails {
 	}
 
 	/**
-	 * Gets the role of the current person, used to authorization.
+	 * Gets the role of the current <code>Person</code> in this principal, used for authorization.
 	 */
 	public String getRole() {
 		return this.person.getRole().getName();

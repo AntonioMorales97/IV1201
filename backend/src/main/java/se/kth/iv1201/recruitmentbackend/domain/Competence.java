@@ -7,8 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
- * Domain class representing an area of competence associated with a competence
- * profile.
+ * Domain class representing an area of competence.
  */
 @Data
 @Entity
@@ -22,9 +21,16 @@ public class Competence {
 	@NotBlank(message = "{competence.name.blank}")
 	private String name;
 
+	/**
+	 * Needed for JPA.
+	 */
 	public Competence() {
 	}
 
+	/**
+	 * Creates a <code>Competence</code> with the given parameter.
+	 * @param name The name of the competence.
+	 */
 	public Competence(String name) {
 		this.name = name;
 	}

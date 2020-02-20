@@ -9,7 +9,7 @@ import javax.validation.constraints.Pattern;
 import lombok.Data;
 
 /**
- * Domain class representing a person (user) of the application system.
+ * Domain class representing a person (user) in the recruitment system.
  */
 @Data
 @Entity
@@ -49,11 +49,14 @@ public class Person {
 	@JoinColumn(name = "role_id", referencedColumnName = "role_id")
 	private Role role;
 
+	/**
+	 * Needed for JPA.
+	 */
 	public Person() {
 	};
 
 	/**
-	 * Creates a new instance with the specified parameters.
+	 * Creates a new person with the specified parameters.
 	 *
 	 * @param name     The user's name
 	 * @param surname  The user's surname

@@ -41,6 +41,16 @@ public class PersonDTO {
 	@NotBlank(message = "{personDto.password.blank}")
 	private String password;
 
+	/**
+	 * Creates a <code>PersonDTO</code> with the given parameters.
+	 * 
+	 * @param firstName the person's first name.
+	 * @param lastName the person's last name.
+	 * @param email the person's email.
+	 * @param ssn the person's SSN.
+	 * @param username the person's username.
+	 * @param password the person's password.
+	 */
 	public PersonDTO(String firstName, String lastName, String email, String ssn, String username, String password) {
 		this.firstName = firstName;
 		this.lastName = lastName;

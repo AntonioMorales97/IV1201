@@ -13,7 +13,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 /**
- * Component that helps to handle JSON web tokens.
+ * Component that helps to handle JSON Web Tokens (JWTs) such as: generating new JWTs,
+ * validation, and extraction.
  *
  */
 @Component
@@ -27,7 +28,7 @@ public class JwtTokenUtil {
 	 * Extracts username from a token.
 	 * 
 	 * @param token The JWT.
-	 * @return username from token.
+	 * @return the username from the token.
 	 */
 	public String getTokenUsername(String token) {
 		return exctractTokenClaim(token, Claims::getSubject);
@@ -35,10 +36,10 @@ public class JwtTokenUtil {
 	}
 
 	/**
-	 * Extracts Roles from token.
+	 * Extracts the role from the token.
 	 * 
-	 * @param token The jwt
-	 * @return role of the token.
+	 * @param token The JWT.
+	 * @return the role in the token.
 	 */
 	public String getTokenRole(String token) {
 		String sub = exctractAllTokenClaims(token).get("roles").toString().substring(6);
@@ -50,19 +51,19 @@ public class JwtTokenUtil {
 	 * Extracts expiration date from token.
 	 * 
 	 * @param token The JWT.
-	 * @return Date expiration date.
+	 * @return a <code>Date</code> with the expiration date.
 	 */
 	public Date getTokenExpirationDate(String token) {
 		return exctractTokenClaim(token, Claims::getExpiration);
 	}
 
 	/**
-	 * Extracts specified info from JWT.
+	 * Extracts specified info from the JWT.
 	 * 
 	 * @param <T>            Type to be extracted.
 	 * @param token          The JWT.
 	 * @param claimsResolver The functionality
-	 * @return The extracted data.
+	 * @return the extracted data.
 	 */
 	public <T> T exctractTokenClaim(String token, Function<Claims, T> claimsResolver) {
 		final Claims claims = exctractAllTokenClaims(token);
@@ -73,7 +74,7 @@ public class JwtTokenUtil {
 	 * Creates a JWT.
 	 * 
 	 * @param userDetails The information to create the JWT from.
-	 * @return JWT.
+	 * @return a generated JWT.
 	 */
 	public String createToken(UserDetails userDetails) {
 		Map<String, Object> claims = new HashMap<>();
@@ -82,11 +83,11 @@ public class JwtTokenUtil {
 	}
 
 	/**
-	 * Validates a JWT, if its equal to UserDetails and if its not expired.
+	 * Validates a JWT, if it's equal to UserDetails and if it's not expired.
 	 * 
 	 * @param token       the JWT
 	 * @param userDetails The UserDetails to validate token to.
-	 * @return boolean true or false.
+	 * @return <code>true</code> if valid; <code>false</code> otherwise.
 	 */
 	public Boolean validateToken(String token, UserDetails userDetails) {
 		final String username = getTokenUsername(token);

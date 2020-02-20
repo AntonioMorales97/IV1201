@@ -42,9 +42,9 @@ public class ApplicationController {
 	ResourceAssembler resourceAssembler;
 
 	/**
-	 * Returns all Applications in the database.
+	 * Returns all <code>Application</code>s in the database.
 	 * 
-	 * @return a CollectionModel with all the applications embedded.
+	 * @return a <code>CollectionModel</code> with all the applications embedded.
 	 */
 	@GetMapping("/applications")
 	public CollectionModel<ApplicationListResponse> getAllApplications() {
@@ -61,10 +61,10 @@ public class ApplicationController {
 	}
 
 	/**
-	 * Returns a specific application by id.
+	 * Returns a specific <code>Application</code> by id.
 	 * 
-	 * @param id of the application (Person.id)
-	 * @return ApplicationResponse.
+	 * @param id of the <code>application</code>.
+	 * @return the <code>Application</code>.
 	 */
 	@GetMapping("/application/{id}")
 	public Application getApplication(@PathVariable Long id) {
@@ -74,11 +74,11 @@ public class ApplicationController {
 	}
 
 	/**
-	 * Changes the status of a given application.
+	 * Changes the status of a <code>Application</code>.
 	 *
-	 * @param statusDTO DTO containing information about the new status
-	 * @param id        of the application to change.
-	 * @return The altered application.
+	 * @param statusDTO DTO containing information about the new status.
+	 * @param id        ID of the <code>Application</code> to update status.
+	 * @return the altered <code>Application</code>.
 	 */
 	@PutMapping("/alter-status/{id}")
 	@ResponseStatus(HttpStatus.OK)

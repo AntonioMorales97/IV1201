@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import se.kth.iv1201.recruitmentbackend.jwt.JwtTokenUtil;
-import se.kth.iv1201.recruitmentbackend.presentation.exception.InvalidCredentials;
+import se.kth.iv1201.recruitmentbackend.presentation.exception.InvalidCredentialsException;
 import se.kth.iv1201.recruitmentbackend.presentation.models.LoginForm;
 import se.kth.iv1201.recruitmentbackend.presentation.models.LoginResponse;
 import se.kth.iv1201.recruitmentbackend.security.MyUserDetailsService;
 
 /**
- * Class that handles all the authentication of Users.
+ * Class that handles all the authentication of users.
  *
  */
 @RestController
@@ -39,11 +39,11 @@ public class AuthenticationController {
 	private JwtTokenUtil jwtUtil;
 
 	/**
-	 * Handles login requests to the rest api.
+	 * Handles login requests to the REST API.
 	 * 
-	 * @param loginForm The user information.
-	 * @return LoginResponse.
-	 * @throws Exception
+	 * @param loginForm A <code>LoginForm</code> that holds user information.
+	 * @return a <code>LoginResponse</code> embedded and HTTP 200.
+	 * @throws Exception if login attempt failed.
 	 */
 	@PostMapping("/authenticate")
 	public ResponseEntity<?> authenticate(@Valid @RequestBody LoginForm loginForm) throws Exception {
@@ -51,7 +51,7 @@ public class AuthenticationController {
 			authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(loginForm.getUsername(), loginForm.getPassword()));
 		} catch (BadCredentialsException ex) {
-			throw new InvalidCredentials("Invalid credentials, please try again!");
+			throw new InvalidCredentialsException("Invalid credentials, please try again!");
 		}
 		UserDetails userDetails = userDetailsService.loadUserByUsername(loginForm.getUsername());
 		String token = jwtUtil.createToken(userDetails);

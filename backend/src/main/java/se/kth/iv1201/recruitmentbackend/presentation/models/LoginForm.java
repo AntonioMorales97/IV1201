@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 import lombok.Data;
 
 /**
- * Represents a login attempt.
+ * Holds the credentials in a login attempt.
  *
  */
 @Data

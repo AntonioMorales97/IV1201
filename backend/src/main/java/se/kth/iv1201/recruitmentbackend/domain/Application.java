@@ -29,7 +29,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * Domain class representing an application of a person.
+ * Domain class representing an application of an applicant.
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -70,14 +70,28 @@ public class Application extends RepresentationModel<Application> {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "application", orphanRemoval = true)
 	private Set<CompetenceProfile> competenceProfile = new HashSet<>();
 
+	/**
+	 * Needed for JPA.
+	 */
 	public Application() {
 	}
 
+	/**
+	 * Creates an <code>Application</code> with the given parameters.
+	 * 
+	 * @param status The <code>Status</code> of the application.
+	 * @param person The <code>Person</code> who owns the application.
+	 */
 	public Application(Status status, Person person) {
 		this.status = status;
 		this.person = person;
 	}
 
+	/**
+	 * Creates an <code>Application</code> with the given parameters.
+	 * 
+	 * @param status The <code>Status</code> of the application.
+	 */
 	public Application(Status status) {
 		this.status = status;
 	}

@@ -26,9 +26,17 @@ public class Status {
 	@Column(unique = true)
 	private String name;
 
+	/**
+	 * Needed for JPA.
+	 */
 	public Status() {
 	}
 
+	/**
+	 * Creates a <code>Status</code> with the given parameter.
+	 * 
+	 * @param name The name of the status.
+	 */
 	public Status(String name) {
 		this.name = name;
 	}

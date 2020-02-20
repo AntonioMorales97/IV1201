@@ -5,7 +5,7 @@ import java.util.List;
 
 
 /**
- * Holds all the Violations to be returned to the client.
+ * Holds all the <code>Violation</code>s to be returned to the client.
  *
  */
 public class ViolationResponse {

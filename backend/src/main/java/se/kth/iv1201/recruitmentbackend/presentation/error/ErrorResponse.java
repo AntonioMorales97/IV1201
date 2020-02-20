@@ -20,6 +20,13 @@ public class ErrorResponse {
 		this.message = message;
 	}
 
+	/**
+	 * Creates an instance of <code>ErrorResponse</code>.
+	 * 
+	 * @param logRef The error.
+	 * @param message The error message.
+	 * @param code The error code.
+	 */
 	ErrorResponse(String logRef, String message, int code) {
 		this.logRef = logRef;
 		this.message = message;

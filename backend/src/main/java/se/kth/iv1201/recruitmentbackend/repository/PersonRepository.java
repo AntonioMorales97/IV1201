@@ -6,7 +6,7 @@ import se.kth.iv1201.recruitmentbackend.domain.Person;
 
 
 /**
- * JPA interface used to store and access person data in the database
+ * JPA interface used to store and access <code>Person</code> data in the database
  */
 public interface PersonRepository extends JpaRepository<Person, Long> {
 

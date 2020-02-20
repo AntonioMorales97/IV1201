@@ -21,11 +21,11 @@ import se.kth.iv1201.recruitmentbackend.application.exception.ApplicationNotFoun
 import se.kth.iv1201.recruitmentbackend.application.exception.IllegalTransactionException;
 import se.kth.iv1201.recruitmentbackend.application.exception.OutdatedApplicationException;
 import se.kth.iv1201.recruitmentbackend.application.exception.StatusNotFoundException;
-import se.kth.iv1201.recruitmentbackend.presentation.exception.InvalidCredentials;
+import se.kth.iv1201.recruitmentbackend.presentation.exception.InvalidCredentialsException;
 
 /**
- * Global Exception handler, that handles all the exceptions in this
- * application.
+ * Global Exception handler, that handles most of the exceptions in this
+ * application. The exceptions caught here are sent to the HTTP client.
  *
  */
 @ControllerAdvice
@@ -35,13 +35,25 @@ public class ExceptionHandlers {
 	private final String METHOD_ARGUMENT_TYPE_MISMATCH = "The type of the given arguments are wrong";
 	private static final Logger logger = LoggerFactory.getLogger(ExceptionHandlers.class);
 
-	@ExceptionHandler(InvalidCredentials.class)
+	/**
+	 * Handles <code>InvalidCredentials</code>.
+	 * 
+	 * @param exc The exception thrown, caused by invalid credentials.
+	 * @return the <code>ErrorResponse</code>.
+	 */
+	@ExceptionHandler(InvalidCredentialsException.class)
 	@ResponseStatus(HttpStatus.UNAUTHORIZED)
-	ErrorResponse invalidCredentials(InvalidCredentials exc) {
+	ErrorResponse invalidCredentials(InvalidCredentialsException exc) {
 		logger.error(exc.getMessage());
 		return new ErrorResponse(HttpStatus.UNAUTHORIZED.getReasonPhrase(), exc.getMessage(), exc.getCode());
 	}
 
+	/**
+	 * Handles <code>OutdatedApplicationException</code>s.
+	 * 
+	 * @param exc The exception thrown.
+	 * @return the <code>ErrorResponseBody</code>.
+	 */
 	@ExceptionHandler(OutdatedApplicationException.class)
 	@ResponseStatus(HttpStatus.CONFLICT)
 	ErrorResponseBody outdatedApplicationException(OutdatedApplicationException exc) {
@@ -54,7 +66,7 @@ public class ExceptionHandlers {
 	 * Handles <code>IllegalTransactionException</code>s.
 	 * 
 	 * @param exc The exception with the message.
-	 * @return the exception message.
+	 * @return the <code>ErrorResponse</code>.
 	 */
 	@ExceptionHandler(IllegalTransactionException.class)
 	@ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
@@ -67,7 +79,7 @@ public class ExceptionHandlers {
 	 * Handles <code>ApplicationNotFoundException</code>s.
 	 * 
 	 * @param exc The exception with the message.
-	 * @return the exception message.
+	 * @return the <code>ErrorResponse</code>.
 	 */
 	@ExceptionHandler(ApplicationNotFoundException.class)
 	@ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
@@ -80,7 +92,7 @@ public class ExceptionHandlers {
 	 * Handles <code>StatusNotFoundException</code>s.
 	 * 
 	 * @param exc The exception with the message.
-	 * @return the exception message.
+	 * @return the <code>ErrorResponse</code>.
 	 */
 	@ExceptionHandler(StatusNotFoundException.class)
 	@ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
@@ -94,7 +106,7 @@ public class ExceptionHandlers {
 	 * <code>Application</code>s.
 	 * 
 	 * @param exc The <code>MethodArgumentNotValidException</code>.
-	 * @return a list over all the violations.
+	 * @return a list over all the violations. See {@link ViolationResponse}.
 	 */
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -113,7 +125,7 @@ public class ExceptionHandlers {
 	 * Handles <code>NoHandlerException</code>s.
 	 * 
 	 * @param exc The exception.
-	 * @return the exception message.
+	 * @return the <code>ErrorResponse</code>.
 	 */
 	@ExceptionHandler(NoHandlerFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
@@ -126,7 +138,7 @@ public class ExceptionHandlers {
 	 * Handles <code>MissingServletRequestParameterException</code>s.
 	 * 
 	 * @param exc The exception.
-	 * @return the exception message.
+	 * @return the <code>ErrorResponse</code>.
 	 */
 	@ExceptionHandler(MissingServletRequestParameterException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -139,7 +151,7 @@ public class ExceptionHandlers {
 	 * Handler for not supported methods.
 	 * 
 	 * @param exc The <code>HttpRequestMethodNotSupportedException</code>.
-	 * @return the exception message.
+	 * @return the <code>ErrorResponse</code>.
 	 */
 	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
 	@ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
@@ -152,7 +164,7 @@ public class ExceptionHandlers {
 	 * Handler for method argument type mismatches.
 	 * 
 	 * @param exc The <code>MethodArgumentTypeMismatchException</code>.
-	 * @return the exception message with the expected type.
+	 * @return the <code>ErrorResponse</code> with the exception message with the expected type.
 	 */
 	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -163,10 +175,10 @@ public class ExceptionHandlers {
 	}
 
 	/**
-	 * Handler for bad http messages received.
+	 * Handler for bad HTTP messages received.
 	 * 
 	 * @param exc The <code>HttpMessageNotReadableException</code>.
-	 * @return a sad face.
+	 * @return a very sad face.
 	 */
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -179,7 +191,7 @@ public class ExceptionHandlers {
 	 * Handles the exceptions that are not handled by any other exception handler.
 	 * 
 	 * @param exc the exception to be handled.
-	 * @return the exception message.
+	 * @return the <code>ErrorResponse</code>.
 	 */
 	@ExceptionHandler(Exception.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

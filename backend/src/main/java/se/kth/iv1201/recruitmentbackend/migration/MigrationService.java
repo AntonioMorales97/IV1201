@@ -63,7 +63,7 @@ public class MigrationService {
 	private MigrationMailSender emailSender;
 
 	/**
-	 * Preform a migration from the old database.
+	 * Peform a migration from the old database.
 	 */
 	public void migrate() throws NullPointerException, SQLException {
 		this.oldRecruitmentDAO = new OldRecruitmentDAO();
@@ -108,9 +108,6 @@ public class MigrationService {
 
 				Person applicant = new Person(personDTO.getName(), personDTO.getSurname(), personDTO.getEmail(),
 						personDTO.getSsn(), username, password, roleRepo.findByName(personDTO.getRole()));
-				// Set<Availability> applicantAvailabilities = applicant.getAvailability();
-				// Set<CompetenceProfile> applicantCompetenceProfiles =
-				// applicant.getCompetenceProfile();
 
 				List<AvailabilityDTO> availabilityDTOs = oldRecruitmentDAO.getAvailabilities(personDTO.getId());
 				List<CompetenceProfileDTO> competenceProfileDTOs = oldRecruitmentDAO

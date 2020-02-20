@@ -24,12 +24,15 @@ import se.kth.iv1201.recruitmentbackend.presentation.error.ExceptionHandlers;
 
 /**
  * A filter to handle exceptions thrown in the
- * <code>JwtExceptionHandlerFilter</code>.
+ * <code>JwtRequestFilter</code>.
  */
 @Component
 public class JwtExceptionHandlerFilter extends OncePerRequestFilter {
 	private static final Logger logger = LoggerFactory.getLogger(ExceptionHandlers.class);
 
+	/**
+	 * Try-catch of the exceptions thrown by the <code>JwtRequestFilter</code>.
+	 */
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {

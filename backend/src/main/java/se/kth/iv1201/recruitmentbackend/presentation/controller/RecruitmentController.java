@@ -32,9 +32,9 @@ public class RecruitmentController {
 	/**
 	 * Handles a new request for a registration.
 	 * 
-	 * @param personDTO The information of the newly registrerd person.
-	 * @param request   request information of the httpservlet request.
-	 * @return 200 OK if successful.
+	 * @param personDTO The information of the newly registered person.
+	 * @param request   the <code>HttpServletRequest</code>.
+	 * @return HTTP 200 OK if successful.
 	 */
 	@PostMapping("/register")
 	@ResponseStatus(HttpStatus.CREATED)

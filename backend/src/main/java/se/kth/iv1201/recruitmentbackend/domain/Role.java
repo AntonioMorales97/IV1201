@@ -22,9 +22,17 @@ public class Role {
 	@Column(unique = true)
 	private String name;
 
+	/**
+	 * Needed for JPA.
+	 */
 	public Role() {
 	}
 
+	/**
+	 * Creates a <code>Role</code> with the given parameter.
+	 * 
+	 * @param name The name of the role.
+	 */
 	public Role(String name) {
 		this.name = name;
 	}

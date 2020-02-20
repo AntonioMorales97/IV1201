@@ -6,7 +6,7 @@ import se.kth.iv1201.recruitmentbackend.domain.CompetenceProfile;
 
 
 /**
- * JPA interface used to store and access competence profile data in the
+ * JPA interface used to store and access <code>CompetenceProfile</code> data in the
  * database
  */
 public interface CompetenceProfileRepository extends JpaRepository<CompetenceProfile, Long> {

@@ -10,7 +10,7 @@ import se.kth.iv1201.recruitmentbackend.domain.Person;
 import se.kth.iv1201.recruitmentbackend.repository.PersonRepository;
 
 /**
- * Implements UserDetailsService. Used to authenticate Persons.
+ * Implements <code>UserDetailsService</code>. Used to authenticate <code>Person</code>s.
  *
  */
 @Service
@@ -21,11 +21,11 @@ public class MyUserDetailsService implements UserDetailsService {
 	private PersonRepository personRepo;
 
 	/**
-	 * Provides user details for a provided username
+	 * Provides <code>UserDetails</code> for a provided username.
 	 * 
-	 * @param username The username of the person
-	 * @return UserDetails object representing the user.
-	 * @throws UsernameNotFoundException if the requested user can not be found.
+	 * @param username The username of the <code>person</code>.
+	 * @return a <code>UserDetails</code> object representing the user.
+	 * @throws <code>UsernameNotFoundException</code> if the requested user could not be found.
 	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

@@ -19,8 +19,9 @@ import se.kth.iv1201.recruitmentbackend.jwt.JwtTokenUtil;
 import se.kth.iv1201.recruitmentbackend.security.MyUserDetailsService;
 
 /**
- * Gets Executed for every request to the API, checks if request has valid JWT.
- **/
+ * Gets executed for every request to the API that has this filter as part of its security filter chain. 
+ * Checks if the request has valid JWTs.
+ */
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 	private final String AUTH_HEADER = "Authorization";
@@ -33,7 +34,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	private JwtTokenUtil jwtTokenUtil;
 
 	/**
-	 * internal filter to apply to requests.
+	 * Internal filter to apply to the requests.
 	 */
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

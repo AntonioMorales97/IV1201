@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 
 /**
- * Domain class representing the availability of a person.
+ * Domain class representing the availability in an application.
  */
 @Data
 @Entity
@@ -34,9 +34,19 @@ public class Availability {
 	@Column(name = "to_date")
 	private Date toDate;
 
+	/**
+	 * Needed for JPA.
+	 */
 	public Availability() {
 	}
 
+	/**
+	 * Creates an <code>Availability</code> with the given parameters.
+	 * 
+	 * @param application The <code>Application</code> related to this availability.
+	 * @param from The start date.
+	 * @param to The end date.
+	 */
 	public Availability(Application application, Date from, Date to) {
 		this.application = application;
 		this.fromDate = from;
