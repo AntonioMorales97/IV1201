@@ -10,9 +10,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.CannotAcquireLockException;
 import org.springframework.test.context.junit4.SpringRunner;
 import se.kth.iv1201.recruitmentbackend.application.exception.ApplicationNotFoundException;
-import se.kth.iv1201.recruitmentbackend.application.exception.OutdatedApplicationException;
 import se.kth.iv1201.recruitmentbackend.application.exception.StatusNotFoundException;
 import se.kth.iv1201.recruitmentbackend.domain.Application;
 import se.kth.iv1201.recruitmentbackend.presentation.dto.StatusDTO;
@@ -78,13 +78,17 @@ public class ApplicationServiceTest {
 	}
 
 	@SuppressWarnings("unused")
-	@Test(expected = OutdatedApplicationException.class)
-	public void simultaniousUpdateTest() {
+	@Test(expected = CannotAcquireLockException.class)
+	public void simultaniousUpdateTest() throws InterruptedException {
 		List<Application> user1 = applicationService.findAllApplications();
 		List<Application> user2 = applicationService.findAllApplications();
 		StatusDTO status1 = new StatusDTO("accepted", user1.get(0).getVersion());
 		StatusDTO status2 = new StatusDTO("rejected", user2.get(0).getVersion());
-		Application application1 = applicationService.changeStatus(user1.get(0).getId(), status1);
+		
+		new Thread(() -> {
+			Application application1 = applicationService.changeStatus(user1.get(0).getId(), status1);
+		}).start(); 
+		Thread.sleep(2000);
 		Application application2 = applicationService.changeStatus(user2.get(0).getId(), status2);
 	}
 
