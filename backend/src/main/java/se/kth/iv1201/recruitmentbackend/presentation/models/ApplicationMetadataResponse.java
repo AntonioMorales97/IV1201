@@ -9,11 +9,12 @@ import lombok.EqualsAndHashCode;
 import se.kth.iv1201.recruitmentbackend.domain.Status;
 
 /**
- * Represents a response in the form of a list of <code>Application</code>s
+ * Represents one shorter response of an <code>Application</code> to be presented. 
+ * With other words: Represents the metadata of an <code>Application</code>.
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ApplicationListResponse extends RepresentationModel<ApplicationListResponse> {
+public class ApplicationMetadataResponse extends RepresentationModel<ApplicationMetadataResponse> {
 	private Long id;
 	private String firstName;
 	private String lastName;
@@ -33,7 +34,7 @@ public class ApplicationListResponse extends RepresentationModel<ApplicationList
 	 * @param status The status of the <code>Application</code>.
 	 * @param creationDate The creation date of the <code>Application</code>.
 	 */
-	public ApplicationListResponse(Long id, String firstName, String lastName, String email, String ssn, Status status,
+	public ApplicationMetadataResponse(Long id, String firstName, String lastName, String email, String ssn, Status status,
 			Date creationDate) {
 		this.id = id;
 		this.firstName = firstName;

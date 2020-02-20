@@ -21,7 +21,7 @@ import se.kth.iv1201.recruitmentbackend.application.ApplicationService;
 import se.kth.iv1201.recruitmentbackend.application.exception.OutdatedApplicationException;
 import se.kth.iv1201.recruitmentbackend.domain.Application;
 import se.kth.iv1201.recruitmentbackend.presentation.dto.StatusDTO;
-import se.kth.iv1201.recruitmentbackend.presentation.models.ApplicationListResponse;
+import se.kth.iv1201.recruitmentbackend.presentation.models.ApplicationMetadataResponse;
 import se.kth.iv1201.recruitmentbackend.presentation.util.ResourceAssembler;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -47,15 +47,15 @@ public class ApplicationController {
 	 * @return a <code>CollectionModel</code> with all the applications embedded.
 	 */
 	@GetMapping("/applications")
-	public CollectionModel<ApplicationListResponse> getAllApplications() {
+	public CollectionModel<ApplicationMetadataResponse> getAllApplications() {
 		List<Application> applications = applicationService.findAllApplications();
-		List<ApplicationListResponse> applicationList = new ArrayList<ApplicationListResponse>();
+		List<ApplicationMetadataResponse> applicationList = new ArrayList<ApplicationMetadataResponse>();
 		applications.forEach(application -> {
 			applicationList.add(createApplicationResponse(application));
 			resourceAssembler.addLinksToApplication(application);
 
 		});
-		return new CollectionModel<ApplicationListResponse>(applicationList,
+		return new CollectionModel<ApplicationMetadataResponse>(applicationList,
 				linkTo(methodOn(ApplicationController.class).getAllApplications()).withSelfRel());
 
 	}
@@ -95,8 +95,8 @@ public class ApplicationController {
 		}
 	}
 
-	private ApplicationListResponse createApplicationResponse(Application application) {
-		ApplicationListResponse applicationResponse = new ApplicationListResponse(application.getId(),
+	private ApplicationMetadataResponse createApplicationResponse(Application application) {
+		ApplicationMetadataResponse applicationResponse = new ApplicationMetadataResponse(application.getId(),
 				application.getPerson().getFirstName(), application.getPerson().getLastName(),
 				application.getPerson().getEmail(), application.getPerson().getSsn(), application.getStatus(),
 				application.getCreateDate());
