@@ -112,8 +112,7 @@ public class ApplicationServiceTest {
 		
 		new Thread(() -> {
 			Application application1 = applicationService.changeStatus(user1.get(0).getId(), status1);
-		}).start(); 
-		Thread.sleep(2000);
+		}).start();
 		Application application2 = applicationService.changeStatus(user2.get(0).getId(), status2);
 	}
 	
