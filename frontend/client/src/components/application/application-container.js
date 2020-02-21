@@ -13,6 +13,11 @@ import {
   APPLICATION_ERROR,
   UPDATE_APPLICATION_SUCCESS
 } from '../../actions/application/application-types';
+import {
+  ACCEPTED_STATUS,
+  REJECTED_STATUS,
+  UNHANDLED_STATUS
+} from '../../constants/application/application-constants';
 
 /**
  * Application component. Holds the logic and state of a specific application. Renders the ApplicationView.
@@ -72,7 +77,7 @@ class ApplicationContainer extends Component {
     this.props.updateApplication(
       this.props.application.application.id,
       this.props.application.application.version,
-      'accepted'
+      ACCEPTED_STATUS
     );
   };
 
@@ -82,7 +87,7 @@ class ApplicationContainer extends Component {
     this.props.updateApplication(
       this.props.application.application.id,
       this.props.application.application.version,
-      'rejected'
+      REJECTED_STATUS
     );
   };
 
@@ -92,7 +97,7 @@ class ApplicationContainer extends Component {
     this.props.updateApplication(
       this.props.application.application.id,
       this.props.application.application.version,
-      'unhandled'
+      UNHANDLED_STATUS
     );
   };
 

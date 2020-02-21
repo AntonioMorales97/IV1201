@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { ListGroupItem } from 'reactstrap';
 import ApplicationView from './application-view';
+import { ACCEPTED_STATUS } from '../../constants/application/application-constants';
 
 jest.mock('react-i18next', () => ({
   useTranslation: () => {
@@ -21,7 +22,7 @@ const person = {
 const application = {
   id: 1,
   status: {
-    name: 'accepted'
+    name: ACCEPTED_STATUS
   },
   person,
   competenceProfile: [],

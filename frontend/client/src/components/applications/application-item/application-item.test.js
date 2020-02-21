@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import ApplicationItem from './application-item';
+import { ACCEPTED_STATUS } from '../../../constants/application/application-constants';
 
 jest.mock('react-i18next', () => ({
   useTranslation: () => {
@@ -16,7 +17,7 @@ const application = {
   lastName: 'lastName',
   ssn: '1231231231',
   status: {
-    name: 'accepted'
+    name: ACCEPTED_STATUS
   }
 };
 

@@ -5,6 +5,7 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL
 } from '../../../actions/auth/auth-types';
+import { RECRUIT_ROLE } from '../../../constants/role/role-constants';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { register } from '../../../actions/auth/auth-actions';
@@ -76,9 +77,9 @@ class RegisterContainer extends Component {
       return <Redirect to='/login' />;
     }
     if (this.props.isAuthenticated) {
-      if (this.props.user.role === 'admin') {
+      if (this.props.user.role === RECRUIT_ROLE) {
         const { from } = this.props.location.state || {
-          from: { pathname: '/admin' }
+          from: { pathname: '/applications' }
         };
         return <Redirect to={from} />;
       }

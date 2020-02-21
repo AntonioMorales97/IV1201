@@ -13,6 +13,7 @@ import {
   DropdownToggle,
   UncontrolledButtonDropdown
 } from 'reactstrap';
+import { RECRUIT_ROLE } from '../../constants/role/role-constants';
 import { Link } from 'react-router-dom';
 
 /**
@@ -101,7 +102,7 @@ const HeaderView = props => {
 
   const links = () => {
     if (auth.isAuthenticated) {
-      if (auth.user.role === 'RECRUIT') {
+      if (auth.user.role === RECRUIT_ROLE) {
         return recruitLinks;
       } else {
         return applicantLinks;

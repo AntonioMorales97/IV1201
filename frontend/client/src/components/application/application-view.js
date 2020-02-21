@@ -9,6 +9,10 @@ import {
 } from 'reactstrap';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
+import {
+  ACCEPTED_STATUS,
+  REJECTED_STATUS
+} from '../../constants/application/application-constants';
 import './application.css';
 
 /**
@@ -36,9 +40,9 @@ const ApplicationView = props => {
   } = props;
 
   const badgeStatus = () => {
-    if (status.name === 'accepted') {
+    if (status.name === ACCEPTED_STATUS) {
       return 'badge-success';
-    } else if (status.name === 'rejected') {
+    } else if (status.name === REJECTED_STATUS) {
       return 'badge-danger';
     } else {
       return 'badge-secondary';

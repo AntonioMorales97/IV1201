@@ -6,6 +6,7 @@ import {
   LOGIN_FAIL,
   REGISTER_SUCCESS
 } from '../../../actions/auth/auth-types';
+import { RECRUIT_ROLE } from '../../../constants/role/role-constants';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from '../../../actions/auth/auth-actions';
@@ -75,7 +76,7 @@ class LoginContainer extends Component {
 
   renderRedirect = () => {
     if (this.props.isAuthenticated) {
-      if (this.props.user.role === 'RECRUITER') {
+      if (this.props.user.role === RECRUIT_ROLE) {
         const { from } = this.props.location.state || {
           from: { pathname: '/applications' }
         };

@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mount, shallow } from 'enzyme';
 import Application from './application-container';
-
+import { ACCEPTED_STATUS } from '../../constants/application/application-constants';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
@@ -26,7 +26,7 @@ const person = {
 const application = {
   id: 1,
   status: {
-    name: 'accepted'
+    name: ACCEPTED_STATUS
   },
   person,
   competenceProfile: [],

@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { RECRUIT_ROLE } from '../../constants/role/role-constants';
 
 const redirectToLogin = location => (
   <Redirect to={{ pathname: '/login', state: { from: location } }} />
@@ -24,7 +25,7 @@ const RecruitRoute = ({
       if (!isAuthenticated && !isLoading) {
         return redirectToLogin(props.location);
       } else {
-        if (user.role === 'RECRUIT') {
+        if (user.role === RECRUIT_ROLE) {
           return <Component {...props} />;
         } else {
           return redirectToApply();
