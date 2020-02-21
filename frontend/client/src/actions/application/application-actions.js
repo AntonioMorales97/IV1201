@@ -18,7 +18,7 @@ export const getApplications = () => dispatch => {
     .then(res => {
       dispatch({
         type: GET_APPLICATIONS,
-        payload: res.data._embedded.applicationListResponses
+        payload: res.data._embedded.applicationMetadataResponses
       });
     })
     .catch(err => {
