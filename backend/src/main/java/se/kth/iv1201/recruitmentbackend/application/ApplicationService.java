@@ -99,14 +99,6 @@ public class ApplicationService {
 					"Could not save update, because current application verson is outdated.", application.get());
 
 		}
-		System.out.println("SLeeping");
-		try {
-			Thread.sleep(15000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println("wakeup");
 		application.get().setStatus(status.get());
 		return application.get();
 	}
