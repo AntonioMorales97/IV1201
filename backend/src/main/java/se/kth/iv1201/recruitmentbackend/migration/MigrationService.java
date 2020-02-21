@@ -63,7 +63,7 @@ public class MigrationService {
 	private MigrationMailSender emailSender;
 
 	/**
-	 * Peform a migration from the old database.
+	 * Perform a migration from the old database.
 	 */
 	public void migrate() throws NullPointerException, SQLException {
 		this.oldRecruitmentDAO = new OldRecruitmentDAO();
