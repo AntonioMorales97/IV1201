@@ -84,16 +84,16 @@ public class ApplicationControllerTest {
 		applicationRepo.deleteAll();
 		personRepo.deleteAll();
 		roleRepo.deleteAll();
-		Role r1 = new Role(RoleNames.recruit.toString());
-		Role r2 = new Role(RoleNames.applicant.toString());
+		Role r1 = new Role(RoleNames.RECRUIT.getRole());
+		Role r2 = new Role(RoleNames.APPLICANT.getRole());
 		roleRepo.save(r1);
 		roleRepo.save(r2);
 		dummyPerson = new Person("testyy", "testaryy", "applicationControll@gmail.com", "9443898491",
-				"applicationControll", "då", roleRepo.findByName(RoleNames.recruit.toString()));
+				"applicationControll", "då", roleRepo.findByName(RoleNames.RECRUIT.getRole()));
 
 		personRepo.save(dummyPerson);
 
-		dummyApplication = new Application(statusRepo.findByName(ApplicationStatus.unhandled.toString()).get(),
+		dummyApplication = new Application(statusRepo.findByName(ApplicationStatus.UNHANDLED.getStatus()).get(),
 				personRepo.findByUsername(dummyPerson.getUsername()));
 		applicationRepo.save(dummyApplication);
 	}
@@ -115,7 +115,7 @@ public class ApplicationControllerTest {
 		String jwt = setupJWT();
 
 		MvcResult res = this.mvc.perform(
-				get(applicationsUrl).contentType(MediaType.APPLICATION_JSON).header(JwtEnums.Authorization.toString(), JwtEnums.Bearer.toString()+" " + jwt))
+				get(applicationsUrl).contentType(MediaType.APPLICATION_JSON).header(JwtEnums.AUTH.getHeader(), JwtEnums.BEARER.getHeader() + jwt))
 				.andDo(print()).andExpect(status().isOk()).andReturn();
 		String result = res.getResponse().getContentAsString();
 		String response = result.substring(15, 15 + 28);
@@ -133,7 +133,7 @@ public class ApplicationControllerTest {
 		List<Application> applicationlist = applicationRepo.findAll();
 		String id = Long.toString(applicationlist.get(0).getId());
 
-		this.mvc.perform(get(applicationUrl+ id).contentType(MediaType.APPLICATION_JSON).header(JwtEnums.Authorization.toString(), JwtEnums.Bearer.toString()+" " + jwt))
+		this.mvc.perform(get(applicationUrl+ id).contentType(MediaType.APPLICATION_JSON).header(JwtEnums.AUTH.getHeader(), JwtEnums.BEARER.getHeader() + jwt))
 		.andDo(print()).andExpect(status().isOk());
 	}
 	/**
@@ -145,7 +145,7 @@ public class ApplicationControllerTest {
 	public void getApplicationTestFail() throws Exception {
 		String jwt = setupJWT();
 
-		this.mvc.perform(get(applicationUrl+420).contentType(MediaType.APPLICATION_JSON).header(JwtEnums.Authorization.toString(), JwtEnums.Bearer.toString()+" " + jwt))
+		this.mvc.perform(get(applicationUrl+420).contentType(MediaType.APPLICATION_JSON).header(JwtEnums.AUTH.getHeader(), JwtEnums.BEARER.getHeader() + jwt))
 		.andDo(print()).andExpect(status().is4xxClientError());
 	}
 	/**
@@ -160,10 +160,10 @@ public class ApplicationControllerTest {
 		String id = Long.toString(applicationlist.get(0).getId());
 		System.out.println("\n ID: " + id + "\n");
 		JSONObject statusDTO = new JSONObject();
-		statusDTO.put("name", ApplicationStatus.rejected.toString());
+		statusDTO.put("name", ApplicationStatus.REJECTED.getStatus());
 		statusDTO.put("version", applicationlist.get(0).getVersion());
 		this.mvc.perform(put(changeStatusUrl + id).contentType(MediaType.APPLICATION_JSON)
-				.content(statusDTO.toString()).header(JwtEnums.Authorization.toString(), JwtEnums.Bearer.toString()+" " + jwt))
+				.content(statusDTO.toString()).header(JwtEnums.AUTH.getHeader(), JwtEnums.BEARER.getHeader() + jwt))
 				.andDo(print())
 				.andExpect(status().isOk());
 	}
@@ -175,7 +175,7 @@ public class ApplicationControllerTest {
 	@Test
 	public void changeStatusTestFail() throws Exception {
 		String jwt = setupJWT();
-		this.mvc.perform(put(changeStatusUrl+420).contentType(MediaType.APPLICATION_JSON).header(JwtEnums.Authorization.toString(), JwtEnums.Bearer.toString()+" " + jwt))
+		this.mvc.perform(put(changeStatusUrl+420).contentType(MediaType.APPLICATION_JSON).header(JwtEnums.AUTH.getHeader(), JwtEnums.BEARER.getHeader() + jwt))
 		.andDo(print()).andExpect(status().is4xxClientError());
 	}
 

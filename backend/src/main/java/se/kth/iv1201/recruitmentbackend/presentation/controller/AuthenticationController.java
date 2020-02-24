@@ -37,6 +37,10 @@ public class AuthenticationController {
 
 	@Autowired
 	private JwtTokenUtil jwtUtil;
+	
+	final static String AUTH_URL = "/authenticate";
+	
+	private final String INVALID_CREDENTIALS = "Invalid credentials, please try again!";
 
 	/**
 	 * Handles login requests to the REST API.
@@ -45,13 +49,13 @@ public class AuthenticationController {
 	 * @return a <code>LoginResponse</code> embedded and HTTP 200.
 	 * @throws Exception if login attempt failed.
 	 */
-	@PostMapping("/authenticate")
+	@PostMapping(AUTH_URL)
 	public ResponseEntity<?> authenticate(@Valid @RequestBody LoginForm loginForm) throws Exception {
 		try {
 			authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(loginForm.getUsername(), loginForm.getPassword()));
 		} catch (BadCredentialsException ex) {
-			throw new InvalidCredentialsException("Invalid credentials, please try again!");
+			throw new InvalidCredentialsException(INVALID_CREDENTIALS);
 		}
 		UserDetails userDetails = userDetailsService.loadUserByUsername(loginForm.getUsername());
 		String token = jwtUtil.createToken(userDetails);

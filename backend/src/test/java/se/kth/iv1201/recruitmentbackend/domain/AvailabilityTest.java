@@ -57,20 +57,20 @@ public class AvailabilityTest {
 		personRepo.deleteAll();
 		roleRepo.deleteAll();
 		availabilityRepo.deleteAll();
-		Role r1 = new Role(RoleNames.recruit.toString());
-		Role r2 = new Role(RoleNames.applicant.toString());
+		Role r1 = new Role(RoleNames.RECRUIT.getRole());
+		Role r2 = new Role(RoleNames.APPLICANT.getRole());
 		roleRepo.save(r1);
 		roleRepo.save(r2);
 		dummyPerson1 = new Person("testyy", "testaryy", "applicationTest1@gmail.com", "9443898491", "applicationTest1",
-				"då", roleRepo.findByName(RoleNames.applicant.toString()));
+				"då", roleRepo.findByName(RoleNames.APPLICANT.getRole()));
 		dummyPerson2 = new Person("Tests", "testsss", "applicationTest2@gmail.com", "938472819", "applicationTest2",
-				"då", roleRepo.findByName(RoleNames.applicant.toString()));
+				"då", roleRepo.findByName(RoleNames.APPLICANT.getRole()));
 		personRepo.save(dummyPerson1);
 		personRepo.save(dummyPerson2);
 
-		application1 = new Application(statusRepo.findByName(ApplicationStatus.unhandled.toString()).get(),
+		application1 = new Application(statusRepo.findByName(ApplicationStatus.UNHANDLED.getStatus()).get(),
 				personRepo.findByUsername("applicationTest1"));
-		application2 = new Application(statusRepo.findByName(ApplicationStatus.unhandled.toString()).get(),
+		application2 = new Application(statusRepo.findByName(ApplicationStatus.UNHANDLED.getStatus()).get(),
 				personRepo.findByUsername("applicationTest2"));
 		applicationRepo.save(application1);
 		applicationRepo.save(application2);

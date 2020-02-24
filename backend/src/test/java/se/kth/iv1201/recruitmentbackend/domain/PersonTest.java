@@ -40,14 +40,14 @@ public class PersonTest {
 	public void setup() {
 		personRepo.deleteAll();
 		roleRepo.deleteAll();
-		Role r1 = new Role(RoleNames.recruit.toString());
-		Role r2 = new Role(RoleNames.applicant.toString());
+		Role r1 = new Role(RoleNames.RECRUIT.getRole());
+		Role r2 = new Role(RoleNames.APPLICANT.getRole());
 		roleRepo.save(r1);
 		roleRepo.save(r2);
 		dummyPerson1 = new Person("testyy", "testaryy", "applicationTest1@gmail.com", "9443898491", "applicationTest1",
-				"då", roleRepo.findByName(RoleNames.applicant.toString()));
+				"då", roleRepo.findByName(RoleNames.APPLICANT.getRole()));
 		dummyPerson2 = new Person("Tests", "testsss", "applicationTest2@gmail.com", "938472819", "applicationTest2",
-				"då", roleRepo.findByName(RoleNames.recruit.toString()));
+				"då", roleRepo.findByName(RoleNames.RECRUIT.getRole()));
 		personRepo.save(dummyPerson1);
 		personRepo.save(dummyPerson2);
 
@@ -62,8 +62,8 @@ public class PersonTest {
 		Person p2 = persons.get(1);
 		long id = p2.getId() - 1;
 		assertEquals(p1.getId(), id);
-		assertEquals(p1.getRole().getName(), RoleNames.applicant.toString());
-		assertEquals(p2.getRole().getName(), RoleNames.recruit.toString());
+		assertEquals(p1.getRole().getName(), RoleNames.APPLICANT.getRole());
+		assertEquals(p2.getRole().getName(), RoleNames.RECRUIT.getRole());
 	}
 	/**
 	 * Tests that only one person with same email/ssn/username can be inside the database.
@@ -71,7 +71,7 @@ public class PersonTest {
 	@Test(expected = ConstraintViolationException.class)
 	public void invalidFirstNameTest() {
 		saveInvalidPerson(null, "testaryy", "applicationTest1@gmail.com", "9443898491", "applicationTest1", "då",
-				roleRepo.findByName(RoleNames.applicant.toString()));
+				roleRepo.findByName(RoleNames.APPLICANT.getRole()));
 
 	}
 	/**
@@ -80,7 +80,7 @@ public class PersonTest {
 	@Test(expected = DataIntegrityViolationException.class)
 	public void invalidLastNameTest() {
 		saveInvalidPerson("testy", "null", "applicationTest1@gmail.com", "9443898491", "applicationTest1", "då",
-				roleRepo.findByName(RoleNames.applicant.toString()));
+				roleRepo.findByName(RoleNames.APPLICANT.getRole()));
 	}
 	/**
 	 * Tests that empty constraint  works by saving invalid person info.
@@ -88,7 +88,7 @@ public class PersonTest {
 	@Test(expected = ConstraintViolationException.class)
 	public void invalidLastNameblankTest() {
 		saveInvalidPerson("testy", "", "applicationTest1@gmail.com", "9443898491", "applicationTest1", "då",
-				roleRepo.findByName(RoleNames.applicant.toString()));
+				roleRepo.findByName(RoleNames.APPLICANT.getRole()));
 	}
 
 	private void saveInvalidPerson(String firstName, String lastName, String email, String ssn, String username,

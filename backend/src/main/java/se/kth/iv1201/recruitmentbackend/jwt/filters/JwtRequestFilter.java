@@ -25,8 +25,8 @@ import se.kth.iv1201.recruitmentbackend.security.MyUserDetailsService;
  */
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
-	private final String AUTH_HEADER = JwtEnums.Authorization.toString();;
-	private final String BEARER_START = JwtEnums.Bearer.toString()+" ";
+	private final String AUTH_HEADER = JwtEnums.AUTH.getHeader();
+	private final String BEARER_START = JwtEnums.BEARER.getHeader();
 
 	@Autowired
 	private MyUserDetailsService userDetailsService;

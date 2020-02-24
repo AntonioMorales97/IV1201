@@ -72,7 +72,7 @@ public class JwtTokenUtilTests {
 		UserDetails user = register(dummyPerson);
 		String jwt = jwtUtil.createToken(user);
 		String role = jwtUtil.getTokenRole(jwt);
-		assertEquals(role, RoleNames.applicant.toString().toUpperCase());
+		assertEquals(role, RoleNames.APPLICANT.getRole().toUpperCase());
 	}
 
 	@Test
@@ -114,7 +114,7 @@ public class JwtTokenUtilTests {
 	}
 
 	private UserDetails register(PersonDTO person) throws IllegalTransactionException {
-		roleRepo.save(new Role(RoleNames.applicant.toString()));
+		roleRepo.save(new Role(RoleNames.APPLICANT.getRole()));
 		recruitmentService.registerUser(person);
 		return userDetailsService.loadUserByUsername(person.getUsername());
 	}

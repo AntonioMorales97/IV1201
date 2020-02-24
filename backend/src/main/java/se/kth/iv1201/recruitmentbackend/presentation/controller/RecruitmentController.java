@@ -28,7 +28,8 @@ public class RecruitmentController {
 
 	@Autowired
 	RecruitmentService recruitmentSerivce;
-
+	
+	final static String REGISTER_URL = "/register";
 	/**
 	 * Handles a new request for a registration.
 	 * 
@@ -36,7 +37,7 @@ public class RecruitmentController {
 	 * @param request   the <code>HttpServletRequest</code>.
 	 * @return HTTP 200 OK if successful.
 	 */
-	@PostMapping("/register")
+	@PostMapping(REGISTER_URL)
 	@ResponseStatus(HttpStatus.CREATED)
 	public void registerPerson(@RequestBody @Valid PersonDTO personDTO, HttpServletRequest request) {
 		this.recruitmentSerivce.registerUser(personDTO);

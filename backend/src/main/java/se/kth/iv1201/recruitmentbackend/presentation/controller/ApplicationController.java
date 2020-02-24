@@ -34,19 +34,21 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Validated
 @CrossOrigin
 public class ApplicationController {
-
+	private final String OUTDATED_APPLICATION_ERROR = "Could not save update, because current application verson is outdated.";
 	@Autowired
 	ApplicationService applicationService;
 
 	@Autowired
 	ResourceAssembler resourceAssembler;
-
+	static final String APPLICATIONS_URL = "/applications";
+	static final String APPLICATION_URL = "/application/";
+	static final String ALTER_STATUS_URL = "/alter-status/";
 	/**
 	 * Returns all <code>Application</code>s in the database.
 	 * 
 	 * @return a <code>CollectionModel</code> with all the applications embedded.
 	 */
-	@GetMapping("/applications")
+	@GetMapping(APPLICATIONS_URL)
 	public CollectionModel<ApplicationMetadataResponse> getAllApplications() {
 		List<Application> applications = applicationService.findAllApplications();
 		List<ApplicationMetadataResponse> applicationList = new ArrayList<ApplicationMetadataResponse>();
@@ -66,7 +68,7 @@ public class ApplicationController {
 	 * @param id of the <code>application</code>.
 	 * @return the <code>Application</code>.
 	 */
-	@GetMapping("/application/{id}")
+	@GetMapping(APPLICATION_URL+"{id}")
 	public Application getApplication(@PathVariable Long id) {
 		Application application = applicationService.findApplication(id);
 		resourceAssembler.addLinksToApplication(application);
@@ -80,7 +82,7 @@ public class ApplicationController {
 	 * @param id        ID of the <code>Application</code> to update status.
 	 * @return the altered <code>Application</code>.
 	 */
-	@PutMapping("/alter-status/{id}")
+	@PutMapping(ALTER_STATUS_URL+"{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public Application alterStatus(@RequestBody @Valid StatusDTO statusDTO, @PathVariable Long id) {
 		try {
@@ -89,7 +91,7 @@ public class ApplicationController {
 			return application;
 		} catch (CannotAcquireLockException exc) {
 			throw new OutdatedApplicationException(
-					"Could not save update, because current application verson is outdated.",
+					OUTDATED_APPLICATION_ERROR,
 					applicationService.findApplication(id));
 
 		}

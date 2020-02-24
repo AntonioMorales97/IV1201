@@ -20,6 +20,7 @@ public class MyUserDetails implements UserDetails {
 	private String username;
 	private String password;
 	private Collection<? extends GrantedAuthority> authorities;
+	private static String role_string = "ROLE_";
 
 	/**
 	 * Creates a <code>MyUserDetails</code> with the given <code>Person</code>.
@@ -111,8 +112,8 @@ public class MyUserDetails implements UserDetails {
 	private Collection<? extends GrantedAuthority> translate(String role) {
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		String name = role.toUpperCase();
-		if (!name.startsWith("ROLE_")) {
-			name = "ROLE_" + name;
+		if (!name.startsWith(role_string)) {
+			name = role_string + name;
 		}
 		authorities.add(new SimpleGrantedAuthority(name));
 		return authorities;

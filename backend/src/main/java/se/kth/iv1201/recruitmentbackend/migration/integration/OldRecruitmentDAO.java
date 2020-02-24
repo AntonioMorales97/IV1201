@@ -62,14 +62,14 @@ public class OldRecruitmentDAO {
 			stmt = this.conn.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
-				Long id = rs.getLong(MigrationEnums.person_id.toString());
-				String name = rs.getString(MigrationEnums.name.toString());
-				String surname = rs.getString(MigrationEnums.surname.toString());
-				String ssn = rs.getString(MigrationEnums.ssn.toString());
-				String email = rs.getString(MigrationEnums.email.toString());
-				String password = rs.getString(MigrationEnums.password.toString());
-				String username = rs.getString(MigrationEnums.username.toString());
-				String role = rs.getString(MigrationEnums.role.toString());
+				Long id = rs.getLong(MigrationEnums.PERSON_ID.getValue());
+				String name = rs.getString(MigrationEnums.PERSON_NAME.getValue());
+				String surname = rs.getString(MigrationEnums.PERSON_SURNAME.getValue());
+				String ssn = rs.getString(MigrationEnums.PERSON_SSN.getValue());
+				String email = rs.getString(MigrationEnums.PERSON_EMAIL.getValue());
+				String password = rs.getString(MigrationEnums.PERSON_PASS.getValue());
+				String username = rs.getString(MigrationEnums.PERSON_USER.getValue());
+				String role = rs.getString(MigrationEnums.PERSON_ROLE.getValue());
 				personDTOs.add(new PersonDTO(id, name, surname, ssn, email, password, username, role));
 			}
 		} catch (SQLException e) {
@@ -95,8 +95,8 @@ public class OldRecruitmentDAO {
 			prepStmt.setLong(1, personID);
 			ResultSet rs = prepStmt.executeQuery();
 			while (rs.next()) {
-				Date from = rs.getDate(MigrationEnums.from_date.toString());
-				Date to = rs.getDate(MigrationEnums.to_date.toString());
+				Date from = rs.getDate(MigrationEnums.DATE_FROM.getValue());
+				Date to = rs.getDate(MigrationEnums.DATE_TO.getValue());
 				availabilitiesDTOs.add(new AvailabilityDTO(from, to));
 			}
 		} catch (SQLException e) {
@@ -122,7 +122,7 @@ public class OldRecruitmentDAO {
 			ResultSet rs = prepStmt.executeQuery();
 			while (rs.next()) {
 				competenceProfileDTOs
-						.add(new CompetenceProfileDTO(rs.getString(MigrationEnums.competence.toString()), rs.getDouble(MigrationEnums.years_of_experience.toString())));
+						.add(new CompetenceProfileDTO(rs.getString(MigrationEnums.COMPETENCE.getValue()), rs.getDouble(MigrationEnums.YEARS_EXPERIANCE.getValue())));
 			}
 		} catch (SQLException e) {
 			logger.error(e.getMessage());
@@ -144,7 +144,7 @@ public class OldRecruitmentDAO {
 			stmt = this.conn.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
-				String name = rs.getString(MigrationEnums.name.toString());
+				String name = rs.getString(MigrationEnums.COMPETENCE_NAME.getValue());
 				competenceDTOs.add(new CompetenceDTO(name));
 			}
 		} catch (SQLException e) {
@@ -167,7 +167,7 @@ public class OldRecruitmentDAO {
 			stmt = this.conn.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
-				String name = rs.getString(MigrationEnums.name.toString());
+				String name = rs.getString(MigrationEnums.ROLE_NAME.getValue());
 				roleDTOs.add(new RoleDTO(name));
 			}
 		} catch (SQLException e) {

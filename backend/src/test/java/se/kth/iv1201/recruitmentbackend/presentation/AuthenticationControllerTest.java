@@ -97,8 +97,8 @@ public class AuthenticationControllerTest {
 	public void testSetup() throws Exception {
 		personRepo.deleteAll();
 		roleRepo.deleteAll();
-		Role r1 = new Role(RoleNames.recruit.toString());
-		Role r2 = new Role(RoleNames.applicant.toString());
+		Role r1 = new Role(RoleNames.RECRUIT.getRole());
+		Role r2 = new Role(RoleNames.APPLICANT.getRole());
 		Role added = roleRepo.save(r1);
 		roleRepo.save(r2);
 		System.out.println(added);
