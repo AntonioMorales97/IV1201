@@ -33,6 +33,11 @@ public class ApplicationService {
 
 	@Autowired
 	private StatusRepository statusRepo;
+	
+	private static final String APPLICATION_NOT_FOUND ="Application could not be found by id: ";
+	private static final String STATUS_NOT_FOUND ="Status could not be found by name: ";
+	private static final String OUTDATED_APPLICATION ="Could not save update, because current application verson is outdated.";
+	
 
 	/**
 	 * Gets a specific <code>Application</code> from database.
@@ -46,7 +51,7 @@ public class ApplicationService {
 		Optional<Application> application = applicationRepo.findById(id);
 
 		if (application.isEmpty()) {
-			throw new ApplicationNotFoundException("Application could not be found by id: " + id);
+			throw new ApplicationNotFoundException(APPLICATION_NOT_FOUND + id);
 		}
 
 		return application.get();
@@ -85,18 +90,16 @@ public class ApplicationService {
 	public Application changeStatus(Long id, @Valid StatusDTO statusDTO) {
 		Optional<Application> application = applicationRepo.findById(id);
 		if (application.isEmpty()) {
-			throw new ApplicationNotFoundException("Application could not be found by id: " + id);
+			throw new ApplicationNotFoundException(APPLICATION_NOT_FOUND + id);
 		}
 		Optional<Status> status = statusRepo.findByName(statusDTO.getName());
 		if (status.isEmpty()) {
-			throw new StatusNotFoundException("Status could not be found by name: " + statusDTO.getName());
+			throw new StatusNotFoundException(STATUS_NOT_FOUND + statusDTO.getName());
 		}
 
 		if (application.get().getVersion() != statusDTO.getVersion()) {
-			System.out.println(
-					"ERROR " + "new vers: " + application.get().getVersion() + " old vers: " + statusDTO.getVersion());
 			throw new OutdatedApplicationException(
-					"Could not save update, because current application verson is outdated.", application.get());
+					OUTDATED_APPLICATION, application.get());
 
 		}
 		application.get().setStatus(status.get());

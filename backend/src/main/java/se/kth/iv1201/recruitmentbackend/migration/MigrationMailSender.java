@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class MigrationMailSender {
-
+	private static final String SUBJECT = "Your new password";
 	@Autowired
 	private JavaMailSender sender;
 
@@ -24,7 +24,7 @@ public class MigrationMailSender {
 	public void sendCredentials(String username, String password, String email) {
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setTo(email);
-		message.setSubject("Your new password");
+		message.setSubject(SUBJECT);
 		message.setText("Username: " + username + "\nPassword: " + password);
 		sender.send(message);
 	}

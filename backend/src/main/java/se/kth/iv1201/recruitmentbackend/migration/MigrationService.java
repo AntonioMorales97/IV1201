@@ -19,6 +19,8 @@ import se.kth.iv1201.recruitmentbackend.domain.CompetenceProfile;
 import se.kth.iv1201.recruitmentbackend.domain.Person;
 import se.kth.iv1201.recruitmentbackend.domain.Role;
 import se.kth.iv1201.recruitmentbackend.domain.Status;
+import se.kth.iv1201.recruitmentbackend.enums.ApplicationStatus;
+import se.kth.iv1201.recruitmentbackend.enums.RoleNames;
 import se.kth.iv1201.recruitmentbackend.migration.dto.AvailabilityDTO;
 import se.kth.iv1201.recruitmentbackend.migration.dto.CompetenceDTO;
 import se.kth.iv1201.recruitmentbackend.migration.dto.CompetenceProfileDTO;
@@ -37,8 +39,8 @@ import se.kth.iv1201.recruitmentbackend.repository.StatusRepository;
 @Service
 @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
 public class MigrationService {
-	private static final String RECRUIT_ROLE = "recruit";
-	private static final String UNHANDLED_STATUS = "unhandled";
+	private static final String RECRUIT_ROLE = RoleNames.RECRUIT.getRole();
+	private static final String UNHANDLED_STATUS = ApplicationStatus.UNHANDLED.getStatus();
 	private OldRecruitmentDAO oldRecruitmentDAO;
 
 	@Autowired
@@ -100,8 +102,8 @@ public class MigrationService {
 				if (personDTO.getPassword() == null) {
 					String newPass = UUID.randomUUID().toString();
 					password = encoder.encode(newPass);
-					emailSender.sendCredentials(username, newPass, personDTO.getEmail()); // Sends an email with the new
-																							// password if it is missing
+					emailSender.sendCredentials(username, newPass, personDTO.getEmail()); 
+																							
 				} else {
 					password = personDTO.getPassword();
 				}

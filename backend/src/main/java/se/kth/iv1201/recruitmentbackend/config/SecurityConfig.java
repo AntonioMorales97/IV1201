@@ -16,6 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import se.kth.iv1201.recruitmentbackend.jwt.filters.JwtExceptionHandlerFilter;
 import se.kth.iv1201.recruitmentbackend.jwt.filters.JwtRequestFilter;
+import se.kth.iv1201.recruitmentbackend.presentation.controller.RecruitmentController;
 import se.kth.iv1201.recruitmentbackend.security.MyUserDetailsService;
 
 /**
@@ -25,6 +26,12 @@ import se.kth.iv1201.recruitmentbackend.security.MyUserDetailsService;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private static final String RECRUIT_ROLE = "RECRUIT";
+	private static final  String REGISTER_URL = "/register";
+	private static final  String AUTH_URL = "/authenticate";
+	static final String APPLICATIONS_URL = "/applications";
+	static final String APPLICATION_URL = "/application/*";
+	static final String ALTER_STATUS_URL = "alter-status/*";
+	static final String ALL_URL = "/**";
 
 	@Autowired
 	private MyUserDetailsService myUserDetailsService;
@@ -34,6 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private JwtExceptionHandlerFilter jwtExcFilter;
+	
 
 	/**
 	 * Configures so that <code>AuthenticationManager</code> knows where to load
@@ -53,7 +61,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/authenticate", "/register");
+	
+		web.ignoring().antMatchers(AUTH_URL, REGISTER_URL);
 	}
 
 	/**
@@ -64,8 +73,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable().cors().and().authorizeRequests()
-				.antMatchers("/application/*", "/applications", "alter-status/*").hasRole(RECRUIT_ROLE)
-				.antMatchers("/**").authenticated().and().sessionManagement()
+				.antMatchers(APPLICATION_URL, APPLICATIONS_URL, ALTER_STATUS_URL).hasRole(RECRUIT_ROLE)
+				.antMatchers(ALL_URL).authenticated().and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.addFilterBefore(jwtReqFilter, UsernamePasswordAuthenticationFilter.class)
 				.addFilterBefore(jwtExcFilter, JwtRequestFilter.class);

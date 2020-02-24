@@ -26,7 +26,12 @@ public class OldRecruitmentDAO {
 	private OldDbConnection oldDbConn;
 	private Connection conn;
 	private static final Logger logger = LoggerFactory.getLogger(OldDbConnection.class);
-
+	private static final String GET_PERSON_QUERY = "SELECT person.person_id, person.name, person.surname, person.ssn, person.email, person.password, person.username, (SELECT name FROM role WHERE person.role_id = role.role_id) AS role FROM person";
+	private static final String GET_AVAILABILITY_QEURY = "SELECT availability.from_date, availability.to_date FROM availability WHERE availability.person_id = ?";
+	private static final String GET_COMPETENCEPROFILE_QUERY = "SELECT competence_profile.years_of_experience, (SELECT name FROM competence WHERE competence_profile.competence_id = competence.competence_id) AS competence FROM competence_profile WHERE competence_profile.person_id = ?";
+	private static final String GET_COMPETENCE_QUERY = "SELECT name FROM competence";
+	private static final String GET_ROLE_QUERY = "SELECT name FROM role";
+	
 	/**
 	 * Creates a connection to the old database and returns a DAO.
 	 */
@@ -55,7 +60,7 @@ public class OldRecruitmentDAO {
 	 *         old database.
 	 */
 	public List<PersonDTO> getPersons() {
-		String query = "SELECT person.person_id, person.name, person.surname, person.ssn, person.email, person.password, person.username, (SELECT name FROM role WHERE person.role_id = role.role_id) AS role FROM person";
+		String query = GET_PERSON_QUERY;
 		Statement stmt;
 		List<PersonDTO> personDTOs = new ArrayList<>();
 		try {
@@ -87,7 +92,7 @@ public class OldRecruitmentDAO {
 	 *         in the old database.
 	 */
 	public List<AvailabilityDTO> getAvailabilities(Long personID) {
-		String query = "SELECT availability.from_date, availability.to_date FROM availability WHERE availability.person_id = ?";
+		String query = GET_AVAILABILITY_QEURY;
 		PreparedStatement prepStmt;
 		List<AvailabilityDTO> availabilitiesDTOs = new ArrayList<>();
 		try {
@@ -113,7 +118,7 @@ public class OldRecruitmentDAO {
 	 * @return a list of CompetenceProfileDTO.
 	 */
 	public List<CompetenceProfileDTO> getCompetenceProfiles(Long personID) {
-		String query = "SELECT competence_profile.years_of_experience, (SELECT name FROM competence WHERE competence_profile.competence_id = competence.competence_id) AS competence FROM competence_profile WHERE competence_profile.person_id = ?";
+		String query = GET_COMPETENCEPROFILE_QUERY;
 		PreparedStatement prepStmt;
 		List<CompetenceProfileDTO> competenceProfileDTOs = new ArrayList<>();
 		try {
@@ -137,7 +142,7 @@ public class OldRecruitmentDAO {
 	 * @return competences in the form of a CompetenceDTO list.
 	 */
 	public List<CompetenceDTO> getCompetences() {
-		String query = "SELECT name FROM competence";
+		String query = GET_COMPETENCE_QUERY;
 		Statement stmt;
 		List<CompetenceDTO> competenceDTOs = new ArrayList<>();
 		try {
@@ -160,7 +165,7 @@ public class OldRecruitmentDAO {
 	 * @return roles in the form of a RoleDTO list.
 	 */
 	public List<RoleDTO> getRoles() {
-		String query = "SELECT name FROM role";
+		String query = GET_ROLE_QUERY;
 		Statement stmt;
 		List<RoleDTO> roleDTOs = new ArrayList<>();
 		try {

@@ -13,6 +13,7 @@ import se.kth.iv1201.recruitmentbackend.domain.Competence;
 import se.kth.iv1201.recruitmentbackend.domain.Person;
 import se.kth.iv1201.recruitmentbackend.domain.Role;
 import se.kth.iv1201.recruitmentbackend.domain.Status;
+import se.kth.iv1201.recruitmentbackend.enums.ApplicationStatus;
 import se.kth.iv1201.recruitmentbackend.migration.MigrationService;
 import se.kth.iv1201.recruitmentbackend.repository.CompetenceRepository;
 import se.kth.iv1201.recruitmentbackend.repository.PersonRepository;
@@ -25,10 +26,10 @@ import se.kth.iv1201.recruitmentbackend.repository.StatusRepository;
  */
 @Configuration
 public class DatabaseInit {
-	private static final String UNHANDLED_STATUS = "unhandled";
-	private static final String ACCEPTED_STATUS = "accepted";
-	private static final String REJECTED_STATUS = "rejected";
-
+	private static final String UNHANDLED_STATUS = ApplicationStatus.UNHANDLED.getStatus();
+	private static final String ACCEPTED_STATUS = ApplicationStatus.ACCEPTED.getStatus();
+	private static final String REJECTED_STATUS = ApplicationStatus.REJECTED.getStatus();
+	
 	@Autowired
 	private MigrationService migration;
 
