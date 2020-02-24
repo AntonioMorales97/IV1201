@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import se.kth.iv1201.recruitmentbackend.application.exception.ApplicationNotFoundException;
 import se.kth.iv1201.recruitmentbackend.application.exception.StatusNotFoundException;
 import se.kth.iv1201.recruitmentbackend.domain.Application;
+import se.kth.iv1201.recruitmentbackend.enums.ApplicationStatus;
 import se.kth.iv1201.recruitmentbackend.presentation.dto.StatusDTO;
 import se.kth.iv1201.recruitmentbackend.repository.ApplicationRepository;
 import se.kth.iv1201.recruitmentbackend.repository.StatusRepository;
@@ -40,7 +41,7 @@ public class ApplicationServiceTest {
 	 */
 	@Before
 	public void construct() {
-		dummyApplication = new Application(statusRepo.findByName("unhandled").get());
+		dummyApplication = new Application(statusRepo.findByName(ApplicationStatus.unhandled.toString()).get());
 		applicationRepo.save(dummyApplication);
 	}
 	/**
@@ -51,7 +52,7 @@ public class ApplicationServiceTest {
 	@Test
 	public void searchAllApplicationsTest() throws Exception {
 		List<Application> applications = applicationService.findAllApplications();
-		assertEquals(applications.get(0).getStatus().getName().toString(), "unhandled");
+		assertEquals(applications.get(0).getStatus().getName().toString(), ApplicationStatus.unhandled.toString());
 	}
 	/**
 	 * Test the findApplication
@@ -62,7 +63,7 @@ public class ApplicationServiceTest {
 	public void searchOneApplicationTest() throws Exception {
 		List<Application> applications = applicationService.findAllApplications();
 		Application application = applicationService.findApplication(applications.get(0).getId());
-		assertEquals(application.getStatus().getName().toString(), "unhandled");
+		assertEquals(application.getStatus().getName().toString(), ApplicationStatus.unhandled.toString());
 
 	}
 	/**
@@ -81,7 +82,7 @@ public class ApplicationServiceTest {
 	@Test
 	public void changeStatus() throws Exception{
 		List<Application> applications = applicationService.findAllApplications();
-		StatusDTO status = new StatusDTO("accepted", applications.get(0).getVersion());
+		StatusDTO status = new StatusDTO(ApplicationStatus.accepted.toString(), applications.get(0).getVersion());
 		Application application = applicationService.changeStatus(applications.get(0).getId(), status);
 		assertEquals(application.getStatus().getName().toString(), status.getName().toString());
 	}
@@ -107,8 +108,8 @@ public class ApplicationServiceTest {
 	public void simultaniousUpdateTest() throws Exception {
 		List<Application> user1 = applicationService.findAllApplications();
 		List<Application> user2 = applicationService.findAllApplications();
-		StatusDTO status1 = new StatusDTO("accepted", user1.get(0).getVersion());
-		StatusDTO status2 = new StatusDTO("rejected", user2.get(0).getVersion());
+		StatusDTO status1 = new StatusDTO(ApplicationStatus.accepted.toString(), user1.get(0).getVersion());
+		StatusDTO status2 = new StatusDTO(ApplicationStatus.rejected.toString(), user2.get(0).getVersion());
 		
 		new Thread(() -> {
 			Application application1 = applicationService.changeStatus(user1.get(0).getId(), status1);

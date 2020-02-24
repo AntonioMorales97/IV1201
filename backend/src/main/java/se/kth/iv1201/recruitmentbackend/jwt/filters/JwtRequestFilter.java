@@ -15,6 +15,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import se.kth.iv1201.recruitmentbackend.enums.JwtEnums;
 import se.kth.iv1201.recruitmentbackend.jwt.JwtTokenUtil;
 import se.kth.iv1201.recruitmentbackend.security.MyUserDetailsService;
 
@@ -24,8 +25,8 @@ import se.kth.iv1201.recruitmentbackend.security.MyUserDetailsService;
  */
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
-	private final String AUTH_HEADER = "Authorization";
-	private final String BEARER_START = "Bearer ";
+	private final String AUTH_HEADER = JwtEnums.Authorization.toString();;
+	private final String BEARER_START = JwtEnums.Bearer.toString()+" ";
 
 	@Autowired
 	private MyUserDetailsService userDetailsService;

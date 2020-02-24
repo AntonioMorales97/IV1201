@@ -27,6 +27,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import se.kth.iv1201.recruitmentbackend.domain.Application;
 import se.kth.iv1201.recruitmentbackend.domain.Person;
 import se.kth.iv1201.recruitmentbackend.domain.Role;
+import se.kth.iv1201.recruitmentbackend.enums.ApplicationStatus;
+import se.kth.iv1201.recruitmentbackend.enums.JwtEnums;
+import se.kth.iv1201.recruitmentbackend.enums.RoleNames;
 import se.kth.iv1201.recruitmentbackend.jwt.JwtTokenUtil;
 import se.kth.iv1201.recruitmentbackend.repository.ApplicationRepository;
 import se.kth.iv1201.recruitmentbackend.repository.PersonRepository;
@@ -68,6 +71,10 @@ public class ApplicationControllerTest {
 	private Person dummyPerson;
 
 	private Application dummyApplication;
+	private static String applicationsTestString = "applicationMetadataResponses";
+	private static String applicationsUrl = "/applications";
+	private static String applicationUrl = "/application/";
+	private static String changeStatusUrl ="/alter-status/";
 
 	/**
 	 * Sets up a dummy data for an Application
@@ -77,17 +84,17 @@ public class ApplicationControllerTest {
 		applicationRepo.deleteAll();
 		personRepo.deleteAll();
 		roleRepo.deleteAll();
-		Role r1 = new Role("recruit");
-		Role r2 = new Role("applicant");
+		Role r1 = new Role(RoleNames.recruit.toString());
+		Role r2 = new Role(RoleNames.applicant.toString());
 		roleRepo.save(r1);
 		roleRepo.save(r2);
 		dummyPerson = new Person("testyy", "testaryy", "applicationControll@gmail.com", "9443898491",
-				"applicationControll", "då", roleRepo.findByName("recruit"));
+				"applicationControll", "då", roleRepo.findByName(RoleNames.recruit.toString()));
 
 		personRepo.save(dummyPerson);
 
-		dummyApplication = new Application(statusRepo.findByName("unhandled").get(),
-				personRepo.findByUsername("applicationControll"));
+		dummyApplication = new Application(statusRepo.findByName(ApplicationStatus.unhandled.toString()).get(),
+				personRepo.findByUsername(dummyPerson.getUsername()));
 		applicationRepo.save(dummyApplication);
 	}
 	/**
@@ -96,7 +103,7 @@ public class ApplicationControllerTest {
 	 */
 	@Test
 	public void getApplicationsTestBadRequest() throws Exception {
-		this.mvc.perform(get("/applications")).andDo(print()).andExpect(status().isForbidden());
+		this.mvc.perform(get(applicationsUrl)).andDo(print()).andExpect(status().isForbidden());
 	}
 	/**
 	 * Tests that /applications endpoint works as intended, and verifies that it returns a
@@ -108,12 +115,12 @@ public class ApplicationControllerTest {
 		String jwt = setupJWT();
 
 		MvcResult res = this.mvc.perform(
-				get("/applications").contentType(MediaType.APPLICATION_JSON).header("Authorization", "Bearer " + jwt))
+				get(applicationsUrl).contentType(MediaType.APPLICATION_JSON).header(JwtEnums.Authorization.toString(), JwtEnums.Bearer.toString()+" " + jwt))
 				.andDo(print()).andExpect(status().isOk()).andReturn();
 		String result = res.getResponse().getContentAsString();
 		String response = result.substring(15, 15 + 28);
 
-		assertEquals("applicationMetadataResponses", response);
+		assertEquals(applicationsTestString, response);
 	}
 	/**
 	 * Tests that /applicaion/{id} works as intended
@@ -126,8 +133,8 @@ public class ApplicationControllerTest {
 		List<Application> applicationlist = applicationRepo.findAll();
 		String id = Long.toString(applicationlist.get(0).getId());
 
-		this.mvc.perform(get("/application/" + id).contentType(MediaType.APPLICATION_JSON).header("Authorization",
-				"Bearer " + jwt)).andDo(print()).andExpect(status().isOk());
+		this.mvc.perform(get(applicationUrl+ id).contentType(MediaType.APPLICATION_JSON).header(JwtEnums.Authorization.toString(), JwtEnums.Bearer.toString()+" " + jwt))
+		.andDo(print()).andExpect(status().isOk());
 	}
 	/**
 	 * Tests that /application/{id} works as intended, when unvalid applicaion id is provided
@@ -138,8 +145,8 @@ public class ApplicationControllerTest {
 	public void getApplicationTestFail() throws Exception {
 		String jwt = setupJWT();
 
-		this.mvc.perform(get("/application/420").contentType(MediaType.APPLICATION_JSON).header("Authorization",
-				"Bearer " + jwt)).andDo(print()).andExpect(status().is4xxClientError());
+		this.mvc.perform(get(applicationUrl+420).contentType(MediaType.APPLICATION_JSON).header(JwtEnums.Authorization.toString(), JwtEnums.Bearer.toString()+" " + jwt))
+		.andDo(print()).andExpect(status().is4xxClientError());
 	}
 	/**
 	 * Test changeStatus function with valid id and status, 
@@ -153,10 +160,11 @@ public class ApplicationControllerTest {
 		String id = Long.toString(applicationlist.get(0).getId());
 		System.out.println("\n ID: " + id + "\n");
 		JSONObject statusDTO = new JSONObject();
-		statusDTO.put("name", "rejected");
+		statusDTO.put("name", ApplicationStatus.rejected.toString());
 		statusDTO.put("version", applicationlist.get(0).getVersion());
-		this.mvc.perform(put("/alter-status/" + id).contentType(MediaType.APPLICATION_JSON)
-				.content(statusDTO.toString()).header("Authorization", "Bearer " + jwt)).andDo(print())
+		this.mvc.perform(put(changeStatusUrl + id).contentType(MediaType.APPLICATION_JSON)
+				.content(statusDTO.toString()).header(JwtEnums.Authorization.toString(), JwtEnums.Bearer.toString()+" " + jwt))
+				.andDo(print())
 				.andExpect(status().isOk());
 	}
 	/**
@@ -167,8 +175,8 @@ public class ApplicationControllerTest {
 	@Test
 	public void changeStatusTestFail() throws Exception {
 		String jwt = setupJWT();
-		this.mvc.perform(put("/alter-status/420").contentType(MediaType.APPLICATION_JSON).header("Authorization",
-				"Bearer " + jwt)).andDo(print()).andExpect(status().is4xxClientError());
+		this.mvc.perform(put(changeStatusUrl+420).contentType(MediaType.APPLICATION_JSON).header(JwtEnums.Authorization.toString(), JwtEnums.Bearer.toString()+" " + jwt))
+		.andDo(print()).andExpect(status().is4xxClientError());
 	}
 
 	private String setupJWT() throws Exception {

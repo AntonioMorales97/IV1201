@@ -19,6 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import se.kth.iv1201.recruitmentbackend.application.RecruitmentService;
 import se.kth.iv1201.recruitmentbackend.application.exception.IllegalTransactionException;
 import se.kth.iv1201.recruitmentbackend.domain.Role;
+import se.kth.iv1201.recruitmentbackend.enums.RoleNames;
 import se.kth.iv1201.recruitmentbackend.presentation.dto.PersonDTO;
 import se.kth.iv1201.recruitmentbackend.repository.PersonRepository;
 import se.kth.iv1201.recruitmentbackend.repository.RoleRepository;
@@ -44,6 +45,7 @@ public class JwtTokenUtilTests {
 	RoleRepository roleRepo;
 
 	private static PersonDTO dummyPerson;
+	
 
 	@BeforeClass
 	public static void setup() {
@@ -70,7 +72,7 @@ public class JwtTokenUtilTests {
 		UserDetails user = register(dummyPerson);
 		String jwt = jwtUtil.createToken(user);
 		String role = jwtUtil.getTokenRole(jwt);
-		assertEquals(role, "APPLICANT");
+		assertEquals(role, RoleNames.applicant.toString().toUpperCase());
 	}
 
 	@Test
@@ -112,7 +114,7 @@ public class JwtTokenUtilTests {
 	}
 
 	private UserDetails register(PersonDTO person) throws IllegalTransactionException {
-		roleRepo.save(new Role("applicant"));
+		roleRepo.save(new Role(RoleNames.applicant.toString()));
 		recruitmentService.registerUser(person);
 		return userDetailsService.loadUserByUsername(person.getUsername());
 	}

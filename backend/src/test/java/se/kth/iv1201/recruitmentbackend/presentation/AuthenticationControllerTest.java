@@ -25,6 +25,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import se.kth.iv1201.recruitmentbackend.domain.Role;
+import se.kth.iv1201.recruitmentbackend.enums.RoleNames;
 import se.kth.iv1201.recruitmentbackend.presentation.models.LoginResponse;
 import se.kth.iv1201.recruitmentbackend.repository.PersonRepository;
 import se.kth.iv1201.recruitmentbackend.repository.RoleRepository;
@@ -51,7 +52,10 @@ public class AuthenticationControllerTest {
 
 	@Value("${jwt.secret}")
 	private String secret;
-
+	private static String authetnciateUrl ="/authenticate";
+	private static String registerUrl ="/register";
+	private static String username = "heja";
+	private static String password = "då";
 	/**
 	 * Test that should fail, because request with no body.
 	 * 
@@ -59,7 +63,7 @@ public class AuthenticationControllerTest {
 	 */
 	@Test
 	public void registerTestBadRequest() throws Exception {
-		this.mvc.perform(post("/authenticate")).andDo(print()).andExpect(status().isBadRequest());
+		this.mvc.perform(post(authetnciateUrl)).andDo(print()).andExpect(status().isBadRequest());
 	}
 	/**
 	 * Test that register with valid body works, and that jwt response is connected to person.
@@ -67,15 +71,15 @@ public class AuthenticationControllerTest {
 	 */
 	@Test
 	public void registerTestSuccess() throws Exception {
-		String user = setupUser("heja", "då");
-		MvcResult res = this.mvc.perform(post("/authenticate").contentType(MediaType.APPLICATION_JSON).content(user))
+		String user = setupUser(username, password);
+		MvcResult res = this.mvc.perform(post(authetnciateUrl).contentType(MediaType.APPLICATION_JSON).content(user))
 				.andDo(print()).andExpect(status().isOk()).andReturn();
 		String result = res.getResponse().getContentAsString();
 		LoginResponse response = objectMapper.readValue(result, LoginResponse.class);
 		String token = response.getJwtToken();
 		Jws<Claims> jws = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
 		System.out.println(jws.getBody().getSubject());
-		assertEquals("heja", jws.getBody().getSubject());
+		assertEquals(username, jws.getBody().getSubject());
 	}
 
 	private String setupUser(String username, String password) throws JSONException {
@@ -93,20 +97,20 @@ public class AuthenticationControllerTest {
 	public void testSetup() throws Exception {
 		personRepo.deleteAll();
 		roleRepo.deleteAll();
-		Role r1 = new Role("recruit");
-		Role r2 = new Role("applicant");
+		Role r1 = new Role(RoleNames.recruit.toString());
+		Role r2 = new Role(RoleNames.applicant.toString());
 		Role added = roleRepo.save(r1);
 		roleRepo.save(r2);
 		System.out.println(added);
 		String body = setupBody("testyy", "testaryy", "testay@gmail.com", "9443528491", "heja", "då");
-		this.mvc.perform(post("/register").contentType(MediaType.APPLICATION_JSON).content(body.toString()));
+		this.mvc.perform(post(registerUrl).contentType(MediaType.APPLICATION_JSON).content(body.toString()));
 	}
 	/**
 	 * Destruct function that deletes all dummy data
 	 */
 	@After
 	public void testDestructor() {
-		personRepo.deleteById(personRepo.findByUsername("heja").getId());
+		personRepo.deleteById(personRepo.findByUsername(username).getId());
 		roleRepo.deleteAll();
 
 	}

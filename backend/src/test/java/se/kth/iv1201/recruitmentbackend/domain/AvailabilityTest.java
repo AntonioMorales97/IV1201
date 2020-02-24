@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import se.kth.iv1201.recruitmentbackend.enums.ApplicationStatus;
+import se.kth.iv1201.recruitmentbackend.enums.RoleNames;
 import se.kth.iv1201.recruitmentbackend.repository.ApplicationRepository;
 import se.kth.iv1201.recruitmentbackend.repository.AvailabilityRepository;
 import se.kth.iv1201.recruitmentbackend.repository.PersonRepository;
@@ -55,20 +57,20 @@ public class AvailabilityTest {
 		personRepo.deleteAll();
 		roleRepo.deleteAll();
 		availabilityRepo.deleteAll();
-		Role r1 = new Role("recruit");
-		Role r2 = new Role("applicant");
+		Role r1 = new Role(RoleNames.recruit.toString());
+		Role r2 = new Role(RoleNames.applicant.toString());
 		roleRepo.save(r1);
 		roleRepo.save(r2);
 		dummyPerson1 = new Person("testyy", "testaryy", "applicationTest1@gmail.com", "9443898491", "applicationTest1",
-				"då", roleRepo.findByName("applicant"));
+				"då", roleRepo.findByName(RoleNames.applicant.toString()));
 		dummyPerson2 = new Person("Tests", "testsss", "applicationTest2@gmail.com", "938472819", "applicationTest2",
-				"då", roleRepo.findByName("applicant"));
+				"då", roleRepo.findByName(RoleNames.applicant.toString()));
 		personRepo.save(dummyPerson1);
 		personRepo.save(dummyPerson2);
 
-		application1 = new Application(statusRepo.findByName("unhandled").get(),
+		application1 = new Application(statusRepo.findByName(ApplicationStatus.unhandled.toString()).get(),
 				personRepo.findByUsername("applicationTest1"));
-		application2 = new Application(statusRepo.findByName("unhandled").get(),
+		application2 = new Application(statusRepo.findByName(ApplicationStatus.unhandled.toString()).get(),
 				personRepo.findByUsername("applicationTest2"));
 		applicationRepo.save(application1);
 		applicationRepo.save(application2);

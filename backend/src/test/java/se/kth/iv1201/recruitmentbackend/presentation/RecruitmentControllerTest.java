@@ -39,6 +39,11 @@ public class RecruitmentControllerTest {
 
 	@Autowired
 	PersonRepository personRepo;
+	private static String authetnciateUrl ="/authenticate";
+	private static String registerUrl ="/register";
+	private static String usernameExists  ="A person with the given username already exists!";
+	private static String emailExists = "A person with the given email already exists!";
+	private static String ssnExists="A person with the given ssn already exists!"; 
 	/**
 	 * Tests /register with no body. 
 	 * Verifies that response isBadRequest.
@@ -46,7 +51,7 @@ public class RecruitmentControllerTest {
 	 */
 	@Test
 	public void registerTestBadRequest() throws Exception {
-		this.mvc.perform(post("/register")).andDo(print()).andExpect(status().isBadRequest());
+		this.mvc.perform(post(registerUrl)).andDo(print()).andExpect(status().isBadRequest());
 	}
 	/**
 	 * Tests /register, with a valid body.
@@ -58,7 +63,7 @@ public class RecruitmentControllerTest {
 	public void registerTestWorking() throws Exception {
 
 		String body = setupBody("test", "testar", "testis@gmail.com", "9403128991", "Testis", "då");
-		this.mvc.perform(post("/register").contentType(MediaType.APPLICATION_JSON).content(body)).andDo(print())
+		this.mvc.perform(post(registerUrl).contentType(MediaType.APPLICATION_JSON).content(body)).andDo(print())
 				.andExpect(status().isCreated());
 
 	}
@@ -70,7 +75,7 @@ public class RecruitmentControllerTest {
 	@Test
 	public void registerAlredyUsedUsername() throws Exception {
 		String body = setupBody("testa", "testars", "testayssss@gmail.com", "9494256712", "heja", "då");
-		registerRequest("A person with the given username already exists!", body);
+		registerRequest(usernameExists, body);
 		removeUsers();
 	}
 	
@@ -83,7 +88,7 @@ public class RecruitmentControllerTest {
 	public void registerAlredyUsedEmail() throws Exception {
 
 		String body = setupBody("testar", "testars", "testay@gmail.com", "9563258789", "hejaaa", "då");
-		registerRequest("A person with the given email already exists!", body);
+		registerRequest(emailExists, body);
 		removeUsers();
 	}
 	
@@ -96,7 +101,7 @@ public class RecruitmentControllerTest {
 	public void registerAlredyUsedSsn() throws Exception {
 
 		String body = setupBody("testa", "test", "finnsej@gmail.com", "9443528491", "hejaaar", "då");
-		registerRequest("A person with the given ssn already exists!", body);
+		registerRequest(ssnExists, body);
 		removeUsers();
 	}
 
@@ -104,7 +109,7 @@ public class RecruitmentControllerTest {
 	public void testSetup() throws Exception {
 
 		String body = setupBody("testyy", "testaryy", "testay@gmail.com", "9443528491", "heja", "då");
-		this.mvc.perform(post("/register").contentType(MediaType.APPLICATION_JSON).content(body.toString()));
+		this.mvc.perform(post(registerUrl).contentType(MediaType.APPLICATION_JSON).content(body.toString()));
 	}
 
 	@After
@@ -113,7 +118,7 @@ public class RecruitmentControllerTest {
 	}
 
 	private void registerRequest(String msg, String body) throws Exception {
-		this.mvc.perform(post("/register").contentType(MediaType.APPLICATION_JSON).content(body.toString()))
+		this.mvc.perform(post(registerUrl).contentType(MediaType.APPLICATION_JSON).content(body.toString()))
 				.andDo(print()).andExpect(status().isMethodNotAllowed()).andExpect(jsonPath("$.message").value(msg));
 	}
 
