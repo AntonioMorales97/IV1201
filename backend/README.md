@@ -52,9 +52,15 @@ The code follows the Domain Driven Design (DDD) principles with a layered archit
 and Repository. The presentation holds the REST controllers that will receive HTTP requests and call the appropriate service in 
 the Application layer. The application layer thus holds the services and will use the Domain models to run operations and possibly
 store data in the database using repositories from the Repository layer. Furthemore, classes that don't belong in any of the mentioned
-layers, have their own "layer"/folder where the name specifies its functionality for higher cohesion.
+layers, have their own "layer"/folder where the name specifies its functionality/concept for higher cohesion. The class diagram for the backend can be seen below (certain packages and classes have been omitted for simplicity):
+![Class diagram](../images/IV1201-main-class-diagram.jfif)
   
 The tests has similar structure to the code they are testing. This makes it easier for navigation and easier to understand and scale.
+
+### Database
+The used database is a Postgres database, as previously mentioned. The database relational model can be seen below:
+  
+![Database model](../images/IV1201_DB.png)
 
 ### Versions
 The different versions can be seen the ```pom.xml``` file of the project. However, some of the versions of the bigger components
